@@ -29,21 +29,21 @@ class _GrdetailState extends State<Grdetail> {
   @override
   void initState() {
     super.initState();
-    getStyleFromGroupe(widget.groupeConcerner.idGroupe).then((value_style) {
+    getStyleFromGroupe(widget.groupeConcerner.idGroupe).then((valueStyle) {
       setState(() {
-        styleDuGroupe = value_style;
+        styleDuGroupe = valueStyle;
       });
     });
     getInstrumentFromGroupe(widget.groupeConcerner.idGroupe)
-        .then((value_instrument) {
+        .then((valueInstrument) {
       setState(() {
-        instrumentDuGroupe = value_instrument;
+        instrumentDuGroupe = valueInstrument;
       });
     });
     getVilleFromGroupeEndroitsJoues(widget.groupeConcerner.idGroupe)
-        .then((value_endroits) {
+        .then((valueEndroits) {
       setState(() {
-        endroitsJouesDuGroupe = value_endroits;
+        endroitsJouesDuGroupe = valueEndroits;
       });
     });
   }
@@ -166,8 +166,7 @@ class _GrdetailState extends State<Grdetail> {
                               itemBuilder: (context, index) {
                                 return ItemValider(
                                   valeur: (endroitsJouesDuGroupe[index]
-                                              .nomEvenement! ??
-                                          "") +
+                                          .nomEvenement!) +
                                       " ; " +
                                       endroitsJouesDuGroupe[index].nomVille,
                                   largeur: 0.8,
@@ -212,20 +211,19 @@ class _GrdetailState extends State<Grdetail> {
                                 ItemValider(
                                   valeur:
                                       // Pour éviter erreur valeur null
-                                      widget.groupeConcerner.modeleSono! ?? "",
+                                      widget.groupeConcerner.modeleSono!,
                                   largeur: 0.8,
                                 ),
                                 //Espace entre les objets
-                                VerticalMargin(ratio: 0.02),
+                                const VerticalMargin(ratio: 0.02),
                                 //Description de la sono
                                 const Text("Description de la sonorisation",
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
                                 //Appel item valider avec une hauteur car description peut etre longue
                                 ItemValider(
-                                    valeur: widget
-                                            .groupeConcerner.descriptionSono! ??
-                                        "",
+                                    valeur:
+                                        widget.groupeConcerner.descriptionSono!,
                                     largeur: 0.8,
                                     hauteur: 0.25),
                                 //Prix location sonorisation

@@ -1,28 +1,29 @@
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:ukruzwa/domain/Style.dart';
 import 'package:ukruzwa/domain/Instrument.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ukruzwa/domain/Ville.dart';
+import 'package:ukruzwa/domain/Groupe.dart';
 
 /* -------- AUTHENTIFICATION A FIREBASE -------- */
 
-Future<bool> ConnectUser(String emailAddress, String password) async {
+Future<bool> connectUser(String emailAddress, String password) async {
   try {
     final credential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: emailAddress, password: password);
     return true;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
-      print('No user found for that email.');
+      return false;
     } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
+      return false;
     }
     return false;
   }
 }
 
-Future<bool> CreateUser(String emailAddress, String password) async {
+Future<bool> createUser(String emailAddress, String password) async {
   try {
     final credential =
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -32,9 +33,9 @@ Future<bool> CreateUser(String emailAddress, String password) async {
     return true;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
-      print('The password provided is too weak.');
+      return false;
     } else if (e.code == 'email-already-in-use') {
-      print('The account already exists for that email.');
+      return false;
     }
     return false;
   } catch (e) {
@@ -43,6 +44,18 @@ Future<bool> CreateUser(String emailAddress, String password) async {
 }
 
 /* -------- PARTIE BASE DE DONNEES -------- */
+
+/* Fonction FindAllGroupe qui ne prend pas de paramètre et retourne une liste de groupe */
+Future<List<Groupe>> findAllGroupe() async {
+  List<Groupe> collectionGroupe = [];
+  return collectionGroupe;
+}
+
+Future<List<Groupe>> findAllGroupeRecherche(
+    String libelle, String option) async {
+  List<Groupe> collectionGroupe = [];
+  return collectionGroupe;
+}
 
 /* Fonction getStyleFromGroupe qui prend en paramètre un objet groupe et retourne une liste de style jouer par le groupe */
 Future<List<Style>> getStyleFromGroupe(int idGroupe) async {

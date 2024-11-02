@@ -34,7 +34,7 @@ class _AuthentificationState extends State<Authentification> {
       }
       // Si le state est la création réussi affiche une pop-up à l'utilisateur pour lui proposer de se connecter avec emit state sur initiamState connexion
       else if (state is AuthentificationStateCreateSuccess) {
-        return UserGrant();
+        return const UserGrant();
       }
 
       return Scaffold(
@@ -54,12 +54,12 @@ class _AuthentificationState extends State<Authentification> {
                   InputCustomPL(
                       placeholder: "Adresse mail",
                       controllerPL: tecEmailAddress,
-                      IsObscure: false),
-                  VerticalMargin(ratio: 0.02),
+                      isObscure: false),
+                  const VerticalMargin(ratio: 0.02),
                   InputCustomPL(
                       placeholder: "Mot de passe",
                       controllerPL: tecPassword,
-                      IsObscure: true),
+                      isObscure: true),
                   TextButton(
                     onPressed: () {
                       if (state is AuthentificationStateInitial) {

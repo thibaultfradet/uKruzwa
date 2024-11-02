@@ -1,9 +1,10 @@
-abstract class HomeState
-{
+import 'package:ukruzwa/domain/Groupe.dart';
+
+abstract class HomeState {
   const HomeState();
 }
 
-
-class HomeStateInitial extends HomeState{
-  const HomeStateInitial() : super();
+class HomeStateInitial extends HomeState {
+  List<Groupe> collectionGroupe = [];
+  HomeStateInitial(this.collectionGroupe) : super();
 }

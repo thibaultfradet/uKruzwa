@@ -6,7 +6,7 @@ class GrdetailBloc extends Bloc<GrdetailEvent, GrdetailState> {
   GrdetailBloc() : super(const GrdetailStateInitial()) {
     //State initial
     on<GrdetailEvent>((event, emit) async {
-      emit(GrdetailStateInitial());
+      emit(const GrdetailStateInitial());
     });
   }
 }

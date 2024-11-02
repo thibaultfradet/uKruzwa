@@ -6,7 +6,7 @@ class PostulerBloc extends Bloc<PostulerEvent, PostulerState> {
   PostulerBloc() : super(const PostulerStateInitial()) {
     //State initial
     on<PostulerEvent>((event, emit) async {
-      emit(PostulerStateInitial());
+      emit(const PostulerStateInitial());
     });
   }
 }

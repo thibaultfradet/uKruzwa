@@ -25,7 +25,7 @@ class _ItemValiderState extends State<ItemValider> {
       color: Colors.black,
       child: Text(
         widget.valeur,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
       ),
     );
   }

@@ -20,7 +20,7 @@ class _PostulerState extends State<Postuler> {
             builder: (BuildContext context, state) {
           //Page de base => on affiche toutes les informations du groupe + la possibilité de Postuler
           if (state is PostulerStateInitial) {
-            return Scaffold();
+            return const Scaffold();
           } else {
             return const Center(child: Text("Une erreur est survenue."));
           }

@@ -22,15 +22,15 @@ class _GlobalpresentationState extends State<Globalpresentation> {
   @override
   void initState() {
     super.initState();
-    getStyleFromGroupe(widget.groupeConcerner.idGroupe).then((value_style) {
+    getStyleFromGroupe(widget.groupeConcerner.idGroupe).then((valueStyle) {
       setState(() {
-        styleDuGroupe = value_style;
+        styleDuGroupe = valueStyle;
       });
     });
     getInstrumentFromGroupe(widget.groupeConcerner.idGroupe)
-        .then((value_instrument) {
+        .then((valueInstrument) {
       setState(() {
-        instrumentDuGroupe = value_instrument;
+        instrumentDuGroupe = valueInstrument;
       });
     });
   }

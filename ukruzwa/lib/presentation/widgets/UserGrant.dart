@@ -14,18 +14,19 @@ class _UserGrantState extends State<UserGrant> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Création du compte"),
+      title: const Text("Création du compte"),
       content: SingleChildScrollView(
         child: Column(
           children: [
-            Text("La création de votre compte s'est bien effectuée."),
+            const Text("La création de votre compte s'est bien effectuée."),
             TextButton(
               //State page de connexion initial
               onPressed: () {
-                BlocProvider.of<AuthentificationBloc>(context).add(AuthentificationShowConnect());
-              } , 
-              child: Text("Se connecter"),
-              )
+                BlocProvider.of<AuthentificationBloc>(context)
+                    .add(AuthentificationShowConnect());
+              },
+              child: const Text("Se connecter"),
+            )
           ],
         ),
       ),

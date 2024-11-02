@@ -11,13 +11,13 @@ class AuthentificationShowCreate extends AuthentificationEvent {
 }
 
 class AuthentificationConnectUser extends AuthentificationEvent {
-  final String EmailAddress;
-  final String Password;
-  AuthentificationConnectUser(this.EmailAddress, this.Password) : super();
+  final String emailAddress;
+  final String password;
+  AuthentificationConnectUser(this.emailAddress, this.password) : super();
 }
 
 class AuthentificationCreateUser extends AuthentificationEvent {
-  final String EmailAddress;
-  final String Password;
-  AuthentificationCreateUser(this.EmailAddress, this.Password) : super();
+  final String emailAddress;
+  final String password;
+  AuthentificationCreateUser(this.emailAddress, this.password) : super();
 }
