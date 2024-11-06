@@ -1,4 +1,4 @@
-import 'package:ukruzwa/domain/Groupe.dart';
+import 'package:ukruzwa/domain/models/Groupe.dart';
 
 abstract class HomeState {
   const HomeState();

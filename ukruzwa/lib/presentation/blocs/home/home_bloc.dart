@@ -2,7 +2,7 @@ import 'package:ukruzwa/data/dataSource/remote/firebase.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_state.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ukruzwa/domain/Groupe.dart';
+import 'package:ukruzwa/domain/models/Groupe.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeStateInitial([])) {

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ukruzwa/domain/Groupe.dart';
-import 'package:ukruzwa/domain/Style.dart';
-import 'package:ukruzwa/domain/Instrument.dart';
+import 'package:ukruzwa/domain/models/Groupe.dart';
+import 'package:ukruzwa/domain/models/Style.dart';
+import 'package:ukruzwa/domain/models/Instrument.dart';
 import 'package:ukruzwa/data/dataSource/remote/firebase.dart';
 import 'package:ukruzwa/presentation/pages/grdetail.dart';
 import 'package:ukruzwa/presentation/widgets/ItemValider.dart';
+import 'package:ukruzwa/presentation/widgets/VerticalMargin.dart';
 
 class Globalpresentation extends StatefulWidget {
   final Groupe groupeConcerner;
@@ -16,25 +17,6 @@ class Globalpresentation extends StatefulWidget {
 }
 
 class _GlobalpresentationState extends State<Globalpresentation> {
-  List<Style> styleDuGroupe = [];
-  List<Instrument> instrumentDuGroupe = [];
-
-  @override
-  void initState() {
-    super.initState();
-    getStyleFromGroupe(widget.groupeConcerner.idGroupe).then((valueStyle) {
-      setState(() {
-        styleDuGroupe = valueStyle;
-      });
-    });
-    getInstrumentFromGroupe(widget.groupeConcerner.idGroupe)
-        .then((valueInstrument) {
-      setState(() {
-        instrumentDuGroupe = valueInstrument;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -51,8 +33,8 @@ class _GlobalpresentationState extends State<Globalpresentation> {
       },
       child: Container(
         //taille
-        width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.height * 0.40,
+        width: MediaQuery.of(context).size.width * 0.91,
+        height: MediaQuery.of(context).size.height * 0.35,
         //bordure
         decoration: BoxDecoration(
           border: Border.all(
@@ -65,7 +47,7 @@ class _GlobalpresentationState extends State<Globalpresentation> {
           children: [
             //Ligne nom du groupe => container car 1 enfant
             Container(
-              height: MediaQuery.of(context).size.height * 0.1,
+              height: MediaQuery.of(context).size.height * 0.07,
               child: Text(
                 widget.groupeConcerner.nomGroupe,
                 style: const TextStyle(
@@ -76,7 +58,7 @@ class _GlobalpresentationState extends State<Globalpresentation> {
             ),
             //Ligne instrument et style décomposer en 2 colonnes => row car multi child mis dans container pour gerer taille
             Container(
-              height: MediaQuery.of(context).size.height * 0.2,
+              height: MediaQuery.of(context).size.height * 0.24,
               child: Row(
                 //La ligne est séparer en deux container ( 1 colonne chaqun pour mieux gerer la largeur => instrument et style)
                 children: [
@@ -91,13 +73,21 @@ class _GlobalpresentationState extends State<Globalpresentation> {
                         ),
 
                         //Liste view pour tous les styles
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: styleDuGroupe.length,
-                          itemBuilder: (context, index) {
-                            return ItemValider(
-                                valeur: styleDuGroupe[index].nomStyle);
-                          },
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount:
+                                widget.groupeConcerner.stylDuGroupe.length,
+                            itemBuilder: (context, index) {
+                              return Column(children: [
+                                ItemValider(
+                                    valeur: widget.groupeConcerner
+                                        .stylDuGroupe[index].nomStyle),
+                                const VerticalMargin(ratio: 0.01),
+                              ]);
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -113,14 +103,23 @@ class _GlobalpresentationState extends State<Globalpresentation> {
                         ),
 
                         //Liste view pour tous les instruments
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: instrumentDuGroupe.length,
-                          itemBuilder: (context, index) {
-                            return ItemValider(
-                                valeur:
-                                    instrumentDuGroupe[index].nomInstrument);
-                          },
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: widget
+                                .groupeConcerner.instrumentDuGroupe.length,
+                            itemBuilder: (context, index) {
+                              return Column(children: [
+                                ItemValider(
+                                    valeur: widget
+                                        .groupeConcerner
+                                        .instrumentDuGroupe[index]
+                                        .nomInstrument),
+                                const VerticalMargin(ratio: 0.01),
+                              ]);
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -130,9 +129,10 @@ class _GlobalpresentationState extends State<Globalpresentation> {
             ),
             //Ligne informations adresse
             Container(
-              height: MediaQuery.of(context).size.height * 0.1,
               child: Text(
-                '${widget.groupeConcerner.villeRepetition.codePostal}, ${widget.groupeConcerner.villeRepetition.idVille}',
+                '${widget.groupeConcerner.villeRepetition.codePostal}, ${widget.groupeConcerner.villeRepetition.nomVille}',
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               ),
             ),
           ],

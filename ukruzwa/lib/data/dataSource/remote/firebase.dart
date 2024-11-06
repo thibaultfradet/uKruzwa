@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ukruzwa/domain/Style.dart';
-import 'package:ukruzwa/domain/Instrument.dart';
+import 'package:ukruzwa/domain/models/Style.dart';
+import 'package:ukruzwa/domain/models/Instrument.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ukruzwa/domain/Ville.dart';
-import 'package:ukruzwa/domain/Groupe.dart';
+import 'package:ukruzwa/domain/models/Ville.dart';
+import 'package:ukruzwa/domain/models/Groupe.dart';
+import 'package:ukruzwa/domain/models/Personne.dart';
 
 /* -------- AUTHENTIFICATION A FIREBASE -------- */
 
@@ -48,6 +49,52 @@ Future<bool> createUser(String emailAddress, String password) async {
 /* Fonction FindAllGroupe qui ne prend pas de paramètre et retourne une liste de groupe */
 Future<List<Groupe>> findAllGroupe() async {
   List<Groupe> collectionGroupe = [];
+
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  //On récupère le contenu de la collection groupe
+  QuerySnapshot<Map<String, dynamic>> querySnapshot =
+      await db.collection("Groupes").get();
+
+  //pour chaque groupe dans la collection
+  for (var item in querySnapshot.docs) {
+    //Récupération des données
+    Map<String, dynamic>? data = item.data();
+    //objet pour boucle
+    /*Ville villeBoucle;
+    Contact contactBoucle;
+    Style styleBoucle;
+    List<Style> listeStyleBoucle;
+    Instrument instrumentBoucle;
+    List<Instrument> listeInstrumentBoucle; */
+
+    //item pour la boucle
+    Groupe groupeTemp = Groupe(
+        idGroupe: data["idGroupe"],
+        nomGroupe: data["NomGroupe"],
+        numeroRemplacementContact: data["NumeroRemplacementContact"],
+        ingeSon: data["IngeSon"],
+        possederSonorisation: data["PossederSonorisation"],
+        modeleSono: data["ModeleSono"],
+        descriptionSono: data["DescriptionSono"],
+        prixLocationSono: data["PrixLocaSono"],
+        ingePro: data["IngePro"],
+        prixInge: data["PrixInge"],
+        villeRepetition:
+            Ville(idVille: 1, nomVille: "Aubusson", codePostal: "23200"),
+        personneAContacter: Contact("", "jean", "bignon", "jbignon@gmail.com"),
+        stylDuGroupe: [
+          Style(idStyle: 1, nomStyle: "Jazz"),
+          Style(idStyle: 2, nomStyle: "Rock")
+        ],
+        instrumentDuGroupe: [
+          Instrument(idInstrument: 1, nomInstrument: "guitare"),
+          Instrument(idInstrument: 2, nomInstrument: "batterie")
+        ]);
+
+    //Ajout item i dans la boucle
+    collectionGroupe.add(groupeTemp);
+  }
+
   return collectionGroupe;
 }
 

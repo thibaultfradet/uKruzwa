@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_state.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_event.dart';
+import 'package:ukruzwa/presentation/widgets/BoutonCustom.dart';
 import 'package:ukruzwa/presentation/widgets/GlobalPresentation.dart';
 import 'package:ukruzwa/presentation/widgets/InputCustomPL.dart';
+import 'package:ukruzwa/presentation/widgets/VerticalMargin.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -37,14 +39,31 @@ class _HomeState extends State<Home> {
           if (state is HomeStateInitial) {
             return Scaffold(
               appBar: AppBar(
-                title: const Text("Rechercher un groupe"),
+                bottom: PreferredSize(
+                    preferredSize: const Size.fromHeight(4.0),
+                    child: Container(
+                      color: Colors.black,
+                      height: 1.0,
+                    )),
+                title: const Text(
+                  "Rechercher un groupe",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
                 centerTitle: true,
                 actions: [
-                  IconButton(
-                    // L'utilisateur clique => page d'informations sur son compte (liste des annonces, etc.)
-                    onPressed: () {},
-                    icon: const CircleAvatar(
-                      child: Icon(Icons.person),
+                  Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.black,
+                    ),
+                    child: IconButton(
+                      // L'utilisateur clique => page d'informations sur son compte (liste des annonces, etc.)
+                      onPressed: () {},
+                      icon: const CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 20,
+                        child: Icon(Icons.person),
+                      ),
                     ),
                   ),
                 ],
@@ -57,26 +76,12 @@ class _HomeState extends State<Home> {
                     // Partie du haut avec recherche
                     Container(
                       width: MediaQuery.of(context).size.width * 0.9,
-                      height: MediaQuery.of(context).size.height * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.22,
                       child: Column(
                         children: [
-                          // Affichage du filtre avec la valeur sélectionnée
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            margin: const EdgeInsets.only(bottom: 10),
-                            decoration: BoxDecoration(
-                              color: Colors.black54,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Text(
-                              "Filtre : $selectedValue",
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                          ),
                           // Ligne avec entrée utilisateur et bouton valider
                           Container(
-                            height: MediaQuery.of(context).size.height * 0.2,
+                            height: MediaQuery.of(context).size.height * 0.07,
                             child: Row(
                               children: [
                                 Expanded(
@@ -87,84 +92,116 @@ class _HomeState extends State<Home> {
                                     isObscure: false,
                                   ),
                                 ),
-                                TextButton(
-                                  onPressed: () {
-                                    // Validation de la recherche on appelle l'event de recherche et on passe en paramètre le libelle saisie et l'option choisis par l'utilisateur
+                                //Bouton validation
+                                // Validation de la recherche on appelle l'event de recherche et on passe en paramètre le libelle saisie et l'option choisis par l'utilisateur
+                                BoutonCustom(
+                                  onpressed: () {
                                     BlocProvider.of<HomeBloc>(context).add(
-                                        HomeEventUtilisateurRecherche(
-                                            tecRecherche.text, selectedValue!));
+                                      HomeEventUtilisateurRecherche(
+                                          tecRecherche.text, selectedValue!),
+                                    );
                                   },
-                                  style: TextButton.styleFrom(
-                                    backgroundColor: Colors.black,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 8),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                  child: const Text(
-                                    "Valider",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                  texteValeur: "Valider",
                                 ),
                               ],
                             ),
                           ),
-                          // ComboBox avec les différents filtres de recherche
+                          // Affichage du filtre avec la valeur sélectionnée,
                           Container(
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: Colors.black54,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                dropdownColor: Colors.black,
-                                value: selectedValue,
-                                icon: const Icon(Icons.arrow_drop_down,
-                                    color: Colors.white),
-                                style: const TextStyle(color: Colors.white),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedValue = newValue;
-                                  });
-                                },
-                                items: options.map<DropdownMenuItem<String>>(
-                                    (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
+                            height: MediaQuery.of(context).size.height * 0.11,
+                            child: Column(
+                                //Affichage filtre selectionner
+                                children: [
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.9,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black54,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Text(
+                                      "Filtre : $selectedValue",
+                                      textAlign: TextAlign.center,
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+
+                                  //Espace entre les deux
+                                  const VerticalMargin(ratio: 0.01),
+                                  // ComboBox avec les différents filtres de recherche
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.9,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black54,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<String>(
+                                        dropdownColor: Colors.black,
+                                        value: selectedValue,
+                                        icon: const Icon(Icons.arrow_drop_down,
+                                            color: Colors.white),
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            selectedValue = newValue;
+                                          });
+                                        },
+                                        items: options
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                  ),
+                                ]),
                           ),
                         ],
                       ),
                     ),
-                    // Résultat aléatoire
+                    // Résultat aléatoire texte
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.12,
+                      height: MediaQuery.of(context).size.height * 0.08,
                       child: const Text(
                         "Goupe apparant de manière aléatoire parmis les résultats de la recherche",
                         style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
                       ),
                     ),
 
                     //Liste view des résultats
-                    ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: state.collectionGroupe.length,
-                        itemBuilder: (context, index) {
-                          return Globalpresentation(
-                              groupeConcerner: state.collectionGroupe[index]);
-                        }),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.9,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: state.collectionGroupe.length,
+                          itemBuilder: (context, index) {
+                            return Column(children: [
+                              Globalpresentation(
+                                  groupeConcerner:
+                                      state.collectionGroupe[index]),
+                              const VerticalMargin(ratio: 0.03)
+                            ]);
+                          }),
+                    ),
                   ],
                 ),
               ),

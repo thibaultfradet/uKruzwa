@@ -3,26 +3,27 @@ abstract class AuthentificationState {
 }
 
 // Par défaut on affiche la connexion donc le state "initial" est en fait la connexion
-class AuthentificationStateInitial extends AuthentificationState {
-  const AuthentificationStateInitial() : super();
+class AuthStateInitial extends AuthentificationState {
+  const AuthStateInitial() : super();
 }
 
-class AuthentificationStateConnectSuccess extends AuthentificationState {
-  AuthentificationStateConnectSuccess() : super();
+class AuthLoading extends AuthentificationState {
+  const AuthLoading() : super();
 }
 
-class AuthentificationStateConnectFailure extends AuthentificationState {
-  AuthentificationStateConnectFailure() : super();
+class AuthSuccess extends AuthentificationState {
+  final bool isLoginMode;
+  const AuthSuccess({required this.isLoginMode}) : super();
 }
 
-class AuthentificationStateCreate extends AuthentificationState {
-  AuthentificationStateCreate() : super();
+class AuthFailure extends AuthentificationState {
+  final String error;
+
+  AuthFailure(this.error);
 }
 
-class AuthentificationStateCreateSuccess extends AuthentificationState {
-  AuthentificationStateCreateSuccess() : super();
-}
+class AuthModeToggle extends AuthentificationState {
+  final bool isLoginMode;
 
-class AuthentificationStateCreateFailure extends AuthentificationState {
-  AuthentificationStateCreateFailure() : super();
+  AuthModeToggle(this.isLoginMode);
 }

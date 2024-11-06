@@ -2,22 +2,18 @@ class AuthentificationEvent {
   AuthentificationEvent();
 }
 
-class AuthentificationShowConnect extends AuthentificationEvent {
-  AuthentificationShowConnect() : super();
-}
-
-class AuthentificationShowCreate extends AuthentificationEvent {
-  AuthentificationShowCreate() : super();
-}
-
-class AuthentificationConnectUser extends AuthentificationEvent {
+class AuthConnect extends AuthentificationEvent {
   final String emailAddress;
   final String password;
-  AuthentificationConnectUser(this.emailAddress, this.password) : super();
+  AuthConnect(this.emailAddress, this.password) : super();
 }
 
-class AuthentificationCreateUser extends AuthentificationEvent {
+class AuthCreate extends AuthentificationEvent {
   final String emailAddress;
   final String password;
-  AuthentificationCreateUser(this.emailAddress, this.password) : super();
+  AuthCreate(this.emailAddress, this.password) : super();
+}
+
+class ToggleAuthMode extends AuthentificationEvent {
+  ToggleAuthMode() : super();
 }

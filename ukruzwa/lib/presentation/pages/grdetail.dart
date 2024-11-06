@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/grdetail/grdetail_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/grdetail/grdetail_event.dart';
 import 'package:ukruzwa/presentation/blocs/grdetail/grdetail_state.dart';
-import 'package:ukruzwa/domain/Groupe.dart';
-import 'package:ukruzwa/domain/Style.dart';
-import 'package:ukruzwa/domain/Instrument.dart';
+import 'package:ukruzwa/domain/models/Groupe.dart';
+import 'package:ukruzwa/domain/models/Style.dart';
+import 'package:ukruzwa/domain/models/Instrument.dart';
 import 'package:ukruzwa/data/dataSource/remote/firebase.dart';
 import 'package:ukruzwa/presentation/pages/postuler.dart';
 import 'package:ukruzwa/presentation/widgets/ItemValider.dart';
-import 'package:ukruzwa/domain/Ville.dart';
+import 'package:ukruzwa/domain/models/Ville.dart';
 import 'package:ukruzwa/presentation/widgets/VerticalMargin.dart';
 
 class Grdetail extends StatefulWidget {
@@ -82,7 +82,9 @@ class _GrdetailState extends State<Grdetail> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Postuler()));
+                                      builder: (context) => Postuler(
+                                          groupeConcerner:
+                                              widget.groupeConcerner)));
                             });
                           },
                           child: const Text(

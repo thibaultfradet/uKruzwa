@@ -17,19 +17,22 @@ class InputCustomPL extends StatefulWidget {
 class _InputCustomPLState extends State<InputCustomPL> {
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: widget.controllerPL,
-      obscureText: widget.isObscure,
-      decoration: InputDecoration(
-          labelText: widget.placeholder,
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: Colors.grey),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: Colors.grey),
-            borderRadius: BorderRadius.circular(15),
-          )),
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.06,
+      child: TextFormField(
+        controller: widget.controllerPL,
+        obscureText: widget.isObscure,
+        decoration: InputDecoration(
+            labelText: widget.placeholder,
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(width: 1, color: Colors.grey),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(width: 1, color: Colors.grey),
+              borderRadius: BorderRadius.circular(15),
+            )),
+      ),
     );
   }
 }
