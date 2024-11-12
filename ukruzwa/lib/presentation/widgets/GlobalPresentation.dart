@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ukruzwa/domain/models/Groupe.dart';
-import 'package:ukruzwa/domain/models/Style.dart';
-import 'package:ukruzwa/domain/models/Instrument.dart';
-import 'package:ukruzwa/data/dataSource/remote/firebase.dart';
 import 'package:ukruzwa/presentation/pages/grdetail.dart';
 import 'package:ukruzwa/presentation/widgets/ItemValider.dart';
 import 'package:ukruzwa/presentation/widgets/VerticalMargin.dart';
@@ -22,14 +19,18 @@ class _GlobalpresentationState extends State<Globalpresentation> {
     return InkWell(
       onTap: () {
         // On push vers la page de vue détaillée d'item
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.push(
+        WidgetsBinding.instance.addPostFrameCallback(
+          (_) {
+            Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Grdetail(
-                        groupeConcerner: widget.groupeConcerner,
-                      )));
-        });
+                builder: (context) => Grdetail(
+                  groupeConcerner: widget.groupeConcerner,
+                ),
+              ),
+            );
+          },
+        );
       },
       child: Container(
         //taille

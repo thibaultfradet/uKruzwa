@@ -7,8 +7,8 @@ class Groupe {
   final int idGroupe;
   final String nomGroupe;
   final String numeroRemplacementContact;
-  final bool ingeSon;
   final bool possederSonorisation;
+  final bool? ingeSon;
   final String? modeleSono;
   final String? descriptionSono;
   final int? prixLocationSono;
@@ -20,13 +20,14 @@ class Groupe {
   final Contact personneAContacter;
   final List<Style> stylDuGroupe;
   final List<Instrument> instrumentDuGroupe;
+  final List<Ville>? endroitsDejaJoues;
 
   Groupe(
       {required this.idGroupe,
       required this.nomGroupe,
       required this.numeroRemplacementContact,
-      required this.ingeSon,
       required this.possederSonorisation,
+      this.ingeSon,
       this.modeleSono,
       this.descriptionSono,
       this.prixLocationSono,
@@ -36,5 +37,6 @@ class Groupe {
       required this.villeRepetition,
       required this.personneAContacter,
       required this.stylDuGroupe,
-      required this.instrumentDuGroupe});
+      required this.instrumentDuGroupe,
+      this.endroitsDejaJoues});
 }

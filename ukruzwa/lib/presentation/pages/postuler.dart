@@ -7,7 +7,9 @@ import 'package:ukruzwa/domain/models/Style.dart';
 import 'package:ukruzwa/domain/models/Instrument.dart';
 import 'package:ukruzwa/domain/models/Ville.dart';
 import 'package:ukruzwa/domain/models/Groupe.dart';
+import 'package:ukruzwa/presentation/widgets/BoutonCustom.dart';
 import 'package:ukruzwa/presentation/widgets/InputCustomPL.dart';
+import 'package:ukruzwa/presentation/widgets/VerticalMargin.dart';
 
 class Postuler extends StatefulWidget {
   final Groupe groupeConcerner;
@@ -23,6 +25,7 @@ class _PostulerState extends State<Postuler> {
   TextEditingController tecStyle = TextEditingController();
   TextEditingController tecVille = TextEditingController();
   TextEditingController tecInstrument = TextEditingController();
+  TextEditingController tecCodePostal = TextEditingController();
 
   //Liste pour instrument et style
   List<Style> stylesSaisis = [];
@@ -34,93 +37,109 @@ class _PostulerState extends State<Postuler> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => PostulerBloc()..add(PostulerEvent()),
-        child: BlocBuilder<PostulerBloc, PostulerState>(
-            builder: (BuildContext context, state) {
+      create: (context) => PostulerBloc()..add(PostulerEvent()),
+      child: BlocBuilder<PostulerBloc, PostulerState>(
+        builder: (BuildContext context, state) {
           //Page de base => formulaire à remplir pour postuler
           if (state is PostulerStateInitial) {
             return Scaffold(
+              backgroundColor: Colors.white,
               appBar: AppBar(
-                title: const Text("Postuler pour un groupe"),
+                backgroundColor: Colors.white,
+                title: const Text(
+                  "Postuler pour un groupe",
+                  style: TextStyle(fontSize: 20),
+                ),
               ),
-              body: Column(children: [
-                //Nom du groupe
-                Container(
-                  alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height * 0.15,
-                  child: Text(
-                    widget.groupeConcerner.nomGroupe,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+              body: Column(
+                children: [
+                  //Nom du groupe
+                  Container(
+                    alignment: Alignment.center,
+                    height: MediaQuery.of(context).size.height * 0.15,
+                    child: Text(
+                      widget.groupeConcerner.nomGroupe,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
 
-                /* ---- Formulaire ---- */
-                //Numéro de téléphone
-                InputCustomPL(
+                  /* ---- Formulaire ---- */
+                  //Numéro de téléphone
+                  InputCustomPL(
                     placeholder: "Numéro de téléphone",
                     controllerPL: tecNumTel,
-                    isObscure: false),
-                //Styles
-                InputCustomPL(
+                    isObscure: false,
+                  ),
+                  const VerticalMargin(ratio: 0.05),
+                  //Styles
+                  InputCustomPL(
                     placeholder: "Style",
                     controllerPL: tecStyle,
-                    isObscure: false),
-                //Instruments
-                InputCustomPL(
-                    placeholder: "Instruments joués",
-                    controllerPL: tecInstrument,
-                    isObscure: false),
+                    isObscure: false,
+                  ),
 
-                /* -- Partie formulaire situation géographique -- */
-                Container(
+                  const VerticalMargin(ratio: 0.05),
+                  //Instruments
+                  InputCustomPL(
+                      placeholder: "Instruments joués",
+                      controllerPL: tecInstrument,
+                      isObscure: false),
+
+                  const VerticalMargin(ratio: 0.05),
+                  /* -- Partie formulaire situation géographique -- */
+                  Container(
                     alignment: Alignment.center,
                     child: const Text(
                       "Situation géographique",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )),
-                //Ville
-                InputCustomPL(
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+
+                  const VerticalMargin(ratio: 0.02),
+                  //Ville
+                  InputCustomPL(
                     placeholder: "Ville",
                     controllerPL: tecVille,
-                    isObscure: false),
+                    isObscure: false,
+                  ),
+                  const VerticalMargin(ratio: 0.05),
+                  InputCustomPL(
+                    placeholder: "Code postal",
+                    controllerPL: tecCodePostal,
+                    isObscure: false,
+                  ),
 
-                //Bouton validation du formulaire
-                TextButton(
-                  // On déclenche la tentative de création
-                  onPressed: () {
-                    BlocProvider.of<PostulerBloc>(context).add(
-                        PostulerEventUtilisateurValider(
+                  const VerticalMargin(ratio: 0.05),
+
+                  BoutonCustom(
+                      onpressed: () {
+                        BlocProvider.of<PostulerBloc>(context).add(
+                          PostulerEventUtilisateurValider(
                             groupeConcerner: widget.groupeConcerner,
                             numTel: tecNumTel.text,
                             stylesJoues: stylesSaisis,
                             instrumentsJoues: instrumentsSaisis,
-                            localisation: villeTemp));
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text(
-                    "Valider",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ]),
+                            ville: tecVille.text,
+                            codePostal: tecCodePostal.text,
+                          ),
+                        );
+                      },
+                      texteValeur: "Valider")
+                  //Bouton validation du formulaire
+                ],
+              ),
             );
           } else {
             return const Center(child: Text("Une erreur est survenue."));
           }
-        }));
+        },
+      ),
+    );
   }
 }

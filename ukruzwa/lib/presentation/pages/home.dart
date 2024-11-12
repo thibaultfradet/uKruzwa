@@ -36,6 +36,9 @@ class _HomeState extends State<Home> {
         create: (context) => HomeBloc()..add(HomeEvent()),
         child: BlocBuilder<HomeBloc, HomeState>(
             builder: (BuildContext context, state) {
+          if (state is HomeStateLoading) {
+            return CircularProgressIndicator();
+          }
           if (state is HomeStateInitial) {
             return Scaffold(
               appBar: AppBar(

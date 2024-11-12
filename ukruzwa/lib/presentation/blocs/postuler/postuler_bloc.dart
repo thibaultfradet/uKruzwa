@@ -13,6 +13,7 @@ class PostulerBloc extends Bloc<PostulerEvent, PostulerState> {
     on<PostulerEventUtilisateurValider>((event, emit) async {
       bool isCreateSuccess = false;
 
+      // On créer un objet Ville pour la candidature
       emit(PostulerStateCreateStatut(isSuccess: isCreateSuccess));
     });
   }
