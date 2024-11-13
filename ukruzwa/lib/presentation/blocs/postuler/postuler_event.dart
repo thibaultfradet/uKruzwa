@@ -9,6 +9,8 @@ class PostulerEvent {
 class PostulerEventUtilisateurValider extends PostulerEvent {
   final Groupe groupeConcerner;
   final String numTel;
+  final String nom;
+  final String prenom;
   final List<Style> stylesJoues;
   final List<Instrument> instrumentsJoues;
   final String codePostal;
@@ -16,6 +18,8 @@ class PostulerEventUtilisateurValider extends PostulerEvent {
   PostulerEventUtilisateurValider(
       {required this.groupeConcerner,
       required this.numTel,
+      required this.nom,
+      required this.prenom,
       required this.stylesJoues,
       required this.instrumentsJoues,
       required this.codePostal,

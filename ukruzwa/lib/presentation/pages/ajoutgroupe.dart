@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ukruzwa/domain/models/Groupe.dart';
+import 'package:ukruzwa/domain/models/Style.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_event.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_state.dart';
@@ -8,8 +8,7 @@ import 'package:ukruzwa/presentation/widgets/BoutonCustom.dart';
 import 'package:ukruzwa/presentation/widgets/InputCustomPL.dart';
 
 class Ajoutgroupe extends StatefulWidget {
-  final Groupe groupeConcerner;
-  const Ajoutgroupe({super.key, required this.groupeConcerner});
+  const Ajoutgroupe({super.key});
 
   @override
   State<Ajoutgroupe> createState() => _AjoutgroupeState();
@@ -91,6 +90,33 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                           );
                         },
                       ),
+
+                      /* */
+                      Autocomplete<String>(
+                        initialValue: const TextEditingValue(text: ""),
+                        optionsBuilder: (TextEditingValue value) {
+                          if (value.text.isEmpty) {
+                            return [];
+                          }
+                          /*return state.styleDisponible.where(
+                            (style) => style.nomStyle
+                                .toLowerCase()
+                                .trim()
+                                .contains(value.text.toLowerCase().trim()),
+                          );
+                        }, */
+                          return [];
+                        },
+                        //L'utilisateur séle  ctionne donc on remplis la textBox avec la valeur selectionner
+                        onSelected: (suggestion) {
+                          setState(
+                            () {
+                              stylesSelectionnes.add(suggestion);
+                            },
+                          );
+                        },
+                      ),
+                      /**/
                       //numero tel contact => auto complete
                       Autocomplete<String>(
                         //Suggestion d'auto completion

@@ -24,6 +24,5 @@ class AuthFailure extends AuthentificationState {
 
 class AuthModeToggle extends AuthentificationState {
   final bool isLoginMode;
-
   AuthModeToggle(this.isLoginMode);
 }

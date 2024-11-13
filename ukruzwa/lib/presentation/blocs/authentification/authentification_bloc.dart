@@ -23,7 +23,11 @@ class AuthentificationBloc
 
     on<AuthCreate>((event, emit) async {
       emit(const AuthLoading());
-      final success = await createUser(event.emailAddress, event.password);
+      //Création dans firebase auth
+      bool success = await createUser(event.emailAddress, event.password);
+      //On ajoute dans firestore
+      success = await createUserInFirestore(event.emailAddress, event.nom,
+          event.prenom, event.numeroTelephone, event.codePostal, event.ville);
       if (success) {
         emit(const AuthSuccess(isLoginMode: false));
       } else {

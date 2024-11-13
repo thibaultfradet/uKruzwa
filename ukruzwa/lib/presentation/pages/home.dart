@@ -33,9 +33,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => HomeBloc()..add(HomeEvent()),
-        child: BlocBuilder<HomeBloc, HomeState>(
-            builder: (BuildContext context, state) {
+      create: (context) => HomeBloc()..add(HomeEvent()),
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (BuildContext context, state) {
           if (state is HomeStateLoading) {
             return CircularProgressIndicator();
           }
@@ -43,11 +43,12 @@ class _HomeState extends State<Home> {
             return Scaffold(
               appBar: AppBar(
                 bottom: PreferredSize(
-                    preferredSize: const Size.fromHeight(4.0),
-                    child: Container(
-                      color: Colors.black,
-                      height: 1.0,
-                    )),
+                  preferredSize: const Size.fromHeight(4.0),
+                  child: Container(
+                    color: Colors.black,
+                    height: 1.0,
+                  ),
+                ),
                 title: const Text(
                   "Rechercher un groupe",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -113,57 +114,58 @@ class _HomeState extends State<Home> {
                           Container(
                             height: MediaQuery.of(context).size.height * 0.11,
                             child: Column(
-                                //Affichage filtre selectionner
-                                children: [
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.05,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 8),
-                                    decoration: BoxDecoration(
-                                      color: Colors.black54,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Text(
-                                      "Filtre : $selectedValue",
-                                      textAlign: TextAlign.center,
+                              //Affichage filtre selectionner
+                              children: [
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.05,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black54,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Text(
+                                    "Filtre : $selectedValue",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ),
+
+                                //Espace entre les deux
+                                const VerticalMargin(ratio: 0.01),
+                                // ComboBox avec les différents filtres de recherche
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.05,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black54,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                      dropdownColor: Colors.black,
+                                      value: selectedValue,
+                                      icon: const Icon(Icons.arrow_drop_down,
+                                          color: Colors.white),
                                       style:
                                           const TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-
-                                  //Espace entre les deux
-                                  const VerticalMargin(ratio: 0.01),
-                                  // ComboBox avec les différents filtres de recherche
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.05,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 8),
-                                    decoration: BoxDecoration(
-                                      color: Colors.black54,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: DropdownButtonHideUnderline(
-                                      child: DropdownButton<String>(
-                                        dropdownColor: Colors.black,
-                                        value: selectedValue,
-                                        icon: const Icon(Icons.arrow_drop_down,
-                                            color: Colors.white),
-                                        style: const TextStyle(
-                                            color: Colors.white),
-                                        onChanged: (String? newValue) {
-                                          setState(() {
+                                      onChanged: (String? newValue) {
+                                        setState(
+                                          () {
                                             selectedValue = newValue;
-                                          });
-                                        },
-                                        items: options
-                                            .map<DropdownMenuItem<String>>(
-                                                (String value) {
+                                          },
+                                        );
+                                      },
+                                      items:
+                                          options.map<DropdownMenuItem<String>>(
+                                        (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(
@@ -171,11 +173,13 @@ class _HomeState extends State<Home> {
                                               textAlign: TextAlign.center,
                                             ),
                                           );
-                                        }).toList(),
-                                      ),
+                                        },
+                                      ).toList(),
                                     ),
                                   ),
-                                ]),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -194,16 +198,19 @@ class _HomeState extends State<Home> {
                     Container(
                       height: MediaQuery.of(context).size.height * 0.9,
                       child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: state.collectionGroupe.length,
-                          itemBuilder: (context, index) {
-                            return Column(children: [
+                        shrinkWrap: true,
+                        itemCount: state.collectionGroupe.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
                               Globalpresentation(
                                   groupeConcerner:
                                       state.collectionGroupe[index]),
                               const VerticalMargin(ratio: 0.03)
-                            ]);
-                          }),
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -212,6 +219,8 @@ class _HomeState extends State<Home> {
           } else {
             return const Center(child: Text("Une erreur est survenue."));
           }
-        }));
+        },
+      ),
+    );
   }
 }

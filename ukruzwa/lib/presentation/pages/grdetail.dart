@@ -185,12 +185,7 @@ class _GrdetailState extends State<Grdetail> {
                                               .endroitsDejaJoues!.length,
                                           itemBuilder: (context, index) {
                                             return ItemValider(
-                                              valeur: (widget
-                                                      .groupeConcerner
-                                                      .endroitsDejaJoues![index]
-                                                      .nomEvenement!) +
-                                                  " ; " +
-                                                  widget
+                                              valeur: widget
                                                       .groupeConcerner
                                                       .endroitsDejaJoues![index]
                                                       .nomVille +

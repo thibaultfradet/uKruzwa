@@ -25,7 +25,7 @@ class _ItemValiderState extends State<ItemValider> {
           : MediaQuery.of(context).size.width * widget.largeur!,
       height: widget.hauteur == null
           ? MediaQuery.of(context).size.height * 0.05
-          : MediaQuery.of(context).size.width * widget.largeur!,
+          : MediaQuery.of(context).size.width * widget.hauteur!,
       child: Center(
         child: Text(
           widget.valeur,

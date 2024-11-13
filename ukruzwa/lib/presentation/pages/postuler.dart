@@ -26,6 +26,8 @@ class _PostulerState extends State<Postuler> {
   TextEditingController tecVille = TextEditingController();
   TextEditingController tecInstrument = TextEditingController();
   TextEditingController tecCodePostal = TextEditingController();
+  TextEditingController tecNom = TextEditingController();
+  TextEditingController tecPrenom = TextEditingController();
 
   //Liste pour instrument et style
   List<Style> stylesSaisis = [];
@@ -67,13 +69,7 @@ class _PostulerState extends State<Postuler> {
                   ),
 
                   /* ---- Formulaire ---- */
-                  //Numéro de téléphone
-                  InputCustomPL(
-                    placeholder: "Numéro de téléphone",
-                    controllerPL: tecNumTel,
-                    isObscure: false,
-                  ),
-                  const VerticalMargin(ratio: 0.05),
+
                   //Styles
                   InputCustomPL(
                     placeholder: "Style",
@@ -89,33 +85,6 @@ class _PostulerState extends State<Postuler> {
                       isObscure: false),
 
                   const VerticalMargin(ratio: 0.05),
-                  /* -- Partie formulaire situation géographique -- */
-                  Container(
-                    alignment: Alignment.center,
-                    child: const Text(
-                      "Situation géographique",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-
-                  const VerticalMargin(ratio: 0.02),
-                  //Ville
-                  InputCustomPL(
-                    placeholder: "Ville",
-                    controllerPL: tecVille,
-                    isObscure: false,
-                  ),
-                  const VerticalMargin(ratio: 0.05),
-                  InputCustomPL(
-                    placeholder: "Code postal",
-                    controllerPL: tecCodePostal,
-                    isObscure: false,
-                  ),
-
-                  const VerticalMargin(ratio: 0.05),
 
                   BoutonCustom(
                       onpressed: () {
@@ -123,6 +92,8 @@ class _PostulerState extends State<Postuler> {
                           PostulerEventUtilisateurValider(
                             groupeConcerner: widget.groupeConcerner,
                             numTel: tecNumTel.text,
+                            nom: tecNom.text,
+                            prenom: tecPrenom.text,
                             stylesJoues: stylesSaisis,
                             instrumentsJoues: instrumentsSaisis,
                             ville: tecVille.text,

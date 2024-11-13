@@ -45,6 +45,39 @@ Future<bool> createUser(String emailAddress, String password) async {
   }
 }
 
+Future<bool> createUserInFirestore(String emailAddress, String nom,
+    String prenom, String numTel, String codePostal, String ville) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  bool isSuccess = false;
+
+  int maxIdVille = await getMaxIdVille();
+  Ville villeTemp =
+      Ville(idVille: maxIdVille + 1, codePostal: codePostal, nomVille: ville);
+  Personne personneTemp =
+      Personne(numTel, nom, prenom, emailAddress, villeTemp);
+
+  try {
+    //On ajoute la ville et l'utilisateur en base
+    final docVille = db.collection("Villes").doc((maxIdVille + 1).toString());
+    await docVille.set(
+        {"CodePostal": villeTemp.nomVille, "NomVille": villeTemp.codePostal});
+    final docName = db
+        .collection("Personnes")
+        .doc(numTel); // identifiant unique => numéro telephone
+    await docName.set({
+      "Mail": personneTemp.mail,
+      "Nom": personneTemp.nom,
+      "Prenom": personneTemp.prenom,
+      "NumeroTelephone": personneTemp.numeroTelephone,
+      "idVille": personneTemp.villeHabiter.idVille
+    });
+    isSuccess = true;
+  } catch (e) {
+    isSuccess = false;
+  }
+  return isSuccess;
+}
+
 /* -------- PARTIE BASE DE DONNEES -------- */
 
 /* Fonction FindAllGroupe qui ne prend pas de paramètre et retourne une liste de groupe */
@@ -82,7 +115,13 @@ Future<List<Groupe>> findAllGroupe() async {
         prixInge: data["PrixInge"],
         villeRepetition:
             Ville(idVille: 1, nomVille: "Aubusson", codePostal: "23200"),
-        personneAContacter: Contact("", "jean", "bignon", "jbignon@gmail.com"),
+        personneAContacter: Contact(
+          "",
+          "jean",
+          "bignon",
+          "jbignon@gmail.com",
+          Ville(idVille: 1, nomVille: "Aubusson", codePostal: "23200"),
+        ),
         stylDuGroupe: [
           Style(idStyle: 1, nomStyle: "Jazz"),
           Style(idStyle: 2, nomStyle: "Rock")
@@ -163,7 +202,22 @@ Future<bool> createStyle(Style styleCreate) async {
 }
 
 Future<Contact> retrieveContact(String numeroTelephone) async {
-  Contact contactRetrieve = Contact(numeroTelephone, "", "", "");
+  Ville villeTemp = Ville(
+    codePostal: "",
+    idVille: -1,
+    nomVille: "",
+  );
+  Contact contactRetrieve = Contact(numeroTelephone, "", "", "", villeTemp);
 
   return contactRetrieve;
+}
+
+/* PARTIE POSTULAT */
+/* Fonction create candidat asynchrone qui essaye de créer un candidat dans la base de données et retourne le statut de la tentative de création
+Paramètre : id du groupe postuler ; objet candidat pour le candidat concerner
+
+*/
+Future<bool> createCandidat(int idGroupe, Candidat candidat) async {
+  bool isSuccess = false;
+  return isSuccess;
 }

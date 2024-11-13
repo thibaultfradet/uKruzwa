@@ -11,10 +11,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
   AjoutgroupeBloc()
       : super(AjoutgroupeStateInitial(
-            contactDisponible: [],
-            instrumentDisponible: [],
-            styleDisponible: [],
-            villeDisponible: [])) {
+          contactDisponible: [],
+          instrumentDisponible: [],
+          styleDisponible: [],
+          villeDisponible: [],
+        )) {
     //Etat initial
     on<AjoutgroupeEvent>((event, emit) async {
       List<Ville> villeDisponible = await findAllVille();

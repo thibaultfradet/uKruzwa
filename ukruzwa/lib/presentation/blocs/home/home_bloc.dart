@@ -17,6 +17,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       // On rappelle le HomeStateInitial mais avec une nouvelle liste en rapport avec la demande de l'utilisateur
       List<Groupe> collectionGroupe =
           await findAllGroupeRecherche(event.libelle, event.option);
+      //On randomise les résultats
+      collectionGroupe.shuffle();
       emit(HomeStateInitial(collectionGroupe));
     });
   }
