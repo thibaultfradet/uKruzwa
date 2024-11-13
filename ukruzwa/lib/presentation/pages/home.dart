@@ -26,6 +26,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+
     selectedValue =
         options[0]; // Valeur par défaut: première valeur de la liste
   }
@@ -41,6 +42,7 @@ class _HomeState extends State<Home> {
           }
           if (state is HomeStateInitial) {
             return Scaffold(
+              resizeToAvoidBottomInset: false,
               appBar: AppBar(
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(4.0),
@@ -193,7 +195,9 @@ class _HomeState extends State<Home> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-
+                    Container(
+                      child: Text(""),
+                    ),
                     //Liste view des résultats
                     Container(
                       height: MediaQuery.of(context).size.height * 0.9,

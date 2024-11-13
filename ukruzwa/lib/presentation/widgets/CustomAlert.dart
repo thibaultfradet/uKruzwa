@@ -12,19 +12,29 @@ class CustomAlert extends StatefulWidget {
 class _CustomAlertState extends State<CustomAlert> {
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text("My title"),
-      content: Text("This is my message."),
-      actions: [
-        TextButton(
-          onPressed: () {
-            widget.onpressed();
-          },
-          child: Text(
-            widget.texte,
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      child: Container(
+        constraints: BoxConstraints(maxHeight: 350),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              RichText(
+                textAlign: TextAlign.justify,
+                text: TextSpan(
+                    text: widget.texte,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: Colors.black,
+                        wordSpacing: 1)),
+              ),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 }

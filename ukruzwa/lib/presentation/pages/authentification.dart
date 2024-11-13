@@ -43,6 +43,7 @@ class _AuthentificationState extends State<Authentification> {
         }
 
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(),
           body: Center(
             child: Column(
@@ -154,7 +155,13 @@ class _AuthentificationState extends State<Authentification> {
                       : "Connexion à mon compte",
                 ),
                 // Afficher les messages d'erreur si présents
-                state is AuthFailure ? const Text("Failed") : const SizedBox(),
+                state is AuthFailure
+                    ? CustomAlert(
+                        onpressed: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                        texte: "Informations saisies invalides.")
+                    : const SizedBox(),
                 state is AuthSuccess && state.isLoginMode == false
                     ? CustomAlert(
                         onpressed: () {

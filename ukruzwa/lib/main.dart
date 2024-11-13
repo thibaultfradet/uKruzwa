@@ -5,11 +5,9 @@ import 'package:ukruzwa/presentation/blocs/authentification/authentification_blo
 import 'package:ukruzwa/presentation/blocs/postuler/postuler_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/grdetail/grdetail_bloc.dart';
-import 'package:ukruzwa/presentation/pages/ajoutgroupe.dart';
 import 'package:ukruzwa/presentation/pages/authentification.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:ukruzwa/presentation/pages/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

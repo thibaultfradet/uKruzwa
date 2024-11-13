@@ -10,6 +10,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEvent>((event, emit) async {
       // Instanciation d'une liste de groupes + appel de méthode dans BDD Firebase
       List<Groupe> collectionGroupe = await findAllGroupe();
+      collectionGroupe.shuffle();
       emit(HomeStateInitial(collectionGroupe));
     });
 

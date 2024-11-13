@@ -31,6 +31,7 @@ class _GrdetailState extends State<Grdetail> {
           //Page de base => on affiche toutes les informations du groupe + la possibilité de postuler
           if (state is GrdetailStateInitial) {
             return Scaffold(
+              resizeToAvoidBottomInset: false,
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 title: Text(

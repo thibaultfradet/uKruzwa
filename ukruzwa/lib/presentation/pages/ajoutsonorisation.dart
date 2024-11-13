@@ -29,6 +29,7 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
     return BlocBuilder<AjoutsonorisationBloc, AjoutsonorisationState>(
       builder: (BuildContext context, state) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: const Text("Ajouter une sonorisation"),
           ),

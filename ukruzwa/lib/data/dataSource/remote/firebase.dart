@@ -93,17 +93,10 @@ Future<List<Groupe>> findAllGroupe() async {
   for (var item in querySnapshot.docs) {
     //Récupération des données
     Map<String, dynamic>? data = item.data();
-    //objet pour boucle
-    /*Ville villeBoucle;
-    Contact contactBoucle;
-    Style styleBoucle;
-    List<Style> listeStyleBoucle;
-    Instrument instrumentBoucle;
-    List<Instrument> listeInstrumentBoucle; */
 
     //item pour la boucle
     Groupe groupeTemp = Groupe(
-        idGroupe: data["idGroupe"],
+        idGroupe: int.parse(item.id),
         nomGroupe: data["NomGroupe"],
         numeroRemplacementContact: data["NumeroRemplacementContact"],
         ingeSon: data["IngeSon"],
@@ -145,18 +138,62 @@ Future<List<Groupe>> findAllGroupeRecherche(
   return collectionGroupe;
 }
 
+/* FindAllVille => permet de recuperer toutes les villes*/
 Future<List<Ville>> findAllVille() async {
   List<Ville> listeVille = [];
+
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  //On récupère le contenu de la collection groupe
+  QuerySnapshot<Map<String, dynamic>> querySnapshot =
+      await db.collection("Villes").get();
+
+  //pour chaque groupe dans la collection
+  for (var item in querySnapshot.docs) {
+    //Récupération des données
+    Map<String, dynamic>? data = item.data();
+    Ville villeTemp = Ville(
+        idVille: int.parse(item.id),
+        codePostal: data["CodePostal"],
+        nomVille: data["NomVille"]);
+    listeVille.add(villeTemp);
+  }
   return listeVille;
 }
 
 Future<List<Instrument>> findAllInstrument() async {
   List<Instrument> listeInstrument = [];
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  //On récupère le contenu de la collection groupe
+  QuerySnapshot<Map<String, dynamic>> querySnapshot =
+      await db.collection("Instruments").get();
+
+  //pour chaque groupe dans la collection
+  for (var item in querySnapshot.docs) {
+    //Récupération des données
+    Map<String, dynamic>? data = item.data();
+    Instrument instrumentTemp = Instrument(
+        idInstrument: int.parse(item.id), nomInstrument: data["NomInstrument"]);
+    listeInstrument.add(instrumentTemp);
+  }
+
   return listeInstrument;
 }
 
 Future<List<Style>> findAllStyle() async {
   List<Style> listeStyle = [];
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  //On récupère le contenu de la collection groupe
+  QuerySnapshot<Map<String, dynamic>> querySnapshot =
+      await db.collection("Styles").get();
+
+  //pour chaque groupe dans la collection
+  for (var item in querySnapshot.docs) {
+    //Récupération des données
+    Map<String, dynamic>? data = item.data();
+    Style styleTemp =
+        Style(idStyle: int.parse(item.id), nomStyle: data["NomStyle"]);
+    listeStyle.add(styleTemp);
+  }
   return listeStyle;
 }
 
@@ -214,10 +251,11 @@ Future<Contact> retrieveContact(String numeroTelephone) async {
 
 /* PARTIE POSTULAT */
 /* Fonction create candidat asynchrone qui essaye de créer un candidat dans la base de données et retourne le statut de la tentative de création
-Paramètre : id du groupe postuler ; objet candidat pour le candidat concerner
+Paramètre : id du groupe postuler ; objet candidat pour le candidat concerner ; instrument du candidat => liste instrument ; style du candidat => liste de style
 
 */
-Future<bool> createCandidat(int idGroupe, Candidat candidat) async {
+Future<bool> createPostulat(int idGroupe, Candidat candidat,
+    List<Style> styleCandidat, List<Instrument> instrumentCandidat) async {
   bool isSuccess = false;
   return isSuccess;
 }

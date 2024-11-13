@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ukruzwa/domain/models/Style.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_event.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_state.dart';
@@ -39,6 +38,7 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
           //Page de base => formulaire à remplir pour Ajoutgroupe
 
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
               title: const Text("Ajouter un groupe"),
             ),
