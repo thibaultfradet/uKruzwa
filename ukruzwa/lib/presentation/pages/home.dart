@@ -38,12 +38,20 @@ class _HomeState extends State<Home> {
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (BuildContext context, state) {
           if (state is HomeStateLoading) {
-            return CircularProgressIndicator();
+            return Center(
+              child: Container(
+                height: MediaQuery.of(context).size.width * 0.5,
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: const CircularProgressIndicator(),
+              ),
+            );
           }
           if (state is HomeStateInitial) {
             return Scaffold(
+              backgroundColor: Colors.white,
               resizeToAvoidBottomInset: false,
               appBar: AppBar(
+                backgroundColor: Colors.white,
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(4.0),
                   child: Container(

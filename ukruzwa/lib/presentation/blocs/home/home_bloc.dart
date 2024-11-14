@@ -8,6 +8,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeStateInitial([])) {
     // État initial
     on<HomeEvent>((event, emit) async {
+      //en attente du chargement des données on emit un load
+      emit(HomeStateLoading());
+
       // Instanciation d'une liste de groupes + appel de méthode dans BDD Firebase
       List<Groupe> collectionGroupe = await findAllGroupe();
       collectionGroupe.shuffle();

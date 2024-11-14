@@ -100,7 +100,7 @@ class _GrdetailState extends State<Grdetail> {
                                   scrollDirection: Axis.horizontal,
                                   shrinkWrap: true,
                                   itemCount: widget
-                                      .groupeConcerner.stylDuGroupe.length,
+                                      .groupeConcerner.stylDuGroupe!.length,
                                   itemBuilder: (context, index) {
                                     return Container(
                                       child: Row(
@@ -109,7 +109,7 @@ class _GrdetailState extends State<Grdetail> {
                                           ItemValider(
                                               valeur: widget
                                                   .groupeConcerner
-                                                  .stylDuGroupe[index]
+                                                  .stylDuGroupe![index]
                                                   .nomStyle),
                                         ],
                                       ),
@@ -133,7 +133,7 @@ class _GrdetailState extends State<Grdetail> {
                                   scrollDirection: Axis.horizontal,
                                   shrinkWrap: true,
                                   itemCount: widget.groupeConcerner
-                                      .instrumentDuGroupe.length,
+                                      .instrumentDuGroupe!.length,
                                   itemBuilder: (context, index) {
                                     return Container(
                                       child: Row(
@@ -142,7 +142,7 @@ class _GrdetailState extends State<Grdetail> {
                                           ItemValider(
                                               valeur: widget
                                                   .groupeConcerner
-                                                  .instrumentDuGroupe[index]
+                                                  .instrumentDuGroupe![index]
                                                   .nomInstrument),
                                         ],
                                       ),

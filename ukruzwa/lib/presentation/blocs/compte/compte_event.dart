@@ -1,0 +1,3 @@
+class CompteEvent {
+  CompteEvent();
+}

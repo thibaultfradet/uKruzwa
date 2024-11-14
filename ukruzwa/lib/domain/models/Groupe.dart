@@ -18,8 +18,8 @@ class Groupe {
   //Clé étrangère
   final Ville villeRepetition;
   final Contact personneAContacter;
-  final List<Style> stylDuGroupe;
-  final List<Instrument> instrumentDuGroupe;
+  final List<Style>? stylDuGroupe;
+  final List<Instrument>? instrumentDuGroupe;
   final List<Ville>? endroitsDejaJoues;
 
   Groupe(
@@ -36,7 +36,7 @@ class Groupe {
       this.prixInge,
       required this.villeRepetition,
       required this.personneAContacter,
-      required this.stylDuGroupe,
-      required this.instrumentDuGroupe,
+      this.stylDuGroupe,
+      this.instrumentDuGroupe,
       this.endroitsDejaJoues});
 }

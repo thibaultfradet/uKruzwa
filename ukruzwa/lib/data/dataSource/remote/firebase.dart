@@ -95,34 +95,72 @@ Future<List<Groupe>> findAllGroupe() async {
     Map<String, dynamic>? data = item.data();
 
     //item pour la boucle
+    Ville villeRepetition = await retrieveVille(data["idVille"]);
+    Contact personneAContacter = await retrieveContact(data["NumeroTelephone"]);
+
+    //objets externe
+    List<Instrument> instrumentsDuGroupe = [];
+    List<Style> stylesDuGroupe = [];
+    List<Ville> endroitsJouesDuGroupe = [];
+
+    //Récupérations obj externe
+    //styles
+    QuerySnapshot<Map<String, dynamic>> snapShotJouer = await db
+        .collection("Jouer")
+        .where("GroupeId", isEqualTo: item.id)
+        .get();
+    for (var jouer in snapShotJouer.docs) {
+      Map<String, dynamic>? dataJouer = jouer.data();
+      Style styleTemp =
+          Style(idStyle: int.parse(jouer.id), nomStyle: dataJouer["NomStyle"]);
+      stylesDuGroupe.add(styleTemp);
+    }
+
+    //instruments
+    QuerySnapshot<Map<String, dynamic>> snapshotUtiliser = await db
+        .collection("Utiliser")
+        .where("GroupeId", isEqualTo: item.id)
+        .get();
+    for (var utiliser in snapshotUtiliser.docs) {
+      Map<String, dynamic>? dataUtiliser = utiliser.data();
+      Instrument instrumentTemp = Instrument(
+          idInstrument: int.parse(utiliser.id),
+          nomInstrument: dataUtiliser["NomInstrument"]);
+      instrumentsDuGroupe.add(instrumentTemp);
+    }
+
+    //endroits deja joues
+    QuerySnapshot<Map<String, dynamic>> snapshotVille = await db
+        .collection("DejaJouer")
+        .where("GroupeId", isEqualTo: item.id)
+        .get();
+    for (var dejajouer in snapShotJouer.docs) {
+      Map<String, dynamic>? dataDejaJouer = dejajouer.data();
+      Ville villeTemp = Ville(
+          codePostal: dataDejaJouer["CodePostal"],
+          idVille: int.parse(dejajouer.id),
+          nomVille: dataDejaJouer["NomVille"]);
+      endroitsJouesDuGroupe.add(villeTemp);
+    }
+
+    //Création obj groupe
     Groupe groupeTemp = Groupe(
-        idGroupe: int.parse(item.id),
-        nomGroupe: data["NomGroupe"],
-        numeroRemplacementContact: data["NumeroRemplacementContact"],
-        ingeSon: data["IngeSon"],
-        possederSonorisation: data["PossederSonorisation"],
-        modeleSono: data["ModeleSono"],
-        descriptionSono: data["DescriptionSono"],
-        prixLocationSono: data["PrixLocaSono"],
-        ingePro: data["IngePro"],
-        prixInge: data["PrixInge"],
-        villeRepetition:
-            Ville(idVille: 1, nomVille: "Aubusson", codePostal: "23200"),
-        personneAContacter: Contact(
-          "",
-          "jean",
-          "bignon",
-          "jbignon@gmail.com",
-          Ville(idVille: 1, nomVille: "Aubusson", codePostal: "23200"),
-        ),
-        stylDuGroupe: [
-          Style(idStyle: 1, nomStyle: "Jazz"),
-          Style(idStyle: 2, nomStyle: "Rock")
-        ],
-        instrumentDuGroupe: [
-          Instrument(idInstrument: 1, nomInstrument: "guitare"),
-          Instrument(idInstrument: 2, nomInstrument: "batterie")
-        ]);
+      idGroupe: int.parse(item.id),
+      nomGroupe: data["NomGroupe"],
+      numeroRemplacementContact: data["NumeroRemplacementContact"],
+      ingeSon: data["IngeSon"],
+      possederSonorisation: data["PossederSonorisation"],
+      modeleSono: data["ModeleSono"],
+      descriptionSono: data["DescriptionSono"],
+      prixLocationSono: data["PrixLocaSono"],
+      ingePro: data["IngePro"],
+      prixInge: data["PrixInge"],
+      villeRepetition: villeRepetition,
+      personneAContacter: personneAContacter,
+      endroitsDejaJoues: endroitsJouesDuGroupe,
+      instrumentDuGroupe: instrumentsDuGroupe,
+      stylDuGroupe: stylesDuGroupe,
+    );
 
     //Ajout item i dans la boucle
     collectionGroupe.add(groupeTemp);
@@ -238,15 +276,81 @@ Future<bool> createStyle(Style styleCreate) async {
   return isSuccess;
 }
 
-Future<Contact> retrieveContact(String numeroTelephone) async {
-  Ville villeTemp = Ville(
-    codePostal: "",
-    idVille: -1,
-    nomVille: "",
-  );
-  Contact contactRetrieve = Contact(numeroTelephone, "", "", "", villeTemp);
+Future<bool> createInstrument(Instrument instrumentCreate) async {
+  bool isSuccess = true;
+  return isSuccess;
+}
 
-  return contactRetrieve;
+Future<Contact> retrieveContact(String numeroTelephone) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
+//On récupére le contact associer au numéro de téléphone
+
+  QuerySnapshot<Map<String, dynamic>> querySnapshot =
+      await db.collection("Contact").get();
+  Contact? contactRetrieve;
+  //pour chaque groupe dans la collection
+  for (var item in querySnapshot.docs) {
+    //Récupération des données
+    Map<String, dynamic>? data = item.data();
+    //NumeroTel egal donc bon numero
+    if (data["NumeroTelephone"] == numeroTelephone) {
+      Ville villeTemp;
+      villeTemp = await retrieveVille(int.parse(data["idVille"]));
+      contactRetrieve = Contact(numeroTelephone, data["Nom"], data["Prenom"],
+          data["Mail"], villeTemp);
+    }
+  }
+
+  return contactRetrieve!;
+}
+
+Future<Ville> retrieveVille(int idVille) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  //On récupère le contenu de la collection groupe
+  QuerySnapshot<Map<String, dynamic>> querySnapshot =
+      await db.collection("Villes").get();
+
+  Ville? villeHabiter;
+  //pour chaque groupe dans la collection
+  for (var item in querySnapshot.docs) {
+    //Récupération des données
+    Map<String, dynamic>? data = item.data();
+    //id égale donc bonne ville
+    if (item.id == idVille.toString()) {
+      villeHabiter = Ville(
+          idVille: int.parse(item.id),
+          codePostal: data["CodePostal"],
+          nomVille: data["NomVille"]);
+    }
+  }
+  return villeHabiter!;
+}
+
+Future<Personne> retrievePersonne(String email) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  //On récupère le contenu de la collection groupe
+  QuerySnapshot<Map<String, dynamic>> querySnapshot =
+      await db.collection("Utilisateurs").get();
+
+  Personne? personneRetrieve;
+  //pour chaque groupe dans la collection
+  for (var item in querySnapshot.docs) {
+    //Récupération des données
+    Map<String, dynamic>? data = item.data();
+    //Email egal donc on set l'utilisateur aux donées
+    if (data["Mail"] == email) {
+      Ville villeHabiter = await retrieveVille(data["idVille"]);
+      personneRetrieve = Personne(
+        data["NumeroTelephone"],
+        data["Nom"],
+        data["Prenom"],
+        data["Mail"],
+        villeHabiter,
+      );
+    }
+  }
+  return personneRetrieve!;
 }
 
 /* PARTIE POSTULAT */
@@ -254,8 +358,58 @@ Future<Contact> retrieveContact(String numeroTelephone) async {
 Paramètre : id du groupe postuler ; objet candidat pour le candidat concerner ; instrument du candidat => liste instrument ; style du candidat => liste de style
 
 */
-Future<bool> createPostulat(int idGroupe, Candidat candidat,
-    List<Style> styleCandidat, List<Instrument> instrumentCandidat) async {
-  bool isSuccess = false;
-  return isSuccess;
+Future<bool> createPostulat(int idGroupe, Personne candidat,
+    List<int> styleCandidat, List<int> instrumentCandidat) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
+  return false;
+}
+
+Future<List<Groupe>> findAllGroupeCompte(String email) async {
+  List<Groupe> groupeDuCompte = [];
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  //On récupère le contenu de la collection groupe
+  QuerySnapshot<Map<String, dynamic>> querySnapshot =
+      await db.collection("Groupes").get();
+
+  //pour chaque groupe dans la collection
+  for (var item in querySnapshot.docs) {
+    //Récupération des données
+    Map<String, dynamic>? data = item.data();
+
+    //item pour la boucle
+    Groupe groupeTemp = Groupe(
+        idGroupe: int.parse(item.id),
+        nomGroupe: data["NomGroupe"],
+        numeroRemplacementContact: data["NumeroRemplacementContact"],
+        ingeSon: data["IngeSon"],
+        possederSonorisation: data["PossederSonorisation"],
+        modeleSono: data["ModeleSono"],
+        descriptionSono: data["DescriptionSono"],
+        prixLocationSono: data["PrixLocaSono"],
+        ingePro: data["IngePro"],
+        prixInge: data["PrixInge"],
+        villeRepetition:
+            Ville(idVille: 1, nomVille: "Aubusson", codePostal: "23200"),
+        personneAContacter: Contact(
+          "",
+          "jean",
+          "bignon",
+          "jbignon@gmail.com",
+          Ville(idVille: 1, nomVille: "Aubusson", codePostal: "23200"),
+        ),
+        stylDuGroupe: [
+          Style(idStyle: 1, nomStyle: "Jazz"),
+          Style(idStyle: 2, nomStyle: "Rock")
+        ],
+        instrumentDuGroupe: [
+          Instrument(idInstrument: 1, nomInstrument: "guitare"),
+          Instrument(idInstrument: 2, nomInstrument: "batterie")
+        ]);
+
+    //Ajout item i dans la boucle
+    groupeDuCompte.add(groupeTemp);
+  }
+
+  return groupeDuCompte;
 }

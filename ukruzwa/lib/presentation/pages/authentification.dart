@@ -34,12 +34,14 @@ class _AuthentificationState extends State<Authentification> {
       builder: (BuildContext context, state) {
         // Rediriger vers la page d'accueil après une connexion réussie => uniquement si il s'agit d'une connexion
         if (state is AuthSuccess && state.isLoginMode) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const Home()),
-            );
-          });
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const Home()),
+              );
+            },
+          );
         }
 
         return Scaffold(
