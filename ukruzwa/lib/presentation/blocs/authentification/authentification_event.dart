@@ -11,6 +11,7 @@ class AuthConnect extends AuthentificationEvent {
 class AuthCreate extends AuthentificationEvent {
   final String emailAddress;
   final String password;
+  final String confirmPassword;
   final String nom;
   final String prenom;
   final String numeroTelephone;
@@ -19,15 +20,11 @@ class AuthCreate extends AuthentificationEvent {
   AuthCreate(
       {required this.emailAddress,
       required this.password,
+      required this.confirmPassword,
       required this.nom,
       required this.prenom,
       required this.numeroTelephone,
       required this.codePostal,
       required this.ville})
       : super();
-}
-
-class ToggleAuthMode extends AuthentificationEvent {
-  final bool isLoginMode;
-  ToggleAuthMode({required this.isLoginMode}) : super();
 }
