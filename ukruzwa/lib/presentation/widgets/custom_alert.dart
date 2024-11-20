@@ -15,7 +15,7 @@ class _CustomAlertState extends State<CustomAlert> {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       child: Container(
-        constraints: BoxConstraints(maxHeight: 350),
+        constraints: const BoxConstraints(maxHeight: 350),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
@@ -24,12 +24,14 @@ class _CustomAlertState extends State<CustomAlert> {
               RichText(
                 textAlign: TextAlign.justify,
                 text: TextSpan(
-                    text: widget.texte,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                        color: Colors.black,
-                        wordSpacing: 1)),
+                  text: widget.texte,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    color: Colors.black,
+                    wordSpacing: 1,
+                  ),
+                ),
               ),
             ],
           ),

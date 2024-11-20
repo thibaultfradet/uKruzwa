@@ -4,10 +4,10 @@ import 'package:ukruzwa/presentation/blocs/authentification/authentification_blo
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_event.dart';
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_state.dart';
 import 'package:ukruzwa/presentation/pages/registration.dart';
-import 'package:ukruzwa/presentation/widgets/BoutonCustom.dart';
-import 'package:ukruzwa/presentation/widgets/CustomAlert.dart';
-import 'package:ukruzwa/presentation/widgets/InputCustomPL.dart';
-import 'package:ukruzwa/presentation/widgets/VerticalMargin.dart';
+import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
+import 'package:ukruzwa/presentation/widgets/custom_alert.dart';
+import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
+import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 import 'package:ukruzwa/presentation/pages/home.dart';
 
 class Authentification extends StatefulWidget {
@@ -39,18 +39,19 @@ class _AuthentificationState extends State<Authentification> {
         }
 
         return Scaffold(
+          backgroundColor: Colors.white,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(),
           body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: Stack(
               children: [
-                //Intitulé
-                const Text("Je me connecte à mon compte"),
-                //Colonne du formulaire
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    //Intitulé
+                    const Text("Je me connecte à mon compte"),
+                    //Colonne du formulaire
                     InputCustomPL(
                       placeholder: "Adresse mail",
                       controllerPL: tecEmailAddress,
@@ -74,34 +75,33 @@ class _AuthentificationState extends State<Authentification> {
                         );
                       },
                       texteValeur: "Valider ma connexion",
-                    )
-                  ],
-                ),
-                // Bouton pour changer de mode (connexion/création)
-                BoutonCustom(
-                  onpressed: () {
-                    WidgetsBinding.instance.addPostFrameCallback(
-                      (_) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Registration(),
-                          ),
+                    ),
+                    // Bouton pour changer de mode (connexion/création)
+                    BoutonCustom(
+                      onpressed: () {
+                        WidgetsBinding.instance.addPostFrameCallback(
+                          (_) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Registration(),
+                              ),
+                            );
+                          },
                         );
                       },
-                    );
-                  },
-                  texteValeur: "Créer un compte",
+                      texteValeur: "Créer un compte",
+                    ),
+                    // Afficher les messages d'erreur si présents
+                    state is AuthFailure
+                        ? CustomAlert(
+                            onpressed: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                            },
+                            texte: "Informations saisies invalides.")
+                        : const SizedBox(),
+                  ],
                 ),
-
-                // Afficher les messages d'erreur si présents
-                state is AuthFailure
-                    ? CustomAlert(
-                        onpressed: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                        },
-                        texte: "Informations saisies invalides.")
-                    : const SizedBox(),
               ],
             ),
           ),

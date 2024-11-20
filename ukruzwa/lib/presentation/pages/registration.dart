@@ -4,10 +4,10 @@ import 'package:ukruzwa/presentation/blocs/authentification/authentification_blo
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_event.dart';
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_state.dart';
 import 'package:ukruzwa/presentation/pages/authentification.dart';
-import 'package:ukruzwa/presentation/widgets/BoutonCustom.dart';
-import 'package:ukruzwa/presentation/widgets/CustomAlert.dart';
-import 'package:ukruzwa/presentation/widgets/InputCustomPL.dart';
-import 'package:ukruzwa/presentation/widgets/VerticalMargin.dart';
+import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
+import 'package:ukruzwa/presentation/widgets/custom_alert.dart';
+import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
+import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 
 class Registration extends StatefulWidget {
   const Registration({super.key});
@@ -47,6 +47,7 @@ class _RegistrationState extends State<Registration> {
         }
 
         return Scaffold(
+          backgroundColor: Colors.white,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(),
           body: Center(

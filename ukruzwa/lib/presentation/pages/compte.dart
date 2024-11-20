@@ -4,9 +4,9 @@ import 'package:ukruzwa/presentation/blocs/compte/compte_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/compte/compte_event.dart';
 import 'package:ukruzwa/presentation/blocs/compte/compte_state.dart';
 import 'package:ukruzwa/presentation/pages/ajoutgroupe.dart';
-import 'package:ukruzwa/presentation/widgets/BoutonCustom.dart';
-import 'package:ukruzwa/presentation/widgets/GlobalPresentation.dart';
-import 'package:ukruzwa/presentation/widgets/VerticalMargin.dart';
+import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
+import 'package:ukruzwa/presentation/widgets/global_presentation_compte.dart';
+import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 
 class Compte extends StatefulWidget {
   const Compte({super.key});
@@ -31,6 +31,15 @@ class _CompteState extends State<Compte> {
               body: SingleChildScrollView(
                 child: Column(
                   children: [
+                    const SizedBox(
+                      child: Text(
+                        "GESTION DES ANNONCES",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.07,
                       width: MediaQuery.of(context).size.width,
@@ -57,8 +66,22 @@ class _CompteState extends State<Compte> {
                         itemBuilder: (context, index) {
                           return Column(
                             children: [
-                              Globalpresentation(
-                                  groupeConcerner: state.groupeDuCompte[index]),
+                              Globalpresentationcompte(
+                                groupeConcerner: state.groupeDuCompte[index],
+                                //On appel l'event pour supprimer le groupe
+                                onPressedDelete: () {
+                                  BlocProvider.of<CompteBloc>(context).add(
+                                    UserDeleteGroupe(
+                                      state.groupeDuCompte[index].idGroupe
+                                          .toString(),
+                                    ),
+                                  );
+                                },
+                                //Envoie de l'utilisateur vers la page de modification de groupe
+                                onPressedEdit: () {},
+                                //Envoie de l'utilisateur vers la page de modification de la sono du groupe concerner
+                                onPressedEditSono: () {},
+                              ),
                               const VerticalMargin(ratio: 0.03)
                             ],
                           );

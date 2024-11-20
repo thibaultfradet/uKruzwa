@@ -1,4 +1,4 @@
-import 'package:ukruzwa/domain/models/Groupe.dart';
+import 'package:ukruzwa/domain/models/groupe.dart';
 
 abstract class CompteState {
   const CompteState();

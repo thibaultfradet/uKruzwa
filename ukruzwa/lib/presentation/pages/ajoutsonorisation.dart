@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ukruzwa/domain/models/Groupe.dart';
+import 'package:ukruzwa/domain/models/groupe.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_event.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_state.dart';
-import 'package:ukruzwa/presentation/widgets/BoutonCustom.dart';
-import 'package:ukruzwa/presentation/widgets/InputCustomPL.dart';
+import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
+import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
 
 class Ajoutsonorisation extends StatefulWidget {
   final Groupe groupeConcerner;
@@ -36,7 +36,7 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
           body: Column(
             children: [
               //Description de la sono
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.1,
                 child: InputCustomPL(
                   placeholder: "Description de la sonorisation",
@@ -45,7 +45,7 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
                 ),
               ),
               // Ingénieur accompagne groupe => + info qui dépende si true
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.4,
                 child: Column(
                   children: [

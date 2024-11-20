@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ukruzwa/domain/models/Groupe.dart';
+import 'package:ukruzwa/domain/models/groupe.dart';
 import 'package:ukruzwa/presentation/pages/grdetail.dart';
-import 'package:ukruzwa/presentation/widgets/ItemValider.dart';
-import 'package:ukruzwa/presentation/widgets/VerticalMargin.dart';
+import 'package:ukruzwa/presentation/widgets/item_valider.dart';
+import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 
 class Globalpresentation extends StatefulWidget {
   final Groupe groupeConcerner;
@@ -47,7 +47,7 @@ class _GlobalpresentationState extends State<Globalpresentation> {
         child: Column(
           children: [
             //Ligne nom du groupe => container car 1 enfant
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.07,
               child: Text(
                 widget.groupeConcerner.nomGroupe,
@@ -58,13 +58,13 @@ class _GlobalpresentationState extends State<Globalpresentation> {
               ),
             ),
             //Ligne instrument et style décomposer en 2 colonnes => row car multi child mis dans container pour gerer taille
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.24,
               child: Row(
                 //La ligne est séparer en deux container ( 1 colonne chaqun pour mieux gerer la largeur => instrument et style)
                 children: [
                   //style du groupe
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.45,
                     child: Column(
                       children: [
@@ -74,7 +74,7 @@ class _GlobalpresentationState extends State<Globalpresentation> {
                         ),
 
                         //Liste view pour tous les styles
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width * 0.35,
                           child: ListView.builder(
                             shrinkWrap: true,
@@ -94,7 +94,7 @@ class _GlobalpresentationState extends State<Globalpresentation> {
                     ),
                   ),
                   //instrument du groupe
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.45,
                     child: Column(
                       children: [
@@ -104,7 +104,7 @@ class _GlobalpresentationState extends State<Globalpresentation> {
                         ),
 
                         //Liste view pour tous les instruments
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width * 0.35,
                           child: ListView.builder(
                             shrinkWrap: true,
@@ -129,12 +129,9 @@ class _GlobalpresentationState extends State<Globalpresentation> {
               ),
             ),
             //Ligne informations adresse
-            Container(
-              child: Text(
-                '${widget.groupeConcerner.villeRepetition.codePostal}, ${widget.groupeConcerner.villeRepetition.nomVille}',
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-              ),
+            Text(
+              '${widget.groupeConcerner.villeRepetition.codePostal}, ${widget.groupeConcerner.villeRepetition.nomVille}',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
             ),
           ],
         ),

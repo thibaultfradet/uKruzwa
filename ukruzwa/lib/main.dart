@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:ukruzwa/firebase_options.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_bloc.dart';
-import 'package:ukruzwa/presentation/blocs/postuler/postuler_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/grdetail/grdetail_bloc.dart';
 import 'package:ukruzwa/presentation/pages/authentification.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:ukruzwa/utils/constants/current_user.dart';
+import 'package:ukruzwa/utils/constants/media_query.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  CurrentUser.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -27,9 +29,9 @@ void main() async {
         BlocProvider<GrdetailBloc>(
           create: (_) => GrdetailBloc(),
         ),
-        BlocProvider<PostulerBloc>(
-          create: (_) => PostulerBloc(),
-        ),
+        // BlocProvider<PostulerBloc>(
+        //   create: (_) => PostulerBloc(),
+        // ),
         BlocProvider<AjoutgroupeBloc>(
           create: (_) => AjoutgroupeBloc(),
         ),
@@ -44,7 +46,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    MediaQ.init(context);
+    return const MaterialApp(
+      color: Colors.white,
+      debugShowCheckedModeBanner: false,
       title: 'ukruzwa',
       home: Authentification(),
     );

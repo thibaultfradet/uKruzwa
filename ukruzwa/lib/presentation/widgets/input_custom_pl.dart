@@ -19,7 +19,7 @@ class InputCustomPL extends StatefulWidget {
 class _InputCustomPLState extends State<InputCustomPL> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height * 0.06,
       child: TextFormField(
         enabled: widget.enable, // Active/desactiver en fonction du paramètre

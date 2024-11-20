@@ -1,9 +1,8 @@
-import 'package:ukruzwa/data/dataSource/remote/firebase.dart';
-import 'package:ukruzwa/domain/models/Groupe.dart';
-import 'package:ukruzwa/domain/models/Instrument.dart';
-import 'package:ukruzwa/domain/models/Personne.dart';
-import 'package:ukruzwa/domain/models/Style.dart';
-import 'package:ukruzwa/domain/models/Ville.dart';
+import 'package:ukruzwa/domain/models/groupe.dart';
+import 'package:ukruzwa/domain/models/instrument.dart';
+import 'package:ukruzwa/domain/models/personnne.dart';
+import 'package:ukruzwa/domain/models/style.dart';
+import 'package:ukruzwa/domain/models/ville.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_event.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,10 +17,11 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
         )) {
     //Etat initial
     on<AjoutgroupeEvent>((event, emit) async {
-      List<Ville> villeDisponible = await findAllVille();
-      List<Style> styleDisponible = await findAllStyle();
-      List<Instrument> instrumentDisponible = await findAllInstrument();
-      List<Contact> contactDisponible = await findAllContact();
+      List<Ville> villeDisponible = await Ville.empty().findAllVille();
+      List<Style> styleDisponible = await Style.empty().findAllStyle();
+      List<Instrument> instrumentDisponible =
+          await Instrument.empty().findAllInstrument();
+      List<Contact> contactDisponible = await Contact.empty().findAllContact();
       emit(AjoutgroupeStateInitial(
           villeDisponible: villeDisponible,
           styleDisponible: styleDisponible,
@@ -35,10 +35,11 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
 
       //Pour comparer avec des .where et recuperer les items
 
-      List<Ville> villeDisponible = await findAllVille();
-      List<Style> styleDisponible = await findAllStyle();
-      List<Instrument> instrumentDisponible = await findAllInstrument();
-      List<Contact> contactDisponible = await findAllContact();
+      List<Ville> villeDisponible = await Ville.empty().findAllVille();
+      List<Style> styleDisponible = await Style.empty().findAllStyle();
+      List<Instrument> instrumentDisponible =
+          await Instrument.empty().findAllInstrument();
+      // List<Contact> contactDisponible = await findAllContact();
 
       /* Récupération des id des objets connus => si pas connus alors on les créer en base et on récupère leurs ids */
       //Ville de repetition
@@ -48,12 +49,13 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
           .first;
       //Si ville à null alors l'objet n'existe pas donc on le créer en base
       if (villeRepetition == null) {
-        int maxIdVille = await getMaxIdVille();
+        int maxIdVille = await Ville.empty().getMaxIdVille();
         villeRepetition = Ville(
             idVille: maxIdVille + 1,
             codePostal: event.villeRepetitionDuGroupe,
             nomVille: event.villeRepetitionDuGroupe);
-        createVille(villeRepetition);
+        //On créer la ville en base
+        Ville.empty().createVille(villeRepetition);
       }
 
       //style
@@ -66,12 +68,13 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
             .first;
         //Si style à null alors l'objet n'existe pas on le créer en base
         if (styleDuGroupe == null) {
-          int maxIdStyle = await getMaxIdStyle();
+          int maxIdStyle = await Style.empty().getMaxIdStyle();
           styleDuGroupe = Style(
             idStyle: maxIdStyle + 1,
             nomStyle: event.stylesDuGroupe[i],
           );
-          createStyle(styleDuGroupe);
+          // On créer le style
+          Style.empty().createStyle(styleDuGroupe);
         }
         listeStyleDuGroupe.add(styleDuGroupe);
       }
@@ -87,17 +90,20 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
             .first;
         //Si instrument à null alors l'objet n'existe pas on le créer en base
         if (instrumentDuGroupe == null) {
-          int maxIdInstrument = await getMaxIdInstrument();
+          int maxIdInstrument = await Instrument.empty().getMaxIdInstrument();
           instrumentDuGroupe = Instrument(
               idInstrument: maxIdInstrument,
               nomInstrument: event.instrumentsDuGroupe[i]);
+
+          //On créer l'instrument en base
+          Instrument.empty().createInstrument(instrumentDuGroupe);
         }
         listeInstrumentDuGroupe.add(instrumentDuGroupe);
       }
 
       Contact? contactGroupe;
 
-      int maxId = await maxIdGroupe();
+      int maxId = await Groupe.empty().maxIdGroupe();
       // on n'utilise que les paramètre non nullable car rapport uniquement avec la page ajout groupe et pas sono
       groupeCreate = Groupe(
         idGroupe: maxId,
@@ -117,7 +123,7 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
         emit(AGLoading());
 
         //Appel de la méthode de création
-        createGroupe(groupeCreate);
+        Groupe.empty().createGroupe(groupeCreate);
         //Réussi => on emit le state success
         emit(AGSuccess());
       } catch (e) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ukruzwa/presentation/widgets/HorizontalMargin.dart';
+import 'package:ukruzwa/presentation/widgets/horizontal_margin.dart';
 
 class FloatingItem extends StatefulWidget {
   final String valeur;
@@ -21,11 +21,11 @@ class _FloatingItemState extends State<FloatingItem> {
       height: MediaQuery.of(context).size.height * 0.2,
       child: Row(
         children: [
-          Padding(padding: EdgeInsets.only(left: 10)),
+          const Padding(padding: EdgeInsets.only(left: 10)),
           //valeur
           Text(widget.valeur),
           const Horizontalmargin(ratio: 0.03),
-          Container(
+          SizedBox(
             width: 45,
             child: TextButton(
               style: ButtonStyle(

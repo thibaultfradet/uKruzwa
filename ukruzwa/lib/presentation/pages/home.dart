@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_state.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_event.dart';
-import 'package:ukruzwa/presentation/widgets/BoutonCustom.dart';
-import 'package:ukruzwa/presentation/widgets/GlobalPresentation.dart';
-import 'package:ukruzwa/presentation/widgets/InputCustomPL.dart';
-import 'package:ukruzwa/presentation/widgets/VerticalMargin.dart';
+import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
+import 'package:ukruzwa/presentation/widgets/global_presentation.dart';
+import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
+import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
         builder: (BuildContext context, state) {
           if (state is HomeStateLoading) {
             return Center(
-              child: Container(
+              child: SizedBox(
                 height: MediaQuery.of(context).size.width * 0.5,
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: const CircularProgressIndicator(),
@@ -88,13 +88,13 @@ class _HomeState extends State<Home> {
                 child: Column(
                   children: [
                     // Partie du haut avec recherche
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: MediaQuery.of(context).size.height * 0.22,
                       child: Column(
                         children: [
                           // Ligne avec entrée utilisateur et bouton valider
-                          Container(
+                          SizedBox(
                             height: MediaQuery.of(context).size.height * 0.07,
                             child: Row(
                               children: [
@@ -121,7 +121,7 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           // Affichage du filtre avec la valeur sélectionnée,
-                          Container(
+                          SizedBox(
                             height: MediaQuery.of(context).size.height * 0.11,
                             child: Column(
                               //Affichage filtre selectionner
@@ -195,7 +195,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     // Résultat aléatoire texte
-                    Container(
+                    SizedBox(
                       height: MediaQuery.of(context).size.height * 0.08,
                       child: const Text(
                         "Goupe apparant de manière aléatoire parmis les résultats de la recherche",
@@ -203,11 +203,11 @@ class _HomeState extends State<Home> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    Container(
+                    const SizedBox(
                       child: Text(""),
                     ),
                     //Liste view des résultats
-                    Container(
+                    SizedBox(
                       height: MediaQuery.of(context).size.height * 0.9,
                       child: ListView.builder(
                         shrinkWrap: true,

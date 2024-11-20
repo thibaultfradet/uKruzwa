@@ -3,8 +3,9 @@ import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_event.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ukruzwa/presentation/widgets/BoutonCustom.dart';
-import 'package:ukruzwa/presentation/widgets/InputCustomPL.dart';
+import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
+import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
+import 'package:ukruzwa/utils/constants/media_query.dart';
 
 class Ajoutgroupe extends StatefulWidget {
   const Ajoutgroupe({super.key});
@@ -46,8 +47,8 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                 ? Column(
                     children: [
                       //nom du groupe
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.2,
+                      SizedBox(
+                        height: MediaQ.height * 0.2,
                         child: InputCustomPL(
                             placeholder: "Nom du groupe",
                             controllerPL: tecNomDuGroupe,
@@ -188,7 +189,7 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                         },
                       ),
                       //Nombre chanteurs => calcul instruments + nb chanteurs
-                      Container(
+                      SizedBox(
                         height: MediaQuery.of(context).size.height * 0.1,
                         child: InputCustomPL(
                             placeholder: "Nombre de chanteurs",
@@ -233,7 +234,7 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                         },
                       ),
                       //Posseder une sonorisation
-                      Container(
+                      SizedBox(
                         height: MediaQuery.of(context).size.height * 0.2,
                         child: Column(
                           children: [

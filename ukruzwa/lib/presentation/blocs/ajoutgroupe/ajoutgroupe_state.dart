@@ -1,7 +1,7 @@
-import 'package:ukruzwa/domain/models/Instrument.dart';
-import 'package:ukruzwa/domain/models/Personne.dart';
-import 'package:ukruzwa/domain/models/Style.dart';
-import 'package:ukruzwa/domain/models/Ville.dart';
+import 'package:ukruzwa/domain/models/instrument.dart';
+import 'package:ukruzwa/domain/models/personnne.dart';
+import 'package:ukruzwa/domain/models/style.dart';
+import 'package:ukruzwa/domain/models/ville.dart';
 
 abstract class AjoutgroupeState {
   AjoutgroupeState();

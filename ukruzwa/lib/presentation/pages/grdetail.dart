@@ -3,12 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/grdetail/grdetail_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/grdetail/grdetail_event.dart';
 import 'package:ukruzwa/presentation/blocs/grdetail/grdetail_state.dart';
-import 'package:ukruzwa/domain/models/Groupe.dart';
-import 'package:ukruzwa/presentation/pages/postuler.dart';
-import 'package:ukruzwa/presentation/widgets/BoutonCustom.dart';
-import 'package:ukruzwa/presentation/widgets/HorizontalMargin.dart';
-import 'package:ukruzwa/presentation/widgets/ItemValider.dart';
-import 'package:ukruzwa/presentation/widgets/VerticalMargin.dart';
+import 'package:ukruzwa/domain/models/groupe.dart';
+import 'package:ukruzwa/presentation/widgets/horizontal_margin.dart';
+import 'package:ukruzwa/presentation/widgets/item_valider.dart';
+import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 
 class Grdetail extends StatefulWidget {
   final Groupe groupeConcerner;
@@ -36,7 +34,7 @@ class _GrdetailState extends State<Grdetail> {
                 backgroundColor: Colors.white,
                 title: Text(
                   "Fiche du groupe " + widget.groupeConcerner.nomGroupe,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
               ),
               backgroundColor: Colors.white,
@@ -56,22 +54,23 @@ class _GrdetailState extends State<Grdetail> {
                         ),
                       ),
                       height: MediaQuery.of(context).size.height * 0.06,
-                      child: BoutonCustom(
-                        onpressed: () {
-                          WidgetsBinding.instance.addPostFrameCallback(
-                            (_) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Postuler(
-                                      groupeConcerner: widget.groupeConcerner),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        texteValeur: "POSTULER",
-                      ),
+                      // Ancien bouton postuler
+                      // child: BoutonCustom(
+                      //   onpressed: () {
+                      //     WidgetsBinding.instance.addPostFrameCallback(
+                      //       (_) {
+                      //         Navigator.push(
+                      //           context,
+                      //           MaterialPageRoute(
+                      //             builder: (context) => Postuler(
+                      //                 groupeConcerner: widget.groupeConcerner),
+                      //           ),
+                      //         );
+                      //       },
+                      //     );
+                      //   },
+                      //   texteValeur: "POSTULER",
+                      // ),
                     ),
                     //Colonne de toutes les informations
                     Column(
@@ -88,12 +87,12 @@ class _GrdetailState extends State<Grdetail> {
 
                         const VerticalMargin(ratio: 0.02),
                         //Style du groupe
-                        Container(
+                        SizedBox(
                           height: MediaQuery.of(context).size.height * 0.1,
                           child: Column(
                             children: [
                               const Text("Styles du groupe"),
-                              Container(
+                              SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.05,
                                 child: ListView.builder(
@@ -102,17 +101,13 @@ class _GrdetailState extends State<Grdetail> {
                                   itemCount: widget
                                       .groupeConcerner.stylDuGroupe!.length,
                                   itemBuilder: (context, index) {
-                                    return Container(
-                                      child: Row(
-                                        children: [
-                                          const Horizontalmargin(ratio: 0.02),
-                                          ItemValider(
-                                              valeur: widget
-                                                  .groupeConcerner
-                                                  .stylDuGroupe![index]
-                                                  .nomStyle),
-                                        ],
-                                      ),
+                                    return Row(
+                                      children: [
+                                        const Horizontalmargin(ratio: 0.02),
+                                        ItemValider(
+                                            valeur: widget.groupeConcerner
+                                                .stylDuGroupe![index].nomStyle),
+                                      ],
                                     );
                                   },
                                 ),
@@ -121,12 +116,12 @@ class _GrdetailState extends State<Grdetail> {
                           ),
                         ),
                         //Instrument du groupe
-                        Container(
+                        SizedBox(
                           height: MediaQuery.of(context).size.height * 0.1,
                           child: Column(
                             children: [
                               const Text("Instruments du groupe"),
-                              Container(
+                              SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.05,
                                 child: ListView.builder(
@@ -135,17 +130,15 @@ class _GrdetailState extends State<Grdetail> {
                                   itemCount: widget.groupeConcerner
                                       .instrumentDuGroupe!.length,
                                   itemBuilder: (context, index) {
-                                    return Container(
-                                      child: Row(
-                                        children: [
-                                          const Horizontalmargin(ratio: 0.02),
-                                          ItemValider(
-                                              valeur: widget
-                                                  .groupeConcerner
-                                                  .instrumentDuGroupe![index]
-                                                  .nomInstrument),
-                                        ],
-                                      ),
+                                    return Row(
+                                      children: [
+                                        const Horizontalmargin(ratio: 0.02),
+                                        ItemValider(
+                                            valeur: widget
+                                                .groupeConcerner
+                                                .instrumentDuGroupe![index]
+                                                .nomInstrument),
+                                      ],
                                     );
                                   },
                                 ),
@@ -155,10 +148,10 @@ class _GrdetailState extends State<Grdetail> {
                         ),
                         //Si le groupe n'a pas d'endroits deja joués alors on affiche sinon on met rien
                         widget.groupeConcerner.endroitsDejaJoues == null
-                            ? SizedBox()
+                            ? const SizedBox()
                             :
                             //Exemple endroits joués
-                            Container(
+                            SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.4,
                                 child: Column(
@@ -176,7 +169,7 @@ class _GrdetailState extends State<Grdetail> {
                                           width: 2.0,
                                         ),
                                       ),
-                                      child: Container(
+                                      child: SizedBox(
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 0.3,
@@ -351,7 +344,7 @@ class _GrdetailState extends State<Grdetail> {
                               ),
 
                               //mail de contact
-                              Container(
+                              SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.1,
                                 child: Column(
@@ -366,7 +359,7 @@ class _GrdetailState extends State<Grdetail> {
                               ),
 
                               //Numéro téléphone contact
-                              Container(
+                              SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.1,
                                 child: Column(
@@ -382,7 +375,7 @@ class _GrdetailState extends State<Grdetail> {
                               ),
 
                               //Numéro remplacement du contact
-                              Container(
+                              SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.1,
                                 child: Column(

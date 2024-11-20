@@ -1,3 +1,4 @@
+import 'package:ukruzwa/domain/models/personnne.dart';
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_state.dart';
@@ -24,10 +25,10 @@ class AuthentificationBloc
         if (success) {
           emit(const AuthSuccess(isLoginMode: true));
         } else {
-          emit(AuthFailure("Invalid email or password"));
+          emit(AuthFailure("Adresse mail ou mot de passe invalide."));
         }
       } catch (e) {
-        emit(AuthFailure("Erreur catch"));
+        emit(AuthFailure("Une erreur est survenue"));
       }
     });
 
@@ -49,25 +50,26 @@ class AuthentificationBloc
           event.prenom.trim().isEmpty ||
           event.numeroTelephone.trim().isEmpty ||
           event.ville.trim().isEmpty) {
-        emit(AuthFailure("Informations vides"));
+        emit(AuthFailure("Informations vides."));
         return; // Sortie immédiate du bloc
       }
 
       // password et confirmPassword non identiques
       if (event.password != event.confirmPassword) {
-        emit(AuthFailure("Mot de passes non identiques"));
+        emit(AuthFailure("Mot de passes non identiques."));
         return; // Sortie immédiate du bloc
       }
 
       // Regex : adresse mail
       if (!emailRegex.hasMatch(event.emailAddress)) {
-        emit(AuthFailure("Regex mail invalide"));
+        emit(AuthFailure("Mail saisie invalide."));
         return; // Sortie immédiate du bloc
       }
 
       // Regex : mot de passe
       if (!passwordRegex.hasMatch(event.password)) {
-        emit(AuthFailure("Regex pass invalide"));
+        emit(AuthFailure(
+            "Mot de passe saisie invalide.\r\n • Au moins 8 caractères \r\n • Au moins 1 majuscule/minuscule \r\n • Au moins 1 chiffre \r\n • Au moins 1 caractère spécial"));
         return; // Sortie immédiate du bloc
       }
 
@@ -76,16 +78,21 @@ class AuthentificationBloc
         bool success = await createUser(event.emailAddress, event.password);
 
         // On ajoute dans Firestore
-        success = await createUserInFirestore(event.emailAddress, event.nom,
-            event.prenom, event.numeroTelephone, event.codePostal, event.ville);
+        success = await Personne.empty().createUserInFirestore(
+            event.emailAddress,
+            event.nom,
+            event.prenom,
+            event.numeroTelephone,
+            event.codePostal,
+            event.ville);
 
         if (success) {
           emit(const AuthSuccess(isLoginMode: false));
         } else {
-          emit(AuthFailure("Failed to create account"));
+          emit(AuthFailure("Création du compte non réussi"));
         }
       } catch (e) {
-        emit(AuthFailure("Erreur catch"));
+        emit(AuthFailure("Une erreur est survenue."));
       }
     });
   }
