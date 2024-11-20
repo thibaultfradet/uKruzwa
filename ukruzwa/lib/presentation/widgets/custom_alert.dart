@@ -1,42 +1,20 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class CustomAlert extends StatefulWidget {
-  final VoidCallback onpressed;
+class CustomAlert extends StatelessWidget {
+  final VoidCallback onPressed;
   final String texte;
-  const CustomAlert({super.key, required this.onpressed, required this.texte});
+  const CustomAlert({super.key, required this.onPressed, required this.texte});
 
-  @override
-  State<CustomAlert> createState() => _CustomAlertState();
-}
-
-class _CustomAlertState extends State<CustomAlert> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      child: Container(
-        constraints: const BoxConstraints(maxHeight: 350),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              RichText(
-                textAlign: TextAlign.justify,
-                text: TextSpan(
-                  text: widget.texte,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                    color: Colors.black,
-                    wordSpacing: 1,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
       ),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: Container(),
     );
   }
 }

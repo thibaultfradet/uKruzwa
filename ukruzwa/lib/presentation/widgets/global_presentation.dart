@@ -79,12 +79,12 @@ class _GlobalpresentationState extends State<Globalpresentation> {
                           child: ListView.builder(
                             shrinkWrap: true,
                             itemCount:
-                                widget.groupeConcerner.stylDuGroupe!.length,
+                                widget.groupeConcerner.stylesDuGroupe!.length,
                             itemBuilder: (context, index) {
                               return Column(children: [
                                 ItemValider(
                                     valeur: widget.groupeConcerner
-                                        .stylDuGroupe![index].nomStyle),
+                                        .stylesDuGroupe![index].nomStyle),
                                 const VerticalMargin(ratio: 0.01),
                               ]);
                             },
@@ -109,13 +109,13 @@ class _GlobalpresentationState extends State<Globalpresentation> {
                           child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: widget
-                                .groupeConcerner.instrumentDuGroupe!.length,
+                                .groupeConcerner.instrumentsDuGroupe!.length,
                             itemBuilder: (context, index) {
                               return Column(children: [
                                 ItemValider(
                                     valeur: widget
                                         .groupeConcerner
-                                        .instrumentDuGroupe![index]
+                                        .instrumentsDuGroupe![index]
                                         .nomInstrument),
                                 const VerticalMargin(ratio: 0.01),
                               ]);

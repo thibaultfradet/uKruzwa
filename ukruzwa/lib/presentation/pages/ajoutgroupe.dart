@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ukruzwa/domain/models/groupe.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_event.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_state.dart';
@@ -8,7 +9,8 @@ import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
 import 'package:ukruzwa/utils/constants/media_query.dart';
 
 class Ajoutgroupe extends StatefulWidget {
-  const Ajoutgroupe({super.key});
+  final Groupe? groupeAModifier; // => cas de modification d'un groupe
+  const Ajoutgroupe({super.key, this.groupeAModifier});
 
   @override
   State<Ajoutgroupe> createState() => _AjoutgroupeState();
@@ -46,14 +48,15 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
             body: state is AjoutgroupeStateInitial
                 ? Column(
                     children: [
-                      //nom du groupe
-                      SizedBox(
-                        height: MediaQ.height * 0.2,
-                        child: InputCustomPL(
-                            placeholder: "Nom du groupe",
-                            controllerPL: tecNomDuGroupe,
-                            isObscure: false),
-                      ),
+                      if (state is AjoutgroupeStateInitial)
+                        //nom du groupe
+                        SizedBox(
+                          height: MediaQ.height * 0.2,
+                          child: InputCustomPL(
+                              placeholder: "Nom du groupe",
+                              controllerPL: tecNomDuGroupe,
+                              isObscure: false),
+                        ),
                       //style du groupe => autoComplete
                       Autocomplete<String>(
                         optionsBuilder: (TextEditingValue textEditingValue) {
@@ -271,9 +274,13 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                             );
                           },
                           texteValeur: "Valider"),
+                      if (state is AGLoading)
+                        const Center(
+                          child: CircularProgressIndicator(),
+                        )
                     ],
                   )
-                : const SizedBox(),
+                : const Text("Temp"),
           );
         },
       ),

@@ -5,7 +5,7 @@ import 'package:ukruzwa/presentation/blocs/authentification/authentification_eve
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_state.dart';
 import 'package:ukruzwa/presentation/pages/authentification.dart';
 import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
-import 'package:ukruzwa/presentation/widgets/custom_alert.dart';
+
 import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
 import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 
@@ -49,7 +49,9 @@ class _RegistrationState extends State<Registration> {
         return Scaffold(
           backgroundColor: Colors.white,
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(),
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+          ),
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -77,7 +79,7 @@ class _RegistrationState extends State<Registration> {
                     InputCustomPL(
                       placeholder: "Confirmation du mot de passe",
                       controllerPL: tecConfirmPassword,
-                      isObscure: false,
+                      isObscure: true,
                     ),
 
                     Column(
@@ -152,13 +154,8 @@ class _RegistrationState extends State<Registration> {
                   texteValeur: "Connexion à mon compte",
                 ),
                 // Afficher les messages d'erreur si présents
-                state is AuthFailure
-                    ? CustomAlert(
-                        onpressed: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                        },
-                        texte: "Informations saisies invalides.")
-                    : const SizedBox(),
+
+                state is AuthFailure ? Text(state.error) : const SizedBox()
               ],
             ),
           ),

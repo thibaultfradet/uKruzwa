@@ -1,3 +1,4 @@
+import 'package:ukruzwa/data/dataSource/remote/groupe_firebase.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_state.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,15 +12,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeStateLoading());
 
       // Instanciation d'une liste de groupes + appel de méthode dans BDD Firebase
-      List<Groupe> collectionGroupe = await Groupe.empty().findAllGroupe();
+      List<Groupe> collectionGroupe = await findAllGroupe();
       collectionGroupe.shuffle();
       emit(HomeStateInitial(collectionGroupe));
     });
 
     on<HomeEventUtilisateurRecherche>((event, emit) async {
       // On rappelle le HomeStateInitial mais avec une nouvelle liste en rapport avec la demande de l'utilisateur
-      List<Groupe> collectionGroupe = await Groupe.empty()
-          .findAllGroupeRecherche(event.libelle, event.option);
+      List<Groupe> collectionGroupe =
+          await findAllGroupeRecherche(event.libelle, event.option);
       //On randomise les résultats
       collectionGroupe.shuffle();
       emit(HomeStateInitial(collectionGroupe));

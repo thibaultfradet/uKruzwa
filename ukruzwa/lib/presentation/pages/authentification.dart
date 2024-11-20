@@ -26,6 +26,9 @@ class _AuthentificationState extends State<Authentification> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthentificationBloc, AuthentificationState>(
       builder: (BuildContext context, state) {
+        if (state is AuthFailure) {
+          customdialog(context, state.error);
+        }
         // Rediriger vers la page d'accueil après une connexion réussie => uniquement si il s'agit d'une connexion
         if (state is AuthSuccess && state.isLoginMode) {
           WidgetsBinding.instance.addPostFrameCallback(
@@ -41,7 +44,7 @@ class _AuthentificationState extends State<Authentification> {
         return Scaffold(
           backgroundColor: Colors.white,
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(),
+          appBar: AppBar(backgroundColor: Colors.white),
           body: Center(
             child: Stack(
               children: [
@@ -92,14 +95,8 @@ class _AuthentificationState extends State<Authentification> {
                       },
                       texteValeur: "Créer un compte",
                     ),
+
                     // Afficher les messages d'erreur si présents
-                    state is AuthFailure
-                        ? CustomAlert(
-                            onpressed: () {
-                              Navigator.of(context, rootNavigator: true).pop();
-                            },
-                            texte: "Informations saisies invalides.")
-                        : const SizedBox(),
                   ],
                 ),
               ],
@@ -109,4 +106,18 @@ class _AuthentificationState extends State<Authentification> {
       },
     );
   }
+}
+
+customdialog(BuildContext context, String error) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return CustomAlert(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        texte: error,
+      );
+    },
+  );
 }

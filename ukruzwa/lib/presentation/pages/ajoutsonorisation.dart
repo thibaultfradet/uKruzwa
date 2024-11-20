@@ -8,7 +8,8 @@ import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
 import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
 
 class Ajoutsonorisation extends StatefulWidget {
-  final Groupe groupeConcerner;
+  final Groupe
+      groupeConcerner; // => dans touts les cas MAIS AUSSI pour la modification d'une sono
   const Ajoutsonorisation({super.key, required this.groupeConcerner});
 
   @override
