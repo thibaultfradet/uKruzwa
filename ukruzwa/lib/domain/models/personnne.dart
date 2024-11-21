@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ukruzwa/data/dataSource/remote/ville_firebase.dart';
 import 'package:ukruzwa/domain/models/ville.dart';
 
@@ -37,7 +36,7 @@ class Personne {
     };
   }
 
-  Future<Personne> PersonnefromJSON(Map<String, dynamic> json) async {
+  Future<Personne> personnefromJSON(Map<String, dynamic> json) async {
     return Personne(
       mail: json['Mail'],
       nom: json['Nom'],
@@ -74,6 +73,16 @@ class Contact extends Personne {
           mail: mail,
           villeHabiter: villeHabiter,
         );
+
+  /* FONCTION DE CONVERSION */
+  Future<Contact> contactFromJSON(Map<String, dynamic> json) async {
+    return Contact(
+        mail: json["Mail"],
+        nom: json["Nom"],
+        prenom: json["Prenom"],
+        numeroTelephone: json["NumeroTelephone"],
+        villeHabiter: await retrieveVille(json["idVille"]));
+  }
 }
 
 // Héritage de personne => candidat

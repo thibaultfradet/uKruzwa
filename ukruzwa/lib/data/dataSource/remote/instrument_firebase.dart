@@ -32,6 +32,11 @@ Future<List<Instrument>> findAllInstrument() async {
 
 /* Fonction retrieveInstrument qui prend en paramètre un id d'instrument et retourne l'objet instrument affilier dans la base de données */
 Future<Instrument> retrieveInstrument(String idInstrument) async {
-  Instrument instrumentTemp = Instrument.empty();
-  return instrumentTemp;
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  final docInstrument = db.collection("Instruments").doc(idInstrument);
+
+  var getDataInstrument = await docInstrument.get();
+  Map<String, dynamic>? dataInstrument = getDataInstrument.data();
+
+  return Instrument.fromJSON(dataInstrument!);
 }

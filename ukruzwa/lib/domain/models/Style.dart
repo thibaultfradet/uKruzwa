@@ -1,10 +1,10 @@
 class Style {
-  final int? idStyle;
+  final String? idStyle;
   final String nomStyle;
 
   /* Constructeur vide */
   Style.empty()
-      : idStyle = 0,
+      : idStyle = "",
         nomStyle = '';
   /* Constructeur surcharger */
   Style({this.idStyle, required this.nomStyle});
@@ -18,6 +18,7 @@ class Style {
 
   factory Style.fromJSON(Map<String, dynamic> json) {
     return Style(
+      idStyle: json["idStyle"],
       nomStyle: json["NomStyle"],
     );
   }

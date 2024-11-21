@@ -1,11 +1,11 @@
 class Ville {
-  final int? idVille;
+  final String? idVille;
   final String nomVille;
   final String codePostal;
 
   /* Constructeur vide */
   Ville.empty()
-      : idVille = 0,
+      : idVille = "",
         nomVille = '',
         codePostal = '';
   /* Constructeur surcharger */
@@ -25,6 +25,7 @@ class Ville {
 
   factory Ville.fromJSON(Map<String, dynamic> json) {
     return Ville(
+      idVille: json["idVille"],
       codePostal: json["CodePostal"],
       nomVille: json["NomVille"],
     );

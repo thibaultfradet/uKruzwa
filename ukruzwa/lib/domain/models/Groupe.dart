@@ -91,7 +91,7 @@ class Groupe {
   }
 
   /* Fonction from json qui prend en paramètre un json et renvoie l'objet groupe en récupérant les différents objets externe en + */
-  Future<Groupe> GroupeFromJSON(Map<String, dynamic> json) async {
+  Future<Groupe> groupeFromJSON(Map<String, dynamic> json) async {
     // objet liste externe
     List<Style> styles = await Future.wait((json['idStyles'] as List)
         .map((styleId) async => await retrieveStyle(styleId))

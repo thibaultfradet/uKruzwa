@@ -12,27 +12,15 @@ Future<bool> createVille(Ville villeCreate) async {
 /* retrieveVille qui prend en paramètre un idVile et retourne un objet ville lier dans la base de données */
 Future<Ville> retrieveVille(String idVille) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
-  //On récupère le contenu de la collection groupe
-  QuerySnapshot<Map<String, dynamic>> querySnapshot =
-      await db.collection("Villes").where("idVille", isEqualTo: idVille).get();
+  final docVille = db.collection("Villes").doc(idVille);
 
-  Ville? villeHabiter;
-  //pour chaque groupe dans la collection
-  for (var item in querySnapshot.docs) {
-    //Récupération des données
-    Map<String, dynamic>? data = item.data();
-    //id égale donc bonne ville
-    if (item.id == idVille.toString()) {
-      villeHabiter = Ville(
-        idVille: int.parse(item.id),
-        codePostal: data["CodePostal"],
-        nomVille: data["NomVille"],
-      );
-    }
-  }
-  return villeHabiter!;
+  var getDataVille = await docVille.get();
+  Map<String, dynamic>? dataVille = getDataVille.data();
+
+  return Ville.fromJSON(dataVille!);
 }
 
+/* Fonction findAllVille qui retourne la liste des ville de la base de données */
 Future<List<Ville>> findAllVille() async {
   List<Ville> listeVille = [];
 
@@ -45,10 +33,7 @@ Future<List<Ville>> findAllVille() async {
   for (var item in querySnapshot.docs) {
     //Récupération des données
     Map<String, dynamic>? data = item.data();
-    Ville villeTemp = Ville(
-        idVille: int.parse(item.id),
-        codePostal: data["CodePostal"],
-        nomVille: data["NomVille"]);
+    Ville villeTemp = Ville.fromJSON(data);
     listeVille.add(villeTemp);
   }
   return listeVille;

@@ -22,8 +22,7 @@ Future<List<Style>> findAllStyle() async {
   for (var item in querySnapshot.docs) {
     //Récupération des données
     Map<String, dynamic>? data = item.data();
-    Style styleTemp =
-        Style(idStyle: int.parse(item.id), nomStyle: data["NomStyle"]);
+    Style styleTemp = Style.fromJSON(data);
     listeStyle.add(styleTemp);
   }
   return listeStyle;
@@ -31,7 +30,11 @@ Future<List<Style>> findAllStyle() async {
 
 /* fonction retrieveStyle qui prende un paramètre un id du style et retourne l'objet style associer dans la base de données */
 Future<Style> retrieveStyle(String idStyle) async {
-  Style styleTemp = Style.empty();
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  final docStyle = db.collection("Styles").doc(idStyle);
 
-  return styleTemp;
+  var getDataStyle = await docStyle.get();
+  Map<String, dynamic>? dataStyle = getDataStyle.data();
+
+  return Style.fromJSON(dataStyle!);
 }

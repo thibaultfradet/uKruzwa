@@ -1,14 +1,8 @@
 /* createGroupe qui prend en paramètre un objet groupe qui essaye de créer le groupe dans firebase et retourne le statut du résultat */
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ukruzwa/data/dataSource/remote/instrument_firebase.dart';
 import 'package:ukruzwa/data/dataSource/remote/personne_firebase.dart';
-import 'package:ukruzwa/data/dataSource/remote/style_firebase.dart';
-import 'package:ukruzwa/data/dataSource/remote/ville_firebase.dart';
 import 'package:ukruzwa/domain/models/groupe.dart';
-import 'package:ukruzwa/domain/models/instrument.dart';
 import 'package:ukruzwa/domain/models/personnne.dart';
-import 'package:ukruzwa/domain/models/style.dart';
-import 'package:ukruzwa/domain/models/ville.dart';
 
 Future<bool> createGroupe(Groupe groupeCreate) async {
   bool isSuccess = false;
@@ -35,7 +29,7 @@ Future<List<Groupe>> findAllGroupeCompte(String email) async {
     //Récupération des données
     Map<String, dynamic>? data = item.data();
 
-    Groupe groupeTemp = await Groupe.empty().GroupeFromJSON(data);
+    Groupe groupeTemp = await Groupe.empty().groupeFromJSON(data);
 
     //Ajout item i dans la boucle
     collectionGroupe.add(groupeTemp);
@@ -68,7 +62,7 @@ Future<List<Groupe>> findAllGroupe() async {
     //Récupération des données
     Map<String, dynamic>? data = item.data();
 
-    Groupe groupeTemp = await Groupe.empty().GroupeFromJSON(data);
+    Groupe groupeTemp = await Groupe.empty().groupeFromJSON(data);
     //Ajout item i dans la boucle
     collectionGroupe.add(groupeTemp);
   }

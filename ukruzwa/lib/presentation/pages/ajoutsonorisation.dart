@@ -114,7 +114,7 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
                       prixLocationSono: int.parse(tecPrixLocationSono.text),
                       puissanceSono: int.parse(tecPuissanceSono.text),
                       //valeur nullable
-                      ingeEstPro: ingeEstPro != null ? ingeEstPro : null,
+                      ingeEstPro: ingeEstPro,
                       prixServiceInge: int.parse(tecPrixServiceInge.text) != ""
                           ? int.parse(tecPrixServiceInge.text)
                           : null,

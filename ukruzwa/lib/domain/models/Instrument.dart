@@ -20,6 +20,7 @@ class Instrument {
   factory Instrument.fromJSON(Map<String, dynamic> json) {
     return Instrument(
       nomInstrument: json["NomInstrument"],
+      idInstrument: json["idInstrument"],
     );
   }
 }

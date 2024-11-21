@@ -89,31 +89,12 @@ Future<Personne> retrievePersonne(String email) async {
 /* retrieveContact qui prend en paramètre un numéro de téléphone et retourne un objet contact */
 Future<Contact> retrieveContact(String numeroTelephone) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
+  final docContact = db.collection("Contacts").doc(numeroTelephone);
 
-  // On récupère le contact associé au numéro de téléphone
-  QuerySnapshot<Map<String, dynamic>> querySnapshot = await db
-      .collection("Contact")
-      .where("NumeroTelephone", isEqualTo: numeroTelephone)
-      .get();
-  Contact? contactRetrieve;
-  // Pour chaque groupe dans la collection
-  for (var item in querySnapshot.docs) {
-    // Récupération des données
-    Map<String, dynamic>? data = item.data();
-    // NuméroTel égal donc bon numéro
-    if (data["NumeroTelephone"] == numeroTelephone) {
-      Ville villeTemp;
-      villeTemp = await retrieveVille(data["idVille"]);
-      contactRetrieve = Contact(
-          numeroTelephone: numeroTelephone,
-          nom: data["Nom"],
-          prenom: data["Prenom"],
-          mail: data["Mail"],
-          villeHabiter: villeTemp);
-    }
-  }
+  var getDataContact = await docContact.get();
+  Map<String, dynamic>? dataContact = getDataContact.data();
 
-  return contactRetrieve!;
+  return Contact.empty().contactFromJSON(dataContact!);
 }
 
 /* FindAllContact qui retourne une liste d'objet contact */
