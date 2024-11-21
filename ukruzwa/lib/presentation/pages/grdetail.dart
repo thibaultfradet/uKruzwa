@@ -33,7 +33,7 @@ class _GrdetailState extends State<Grdetail> {
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 title: Text(
-                  "Fiche du groupe " + widget.groupeConcerner.nomGroupe,
+                  "Fiche du groupe ${widget.groupeConcerner.nomGroupe}",
                   style: const TextStyle(fontSize: 20),
                 ),
               ),
@@ -181,16 +181,9 @@ class _GrdetailState extends State<Grdetail> {
                                               .endroitsDejaJoues!.length,
                                           itemBuilder: (context, index) {
                                             return ItemValider(
-                                              valeur: widget
-                                                      .groupeConcerner
-                                                      .endroitsDejaJoues![index]
-                                                      .nomVille +
-                                                  " ; " +
-                                                  widget
-                                                      .groupeConcerner
-                                                      .endroitsDejaJoues![index]
-                                                      .codePostal,
-                                              largeur: 0.8,
+                                              valeur:
+                                                  "${widget.groupeConcerner.endroitsDejaJoues![index].nomVille} ; ${widget.groupeConcerner.endroitsDejaJoues![index].codePostal}",
+                                              largeur: 0.7,
                                             );
                                           },
                                         ),
@@ -382,7 +375,8 @@ class _GrdetailState extends State<Grdetail> {
                                     MediaQuery.of(context).size.height * 0.1,
                                 child: Column(
                                   children: [
-                                    const Text("Adresse mail du contact"),
+                                    const Text(
+                                        "Numéro de remplacement du contact"),
                                     ItemValider(
                                         valeur: widget.groupeConcerner
                                             .numeroRemplacementContact,

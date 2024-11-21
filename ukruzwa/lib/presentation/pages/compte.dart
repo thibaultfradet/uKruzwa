@@ -23,9 +23,10 @@ class _CompteState extends State<Compte> {
       child: BlocBuilder<CompteBloc, CompteState>(
         builder: (BuildContext context, state) {
           //Page de base => touts les groupes du compte concerner
-
           return Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
+              backgroundColor: Colors.white,
               title: const Text("Information sur votre compte"),
             ),
             body: Stack(
@@ -36,6 +37,7 @@ class _CompteState extends State<Compte> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
+                          const VerticalMargin(ratio: 0.02),
                           const SizedBox(
                             child: Text(
                               "GESTION DES ANNONCES",
@@ -45,6 +47,7 @@ class _CompteState extends State<Compte> {
                               ),
                             ),
                           ),
+                          const VerticalMargin(ratio: 0.02),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.07,
                             width: MediaQuery.of(context).size.width,
@@ -64,6 +67,7 @@ class _CompteState extends State<Compte> {
                                 },
                                 texteValeur: "Ajouter un groupe"),
                           ),
+                          const VerticalMargin(ratio: 0.02),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.9,
                             child: ListView.builder(
@@ -72,6 +76,7 @@ class _CompteState extends State<Compte> {
                               itemBuilder: (context, index) {
                                 return Column(
                                   children: [
+                                    const VerticalMargin(ratio: 0.05),
                                     Globalpresentationcompte(
                                       groupeConcerner:
                                           state.groupeDuCompte[index],

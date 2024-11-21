@@ -18,7 +18,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   // Pour DropDownButton => liste des options
-  List<String> options = ['Nom du groupe', 'Style', 'Ville'];
+  List<String> options = ['Nom', 'Style', 'Instrument'];
   // Pour DropDownButton => valeur sélectionnée par défaut
   String? selectedValue;
   // Pour TextEditingController
@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
                     onPressed: () {
                       WidgetsBinding.instance.addPostFrameCallback(
                         (_) {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const Compte()),
@@ -107,8 +107,8 @@ class _HomeState extends State<Home> {
                                     children: [
                                       Expanded(
                                         child: InputCustomPL(
-                                          placeholder: "Rechercher par " +
-                                              selectedValue!,
+                                          placeholder:
+                                              "Rechercher par ${selectedValue!}",
                                           controllerPL: tecRecherche,
                                           isObscure: false,
                                         ),

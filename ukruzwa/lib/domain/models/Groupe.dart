@@ -110,7 +110,7 @@ class Groupe {
       possederSonorisation: json['PossederSonorisation'],
       ingeSon: json['IngeSon'],
       modeleSono: json['ModeleSono'],
-      descriptionSono: json['DescriptionSono'],
+      descriptionSono: json['DescriptionSonorisation'],
       prixLocationSono: json['PrixLocaSono'],
       puissanceSonorisation: json['PuissanceSono'],
       ingePro: json['IngePro'],

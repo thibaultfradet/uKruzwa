@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CustomAlert extends StatelessWidget {
@@ -8,13 +7,12 @@ class CustomAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
+    return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
       elevation: 0,
       backgroundColor: Colors.transparent,
-      child: Container(),
     );
   }
 }

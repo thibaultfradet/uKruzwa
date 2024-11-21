@@ -17,6 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeStateInitial(collectionGroupe));
     });
 
+    /* L'utilisateur recherche un groupe */
     on<HomeEventUtilisateurRecherche>((event, emit) async {
       // On rappelle le HomeStateInitial mais avec une nouvelle liste en rapport avec la demande de l'utilisateur
       List<Groupe> collectionGroupe =

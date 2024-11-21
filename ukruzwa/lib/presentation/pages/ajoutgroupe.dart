@@ -41,8 +41,10 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
           //Page de base => formulaire à remplir pour Ajoutgroupe
 
           return Scaffold(
+            backgroundColor: Colors.white,
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
+              backgroundColor: Colors.white,
               title: const Text("Ajouter un groupe"),
             ),
             body: state is AjoutgroupeStateInitial

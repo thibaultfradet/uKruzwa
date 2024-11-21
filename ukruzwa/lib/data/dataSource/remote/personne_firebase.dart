@@ -56,33 +56,6 @@ Future<bool> createUserInFirestore(String emailAddress, String nom,
   return isSuccess;
 }
 
-/* Fonction retrievePersonne qui prend en paramètre un mail et retourne l'objet personne associé dans la base de données */
-Future<Personne> retrievePersonne(String email) async {
-  FirebaseFirestore db = FirebaseFirestore.instance;
-  // On récupère le contenu de la collection groupe
-  QuerySnapshot<Map<String, dynamic>> querySnapshot =
-      await db.collection("Personnes").get();
-
-  Personne? personneRetrieve;
-  // Pour chaque groupe dans la collection
-  for (var item in querySnapshot.docs) {
-    // Récupération des données
-    Map<String, dynamic>? data = item.data();
-    // Email égal donc on set l'utilisateur aux données
-    if (data["Mail"] == email) {
-      Ville villeHabiter = await retrieveVille(data["idVille"]);
-      personneRetrieve = Personne(
-        numeroTelephone: data["NumeroTelephone"],
-        nom: data["Nom"],
-        prenom: data["Prenom"],
-        mail: data["Mail"],
-        villeHabiter: villeHabiter,
-      );
-    }
-  }
-  return personneRetrieve!;
-}
-
 /* PARTIE CONTACT */
 /* CRUD ET AUTRE */
 
@@ -103,6 +76,20 @@ Future<List<Contact>> findAllContact() async {
   return listeContact;
 }
 
+/* Fonction retrieveContactByMail qui prend en paramètre un email et retourne le contact associer à cette adresse dans la base de données */
+Future<Contact> retrieveContactByMail(String email) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  QuerySnapshot<Map<String, dynamic>> snapshotContact =
+      await db.collection("Contacts").where("Mail", isEqualTo: email).get();
+
+  Contact contactTemp = Contact.empty();
+
+  for (var itemContact in snapshotContact.docs) {
+    Map<String, dynamic>? dataContact = itemContact.data();
+    contactTemp = await contactTemp.contactFromJSON(dataContact);
+  }
+  return contactTemp;
+}
 
 
 /* PARTIE CANDIDAT */

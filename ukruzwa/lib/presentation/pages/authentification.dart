@@ -22,6 +22,20 @@ class _AuthentificationState extends State<Authentification> {
   TextEditingController tecPassword = TextEditingController();
   bool isLoginMode = true;
 
+  customdialog(BuildContext context, String error) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlert(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          texte: error,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthentificationBloc, AuthentificationState>(
@@ -33,8 +47,7 @@ class _AuthentificationState extends State<Authentification> {
         if (state is AuthSuccess && state.isLoginMode) {
           WidgetsBinding.instance.addPostFrameCallback(
             (_) {
-              Navigator.pushReplacement(
-                context,
+              Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => const Home()),
               );
             },
@@ -106,18 +119,4 @@ class _AuthentificationState extends State<Authentification> {
       },
     );
   }
-}
-
-customdialog(BuildContext context, String error) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return CustomAlert(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        texte: error,
-      );
-    },
-  );
 }

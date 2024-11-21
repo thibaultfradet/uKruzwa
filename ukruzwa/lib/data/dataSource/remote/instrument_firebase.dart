@@ -40,3 +40,20 @@ Future<Instrument> retrieveInstrument(String idInstrument) async {
 
   return Instrument.fromJSON(dataInstrument!);
 }
+
+/* fonction retrieveInstrumentByLibelle qui prend en paramètre un libelle (unique en base) et retourne l'objet associer en base si existant */
+Future<Instrument> retrieveInstrumentByLibelle(String libelle) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  QuerySnapshot<Map<String, dynamic>> snapshotInstrument = await db
+      .collection("Instruments")
+      .where("NomInstrument", isEqualTo: libelle)
+      .get();
+
+  Instrument instrumentTemp = Instrument.empty();
+
+  for (var itemInstrument in snapshotInstrument.docs) {
+    Map<String, dynamic>? dataInstrument = itemInstrument.data();
+    instrumentTemp = Instrument.fromJSON(dataInstrument);
+  }
+  return instrumentTemp;
+}

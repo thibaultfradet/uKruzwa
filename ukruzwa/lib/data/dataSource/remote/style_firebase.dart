@@ -38,3 +38,18 @@ Future<Style> retrieveStyle(String idStyle) async {
 
   return Style.fromJSON(dataStyle!);
 }
+
+/* fonction retrieveStyleByLibelle qui prend en paramètre un libelle (unique en base) et retourne l'objet associer en base si existant */
+Future<Style> retrieveStyleByLibelle(String libelle) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  QuerySnapshot<Map<String, dynamic>> snapshotStyle =
+      await db.collection("Styles").where("NomStyle", isEqualTo: libelle).get();
+
+  Style styleTemp = Style.empty();
+
+  for (var itemStyle in snapshotStyle.docs) {
+    Map<String, dynamic>? dataStyle = itemStyle.data();
+    styleTemp = Style.fromJSON(dataStyle);
+  }
+  return styleTemp;
+}

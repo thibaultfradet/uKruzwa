@@ -46,7 +46,7 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
       child: Container(
         //taille
         width: MediaQuery.of(context).size.width * 0.91,
-        height: MediaQuery.of(context).size.height * 0.40,
+        height: MediaQuery.of(context).size.height * 0.52,
         //bordure
         decoration: BoxDecoration(
           border: Border.all(
@@ -92,12 +92,14 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                             itemCount:
                                 widget.groupeConcerner.stylesDuGroupe!.length,
                             itemBuilder: (context, index) {
-                              return Column(children: [
-                                ItemValider(
-                                    valeur: widget.groupeConcerner
-                                        .stylesDuGroupe![index].nomStyle),
-                                const VerticalMargin(ratio: 0.01),
-                              ]);
+                              return Column(
+                                children: [
+                                  ItemValider(
+                                      valeur: widget.groupeConcerner
+                                          .stylesDuGroupe![index].nomStyle),
+                                  const VerticalMargin(ratio: 0.01),
+                                ],
+                              );
                             },
                           ),
                         ),
@@ -122,14 +124,17 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                             itemCount: widget
                                 .groupeConcerner.instrumentsDuGroupe!.length,
                             itemBuilder: (context, index) {
-                              return Column(children: [
-                                ItemValider(
+                              return Column(
+                                children: [
+                                  ItemValider(
                                     valeur: widget
                                         .groupeConcerner
                                         .instrumentsDuGroupe![index]
-                                        .nomInstrument),
-                                const VerticalMargin(ratio: 0.01),
-                              ]);
+                                        .nomInstrument,
+                                  ),
+                                  const VerticalMargin(ratio: 0.01),
+                                ],
+                              );
                             },
                           ),
                         ),
@@ -158,10 +163,11 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                       onpressed: () {
                         widget.onPressedDelete();
                       },
-                      texteValeur: "Supprimer",
+                      texteValeur: "SUPPRIMER",
                       isDeleteButton: true,
                     ),
                   ),
+                  const VerticalMargin(ratio: 0.01),
                   //edit groupe button
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.05,
@@ -172,6 +178,7 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                       texteValeur: "MODIFIER LE GROUPE",
                     ),
                   ),
+                  const VerticalMargin(ratio: 0.01),
                   //edit sono button
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.05,

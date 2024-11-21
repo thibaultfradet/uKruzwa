@@ -25,7 +25,6 @@ class CompteBloc extends Bloc<CompteEvent, CompteState> {
       deleteGroupe(event.idGroupe);
 
       //récupération nouvelle liste et on emit => toujours en se basant sur le mail de l'utilisateur connecter
-
       List<Groupe> groupeDuCompteNew =
           await findAllGroupeCompte(CurrentUser.getUserCurrent.email!);
       emit(CompteStateInitial(groupeDuCompteNew));
