@@ -19,7 +19,7 @@ class Ajoutsonorisation extends StatefulWidget {
 class _AjoutsonorisationState extends State<Ajoutsonorisation> {
   TextEditingController tecDescriptionSono = TextEditingController();
   bool ingeAccompagne = false;
-  bool? ingeEstPro = null;
+  bool? ingeEstPro;
   TextEditingController tecModeleSono = TextEditingController();
   TextEditingController tecPuissanceSono = TextEditingController();
   TextEditingController tecPrixLocationSono = TextEditingController();
@@ -115,7 +115,7 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
                       puissanceSono: int.parse(tecPuissanceSono.text),
                       //valeur nullable
                       ingeEstPro: ingeEstPro,
-                      prixServiceInge: int.parse(tecPrixServiceInge.text) != ""
+                      prixServiceInge: tecPrixServiceInge.text != ""
                           ? int.parse(tecPrixServiceInge.text)
                           : null,
                     ),

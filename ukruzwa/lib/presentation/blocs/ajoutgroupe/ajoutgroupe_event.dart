@@ -8,7 +8,8 @@ class AGEventCreate extends AjoutgroupeEvent {
   final String
       numeroTelContact; // permet de récupérer un objet contact dans la base de données -> dans le bloc plus tard
   final String numeroRemplacementContact;
-  final String villeRepetitionDuGroupe;
+  final String nomVilleRepetition;
+  final String codePostalVilleRepetition;
   final List<String> instrumentsDuGroupe;
   final int
       nombreChanteurs; // A ajouter aux chanteurs -> dans le bloc plus tard
@@ -20,7 +21,8 @@ class AGEventCreate extends AjoutgroupeEvent {
     required this.stylesDuGroupe,
     required this.numeroTelContact,
     required this.numeroRemplacementContact,
-    required this.villeRepetitionDuGroupe,
+    required this.nomVilleRepetition,
+    required this.codePostalVilleRepetition,
     required this.instrumentsDuGroupe,
     required this.nombreChanteurs,
     required this.possederSonorisation,

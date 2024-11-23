@@ -5,7 +5,6 @@ import 'package:ukruzwa/presentation/blocs/authentification/authentification_eve
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_state.dart';
 import 'package:ukruzwa/presentation/pages/registration.dart';
 import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
-import 'package:ukruzwa/presentation/widgets/custom_alert.dart';
 import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
 import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 import 'package:ukruzwa/presentation/pages/home.dart';
@@ -22,27 +21,10 @@ class _AuthentificationState extends State<Authentification> {
   TextEditingController tecPassword = TextEditingController();
   bool isLoginMode = true;
 
-  customdialog(BuildContext context, String error) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CustomAlert(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          texte: error,
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthentificationBloc, AuthentificationState>(
       builder: (BuildContext context, state) {
-        if (state is AuthFailure) {
-          customdialog(context, state.error);
-        }
         // Rediriger vers la page d'accueil après une connexion réussie => uniquement si il s'agit d'une connexion
         if (state is AuthSuccess && state.isLoginMode) {
           WidgetsBinding.instance.addPostFrameCallback(
@@ -92,6 +74,7 @@ class _AuthentificationState extends State<Authentification> {
                       },
                       texteValeur: "Valider ma connexion",
                     ),
+                    const VerticalMargin(ratio: 0.02),
                     // Bouton pour changer de mode (connexion/création)
                     BoutonCustom(
                       onpressed: () {
@@ -108,8 +91,9 @@ class _AuthentificationState extends State<Authentification> {
                       },
                       texteValeur: "Créer un compte",
                     ),
-
-                    // Afficher les messages d'erreur si présents
+                    const VerticalMargin(ratio: 0.02),
+                    //Si le state est une erreur alors on affiche le message d'erreur dans un texte
+                    state is AuthFailure ? Text(state.error) : const SizedBox()
                   ],
                 ),
               ],

@@ -80,7 +80,7 @@ Future<List<Groupe>> findAllGroupeRecherche(
   }
 
   //pour chaque groupe dans la collection
-  for (var item in querySnapshot!.docs) {
+  for (var item in querySnapshot.docs) {
     //Récupération des données
     Map<String, dynamic>? data = item.data();
 

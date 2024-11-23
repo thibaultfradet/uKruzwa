@@ -13,7 +13,6 @@ class CompteBloc extends Bloc<CompteEvent, CompteState> {
       //on emit un state de chargement en attendant les données
       emit(const CompteStateLoading());
 
-// CurrentUser.getUserCurrent.email!
       List<Groupe> groupeDuCompte =
           await findAllGroupeCompte(FirebaseAuth.instance.currentUser!.email!);
       emit(CompteStateInitial(groupeDuCompte));

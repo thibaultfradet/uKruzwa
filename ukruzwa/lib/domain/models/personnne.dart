@@ -61,20 +61,25 @@ class Contact extends Personne {
 
   /* Constructeur surchargé */
   Contact({
-    required String numeroTelephone,
-    required String nom,
-    required String prenom,
-    required String mail,
-    required Ville villeHabiter,
-  }) : super(
-          numeroTelephone: numeroTelephone,
-          nom: nom,
-          prenom: prenom,
-          mail: mail,
-          villeHabiter: villeHabiter,
-        );
+    required super.numeroTelephone,
+    required super.nom,
+    required super.prenom,
+    required super.mail,
+    required super.villeHabiter,
+  });
 
   /* FONCTION DE CONVERSION */
+  @override
+  Map<String, dynamic> toFirestore() {
+    return {
+      'Mail': mail,
+      'Nom': nom,
+      'NumeroTelephone': numeroTelephone,
+      'Prenom': prenom,
+      'idVille': villeHabiter.idVille,
+    };
+  }
+
   Future<Contact> contactFromJSON(Map<String, dynamic> json) async {
     return Contact(
         mail: json["Mail"],
@@ -99,16 +104,10 @@ class Candidat extends Personne {
 
   /* Constructeur surchargé */
   Candidat({
-    required String numeroTelephone,
-    required String nom,
-    required String prenom,
-    required String mail,
-    required Ville villeHabiter,
-  }) : super(
-          numeroTelephone: numeroTelephone,
-          nom: nom,
-          prenom: prenom,
-          mail: mail,
-          villeHabiter: villeHabiter,
-        );
+    required super.numeroTelephone,
+    required super.nom,
+    required super.prenom,
+    required super.mail,
+    required super.villeHabiter,
+  });
 }

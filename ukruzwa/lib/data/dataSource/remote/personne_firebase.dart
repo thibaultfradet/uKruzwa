@@ -1,13 +1,26 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ukruzwa/domain/models/personnne.dart';
+import 'package:ukruzwa/domain/models/ville.dart';
 /* CRUD ET AUTRE  */
 
 /* PARTIE PERSONNE */
 
-/* fonction isTelephoneAlreadyUse qui prende un paramètre un numéro de téléphone et retourne si il est deja affilier à un utilisateur dans la base de données */
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ukruzwa/data/dataSource/remote/ville_firebase.dart';
-import 'package:ukruzwa/domain/models/personnne.dart';
-import 'package:ukruzwa/domain/models/ville.dart';
+/* Fonction retrievePersonneByMail qui prend en paramètre un email et retourne le Personne associer à cette adresse dans la base de données */
+Future<Personne> retrievePersonneByMail(String email) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  QuerySnapshot<Map<String, dynamic>> snapshotPersonne =
+      await db.collection("Personnes").where("Mail", isEqualTo: email).get();
 
+  Personne personneTemp = Personne.empty();
+
+  for (var itemPersonne in snapshotPersonne.docs) {
+    Map<String, dynamic>? dataPersonne = itemPersonne.data();
+    personneTemp = await Personne.empty().personnefromJSON(dataPersonne);
+  }
+  return personneTemp;
+}
+
+/* fonction isTelephoneAlreadyUse qui prende un paramètre un numéro de téléphone et retourne si il est deja affilier à un utilisateur dans la base de données */
 Future<bool> isTelephoneAlreadyUse(String numeroTelephone) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
   // On récupère le contenu de la collection groupe
@@ -38,6 +51,7 @@ Future<bool> createUserInFirestore(String emailAddress, String nom,
     await docVille.set({
       "CodePostal": villeTemp.codePostal,
       "NomVille": villeTemp.nomVille,
+      "idVille": docVille.id,
     });
     final docName = db
         .collection("Personnes")
@@ -47,7 +61,7 @@ Future<bool> createUserInFirestore(String emailAddress, String nom,
       "Nom": personneTemp.nom,
       "Prenom": personneTemp.prenom,
       "NumeroTelephone": personneTemp.numeroTelephone,
-      "idVille": personneTemp.villeHabiter.idVille,
+      "idVille": docVille.id,
     });
     isSuccess = true;
   } catch (e) {
@@ -58,6 +72,14 @@ Future<bool> createUserInFirestore(String emailAddress, String nom,
 
 /* PARTIE CONTACT */
 /* CRUD ET AUTRE */
+
+Future<void> createContact(Personne personneContact) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
+  // On ajoute la ville et l'utilisateur en base
+  final docContact = db.collection("Contacts").doc();
+  await docContact.set({personneContact.toFirestore()} as Map<String, dynamic>);
+}
 
 /* retrieveContact qui prend en paramètre un numéro de téléphone et retourne un objet contact */
 Future<Contact> retrieveContact(String numeroTelephone) async {
@@ -72,8 +94,20 @@ Future<Contact> retrieveContact(String numeroTelephone) async {
 
 /* FindAllContact qui retourne une liste d'objet contact */
 Future<List<Contact>> findAllContact() async {
-  List<Contact> listeContact = [];
-  return listeContact;
+  List<Contact> contactDisponible = [];
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  //On récupère le contenu de la collection groupe
+  QuerySnapshot<Map<String, dynamic>> querySnapshot =
+      await db.collection("Contacts").get();
+
+  //pour chaque groupe dans la collection
+  for (var item in querySnapshot.docs) {
+    //Récupération des données
+    Map<String, dynamic>? data = item.data();
+    Contact contactTemp = await Contact.empty().contactFromJSON(data);
+    contactDisponible.add(contactTemp);
+  }
+  return contactDisponible;
 }
 
 /* Fonction retrieveContactByMail qui prend en paramètre un email et retourne le contact associer à cette adresse dans la base de données */

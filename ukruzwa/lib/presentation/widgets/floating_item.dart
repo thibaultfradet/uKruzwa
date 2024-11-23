@@ -29,8 +29,7 @@ class _FloatingItemState extends State<FloatingItem> {
             width: 45,
             child: TextButton(
               style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue)),
+                  backgroundColor: WidgetStateProperty.all<Color>(Colors.blue)),
               onPressed: () {
                 widget.onPressed();
               },

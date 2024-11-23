@@ -7,7 +7,7 @@ import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 class Globalpresentation extends StatefulWidget {
   final Groupe groupeConcerner;
 
-  Globalpresentation({super.key, required this.groupeConcerner});
+  const Globalpresentation({super.key, required this.groupeConcerner});
 
   @override
   State<Globalpresentation> createState() => _GlobalpresentationState();

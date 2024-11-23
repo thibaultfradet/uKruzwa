@@ -137,6 +137,7 @@ class _RegistrationState extends State<Registration> {
                     ),
                   ],
                 ),
+                const VerticalMargin(ratio: 0.02),
                 // Bouton pour changer de mode (connexion/création)
                 BoutonCustom(
                   onpressed: () {
@@ -153,9 +154,11 @@ class _RegistrationState extends State<Registration> {
                   },
                   texteValeur: "Connexion à mon compte",
                 ),
-                // Afficher les messages d'erreur si présents
+                
 
-                state is AuthFailure ? Text(state.error) : const SizedBox()
+                const VerticalMargin(ratio: 0.02),
+                    //Si le state est une erreur alors on affiche le message d'erreur dans un texte
+                  state is AuthFailure ? Text(state.error) : const SizedBox()
               ],
             ),
           ),
