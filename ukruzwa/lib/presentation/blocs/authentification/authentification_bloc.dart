@@ -37,6 +37,34 @@ class AuthentificationBloc
       }
     });
 
+    /* Création d'un compte avec google */
+    on<AuthCreateWithGoogle>((event, emit) async {
+      emit(const AuthLoading());
+      if (await isTelephoneAlreadyUse(event.numeroTelephone)) {
+        emit(AuthFailure("Numéro de téléphone deja utilisé."));
+      } else {
+        try {
+          // On ajoute dans Firestore
+          bool success = await createUserInFirestore(
+              event.emailAddress,
+              event.nom,
+              event.prenom,
+              event.numeroTelephone,
+              event.codePostal,
+              event.ville);
+
+          if (success) {
+            emit(const AuthSuccess(isLoginMode: false));
+          } else {
+            emit(AuthFailure("Création du compte non réussi"));
+          }
+        } catch (e) {
+          emit(AuthFailure("Une erreur est survenue."));
+        }
+      }
+    });
+
+    /* Création d'un compte normal */
     on<AuthCreate>(
       (event, emit) async {
         emit(const AuthLoading());

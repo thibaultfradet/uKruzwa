@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ukruzwa/data/dataSource/remote/firebase.dart';
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_event.dart';
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_state.dart';
 import 'package:ukruzwa/presentation/pages/registration.dart';
+import 'package:ukruzwa/presentation/pages/registration_with_google.dart';
 import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
 import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
 import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 import 'package:ukruzwa/presentation/pages/home.dart';
+
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ukruzwa/utils/constants/current_user.dart';
 
 class Authentification extends StatefulWidget {
   const Authentification({super.key});
@@ -23,6 +28,9 @@ class _AuthentificationState extends State<Authentification> {
 
   @override
   Widget build(BuildContext context) {
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    bool _isLoggedIn = false;
+    late GoogleSignInAccount _userObj;
     return BlocBuilder<AuthentificationBloc, AuthentificationState>(
       builder: (BuildContext context, state) {
         // Rediriger vers la page d'accueil après une connexion réussie => uniquement si il s'agit d'une connexion
@@ -91,9 +99,66 @@ class _AuthentificationState extends State<Authentification> {
                       },
                       texteValeur: "Créer un compte",
                     ),
+
+                    const VerticalMargin(ratio: 0.05),
+                    //Bouton connexion sso
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      child: BoutonCustom(
+                        onpressed: () {
+                          _googleSignIn.signIn().then(
+                            //auth effectuer => .then
+                            (userData) {
+                              setState(
+                                () async {
+                                  _isLoggedIn = true;
+                                  _userObj = userData!;
+                                  //si l'email existe deja en base alors c'est que l'utilisateur se connecte donc on l'envoie vers home
+                                  if (await emailAlreadyInDatabase(
+                                      userData.email)) {
+                                    // on init le user actif
+                                    CurrentUser.init();
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback(
+                                      (_) {
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Home()),
+                                        );
+                                      },
+                                    );
+                                  }
+                                  //Sinon cest qu'il créer un compte donc on le push pour les dernier renseignement avec les data en paramètre
+                                  else {
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback(
+                                      (_) {
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                RegistrationWithGoogle(
+                                              activeData: userData,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                },
+                              );
+                            },
+                          ).catchError((e) {});
+                        },
+                        texteValeur: "Connexion avec google",
+                      ),
+                    ),
+
                     const VerticalMargin(ratio: 0.02),
                     //Si le state est une erreur alors on affiche le message d'erreur dans un texte
-                    state is AuthFailure ? Text(state.error) : const SizedBox()
+                    state is AuthFailure
+                        ? Center(child: Text(state.error))
+                        : const SizedBox()
                   ],
                 ),
               ],

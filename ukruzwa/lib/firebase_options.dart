@@ -46,7 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '540328794600',
     projectId: 'ukruzwa-c52e5',
     authDomain: 'ukruzwa-c52e5.firebaseapp.com',
-    storageBucket: 'ukruzwa-c52e5.appspot.com',
+    storageBucket: 'ukruzwa-c52e5.firebasestorage.app',
     measurementId: 'G-K1YWPV81K6',
   );
 
@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
     appId: '1:540328794600:android:e75df6677e8b59f4c56c5d',
     messagingSenderId: '540328794600',
     projectId: 'ukruzwa-c52e5',
-    storageBucket: 'ukruzwa-c52e5.appspot.com',
+    storageBucket: 'ukruzwa-c52e5.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     appId: '1:540328794600:ios:82a5db7d4304d578c56c5d',
     messagingSenderId: '540328794600',
     projectId: 'ukruzwa-c52e5',
-    storageBucket: 'ukruzwa-c52e5.appspot.com',
+    storageBucket: 'ukruzwa-c52e5.firebasestorage.app',
+    iosClientId: '540328794600-4q4je6f9meik1s2h0fm944clk694c9gj.apps.googleusercontent.com',
     iosBundleId: 'com.example.ukruzwa',
   );
 
@@ -72,7 +73,8 @@ class DefaultFirebaseOptions {
     appId: '1:540328794600:ios:82a5db7d4304d578c56c5d',
     messagingSenderId: '540328794600',
     projectId: 'ukruzwa-c52e5',
-    storageBucket: 'ukruzwa-c52e5.appspot.com',
+    storageBucket: 'ukruzwa-c52e5.firebasestorage.app',
+    iosClientId: '540328794600-4q4je6f9meik1s2h0fm944clk694c9gj.apps.googleusercontent.com',
     iosBundleId: 'com.example.ukruzwa',
   );
 
@@ -82,7 +84,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '540328794600',
     projectId: 'ukruzwa-c52e5',
     authDomain: 'ukruzwa-c52e5.firebaseapp.com',
-    storageBucket: 'ukruzwa-c52e5.appspot.com',
+    storageBucket: 'ukruzwa-c52e5.firebasestorage.app',
     measurementId: 'G-RJ15PNKGJT',
   );
+
 }

@@ -4,9 +4,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ukruzwa/domain/models/ville.dart';
 
-Future<bool> createVille(Ville villeCreate) async {
-  bool isSuccess = true;
-  return isSuccess;
+Future<String> createVille(Ville villeCreate) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  try {
+    // On ajoute la ville et l'utilisateur en base
+    final docVille = db.collection("Villes").doc();
+    await docVille.set(villeCreate.toFirestore());
+    await docVille.update({'idVille': docVille.id});
+
+    //si encore a ce stade alors création reussi donc on retourne l'id du doc créer
+    return docVille.id;
+  } catch (e) {
+    return "";
+  }
 }
 
 /* retrieveVille qui prend en paramètre un idVile et retourne un objet ville lier dans la base de données */

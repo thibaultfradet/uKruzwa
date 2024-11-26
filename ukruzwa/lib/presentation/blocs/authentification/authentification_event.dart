@@ -28,3 +28,20 @@ class AuthCreate extends AuthentificationEvent {
       required this.ville})
       : super();
 }
+
+class AuthCreateWithGoogle extends AuthentificationEvent {
+  final String emailAddress;
+  final String nom;
+  final String prenom;
+  final String numeroTelephone;
+  final String codePostal;
+  final String ville;
+  AuthCreateWithGoogle(
+      {required this.emailAddress,
+      required this.nom,
+      required this.prenom,
+      required this.numeroTelephone,
+      required this.codePostal,
+      required this.ville})
+      : super();
+}

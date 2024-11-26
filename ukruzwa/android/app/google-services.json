@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "540328794600",
     "project_id": "ukruzwa-c52e5",
-    "storage_bucket": "ukruzwa-c52e5.appspot.com"
+    "storage_bucket": "ukruzwa-c52e5.firebasestorage.app"
   },
   "client": [
     {
@@ -12,7 +12,12 @@
           "package_name": "com.example.ukruzwa"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "540328794600-k8ksmptv44kp7t8l9n9909dedqra382r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCvi-AzNXViV4CNykg32a9bNVJ-RfTuyHE"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540328794600-k8ksmptv44kp7t8l9n9909dedqra382r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "540328794600-4q4je6f9meik1s2h0fm944clk694c9gj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ukruzwa"
+              }
+            }
+          ]
         }
       }
     }

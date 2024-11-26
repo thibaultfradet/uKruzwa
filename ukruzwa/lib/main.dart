@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ukruzwa/firebase_options.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_bloc.dart';
+import 'package:ukruzwa/presentation/blocs/ajoutsallesp/ajout_sallesp_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/grdetail/grdetail_bloc.dart';
+import 'package:ukruzwa/presentation/pages/ajoutsallesp.dart';
 import 'package:ukruzwa/presentation/pages/authentification.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,6 +36,9 @@ void main() async {
         // ),
         BlocProvider<AjoutgroupeBloc>(
           create: (_) => AjoutgroupeBloc(),
+        ),
+        BlocProvider<AjoutSalleSpBloc>(
+          create: (_) => AjoutSalleSpBloc(),
         ),
       ],
       child: const MyApp(),
