@@ -46,7 +46,7 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
       child: Container(
         //taille
         width: MediaQuery.of(context).size.width * 0.91,
-        height: MediaQuery.of(context).size.height * 0.52,
+        height: MediaQuery.of(context).size.height * 0.55,
         //bordure
         decoration: BoxDecoration(
           border: Border.all(
@@ -158,8 +158,9 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                 children: [
                   //bouton supprimer
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
+                    height: MediaQuery.of(context).size.height * 0.058,
                     child: BoutonCustom(
+                      largeur: 0.7,
                       onpressed: () {
                         widget.onPressedDelete();
                       },
@@ -170,8 +171,9 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                   const VerticalMargin(ratio: 0.01),
                   //edit groupe button
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
+                    height: MediaQuery.of(context).size.height * 0.058,
                     child: BoutonCustom(
+                      largeur: 0.7,
                       onpressed: () {
                         widget.onPressedEdit;
                       },
@@ -181,8 +183,9 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                   const VerticalMargin(ratio: 0.01),
                   //edit sono button
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
+                    height: MediaQuery.of(context).size.height * 0.058,
                     child: BoutonCustom(
+                      largeur: 0.7,
                       onpressed: () {
                         widget.onPressedEditSono;
                       },

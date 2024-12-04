@@ -32,7 +32,12 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            title: const Text("Ajouter une sonorisation"),
+            title: const Center(
+              child: Text(
+                "Ajouter une sonorisation",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
           ),
           body: Column(
             children: [

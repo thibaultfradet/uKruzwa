@@ -24,7 +24,8 @@ class AjoutgroupeStateInitial extends AjoutgroupeState {
 
 // Tentative de création => load,success,fail
 class AGSuccess extends AjoutgroupeState {
-  AGSuccess() : super();
+  final bool isSonorisation;
+  AGSuccess(this.isSonorisation) : super();
 }
 
 class AGFailure extends AjoutgroupeState {

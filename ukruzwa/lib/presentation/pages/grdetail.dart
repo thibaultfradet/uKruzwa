@@ -32,9 +32,12 @@ class _GrdetailState extends State<Grdetail> {
               resizeToAvoidBottomInset: false,
               appBar: AppBar(
                 backgroundColor: Colors.white,
-                title: Text(
-                  "Fiche du groupe ${widget.groupeConcerner.nomGroupe}",
-                  style: const TextStyle(fontSize: 20),
+                title: Center(
+                  child: Text(
+                    "Fiche du groupe ${widget.groupeConcerner.nomGroupe}",
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
               backgroundColor: Colors.white,

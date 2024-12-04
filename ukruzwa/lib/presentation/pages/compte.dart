@@ -27,7 +27,12 @@ class _CompteState extends State<Compte> {
             backgroundColor: Colors.white,
             appBar: AppBar(
               backgroundColor: Colors.white,
-              title: const Text("Information sur votre compte"),
+              title: const Center(
+                child: Text(
+                  "Information sur votre compte",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
             body: Stack(
               children: [
@@ -48,29 +53,29 @@ class _CompteState extends State<Compte> {
                             ),
                           ),
                           const VerticalMargin(ratio: 0.02),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                            width: MediaQuery.of(context).size.width,
-                            child: BoutonCustom(
-                                onpressed: () {
-                                  WidgetsBinding.instance.addPostFrameCallback(
-                                    (_) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Ajoutgroupe(),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                                texteValeur: "Ajouter un groupe"),
-                          ),
+
+                          //Bouton ajout de groupe
+                          BoutonCustom(
+                              largeur: 0.9,
+                              onpressed: () {
+                                WidgetsBinding.instance.addPostFrameCallback(
+                                  (_) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Ajoutgroupe(),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              texteValeur: "Ajouter un groupe"),
                           const VerticalMargin(ratio: 0.02),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.9,
                             child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: state.groupeDuCompte.length,
                               itemBuilder: (context, index) {

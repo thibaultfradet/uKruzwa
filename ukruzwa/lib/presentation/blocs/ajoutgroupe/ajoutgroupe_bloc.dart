@@ -150,8 +150,7 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
         numeroRemplacementContact: event.numeroRemplacementContact,
         possederSonorisation: event.possederSonorisation,
         villeRepetition: villeRepetition,
-        personneAContacter:
-            contactGroupe, // => A CHANGER CAR NULL POUR LE MOMENT
+        personneAContacter: contactGroupe,
         stylesDuGroupe: listeStyleDuGroupe,
         instrumentsDuGroupe: listeInstrumentDuGroupe,
         endroitsDejaJoues: [],
@@ -164,7 +163,7 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
         //Appel de la méthode de création
         createGroupe(groupeCreate);
         //Réussi => on emit le state success
-        emit(AGSuccess());
+        emit(AGSuccess(groupeCreate.possederSonorisation));
       } catch (e) {
         //Non réussi => on emit le state failure
         emit(AGFailure());

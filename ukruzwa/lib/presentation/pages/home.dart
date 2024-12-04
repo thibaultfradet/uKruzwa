@@ -113,9 +113,11 @@ class _HomeState extends State<Home> {
                                           isObscure: false,
                                         ),
                                       ),
+
                                       //Bouton validation
                                       // Validation de la recherche on appelle l'event de recherche et on passe en paramètre le libelle saisie et l'option choisis par l'utilisateur
                                       BoutonCustom(
+                                        hauteur: 0.06,
                                         onpressed: () {
                                           BlocProvider.of<HomeBloc>(context)
                                               .add(
@@ -214,10 +216,14 @@ class _HomeState extends State<Home> {
                           ),
                           // Résultat aléatoire texte
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.08,
+                            height: MediaQuery.of(context).size.height * 0.05,
+                            width: MediaQuery.of(context).size.width * 0.9,
                             child: const Text(
                               "Goupe apparant de manière aléatoire parmis les résultats de la recherche",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -228,6 +234,8 @@ class _HomeState extends State<Home> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.9,
                             child: ListView.builder(
+                              //on laisse le single child scroll view prendre le scroll
+                              physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: state.collectionGroupe.length,
                               itemBuilder: (context, index) {

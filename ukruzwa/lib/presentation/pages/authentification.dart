@@ -62,6 +62,8 @@ class _AuthentificationState extends State<Authentification> {
                       isObscure: true,
                     ),
 
+                    const VerticalMargin(ratio: 0.02),
+
                     // Bouton de envoie formulaire
                     BoutonCustom(
                       onpressed: () {

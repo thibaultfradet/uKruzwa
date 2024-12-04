@@ -5,7 +5,9 @@ import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_event.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
+import 'package:ukruzwa/presentation/widgets/horizontal_margin.dart';
 import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
+import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 
 class Ajoutgroupe extends StatefulWidget {
   final Groupe? groupeAModifier; // => cas de modification d'un groupe
@@ -43,133 +45,203 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
               backgroundColor: Colors.white,
-              title: const Text("Ajouter un groupe"),
+              title: const Center(
+                child: Text(
+                  "Ajouter un groupe",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
             body: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 if (state is AjoutgroupeStateInitial) ...[
-                  // Nom du groupe
+                  const VerticalMargin(ratio: 0.05),
+
+                  //Nom du groupe
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.2,
+                    width: MediaQuery.of(context).size.width * 0.96,
                     child: InputCustomPL(
                       placeholder: "Nom du groupe",
                       controllerPL: tecNomDuGroupe,
                       isObscure: false,
                     ),
-                  ), // Style du groupe => AutoComplete
-                  Autocomplete<String>(
-                    optionsBuilder: (TextEditingValue textEditingValue) {
-                      if (textEditingValue.text.isEmpty) {
-                        return const Iterable<String>.empty();
-                      }
-                      return state.styleDisponible
-                          .map((style) => style.nomStyle)
-                          .where((String style) {
-                        return style
-                            .toLowerCase()
-                            .contains(textEditingValue.text.toLowerCase());
-                      }).toList();
-                    },
-                    onSelected: (String styleSaisie) {
-                      setState(() {
-                        stylesSelectionnes.add(styleSaisie);
-                      });
-                    },
-                    fieldViewBuilder: (
-                      BuildContext context,
-                      TextEditingController tecStyle,
-                      FocusNode focusNode,
-                      VoidCallback onFieldSubmitted,
-                    ) {
-                      return InputCustomPL(
-                        placeholder: "Style du groupe",
-                        controllerPL: tecStyle,
-                        isObscure: false,
-                      );
-                    },
-                  ), // Instrument du groupe
+                  ),
+
+                  const VerticalMargin(ratio: 0.04),
+                  // Style du groupe
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    child: InputCustomPL(
-                      placeholder: "Instrument du groupe (sans chanteurs)",
-                      controllerPL: tecInstrumentDuGroupe,
-                      isObscure: false,
+                    width: MediaQuery.of(context).size.width * 0.96,
+                    //ligne entrée utilisateur et bouton de validation
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          child: InputCustomPL(
+                            controllerPL: tecStyleDuGroupe,
+                            placeholder: "Style joués",
+                            largeur: 0.8,
+                          ),
+                        ),
+                        const Horizontalmargin(ratio: 0.04),
+                        // bouton pour ajouter le style saisies dans la liste + vider la saisie
+                        SizedBox(
+                          child: BoutonCustom(
+                            largeur: 0.12,
+                            onpressed: () {
+                              setState(
+                                () {
+                                  stylesSelectionnes.add(
+                                    tecStyleDuGroupe.text.toLowerCase(),
+                                  );
+                                  tecStyleDuGroupe.text = "";
+                                },
+                              );
+                            },
+                            texteValeur: "+",
+                          ),
+                        ),
+                      ],
                     ),
-                  ), // Nombre de chanteurs
+                  ),
+
+                  const VerticalMargin(ratio: 0.04),
+
+                  // Instrument du groupe
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
+                    width: MediaQuery.of(context).size.width * 0.96,
+                    //ligne entrée utilisateur et bouton de validation
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          child: InputCustomPL(
+                            controllerPL: tecInstrumentDuGroupe,
+                            placeholder: "Instruments joués(sans chanteurs)",
+                            largeur: 0.8,
+                          ),
+                        ),
+                        const Horizontalmargin(ratio: 0.04),
+                        // bouton pour ajouter le style saisies dans la liste + vider la saisie
+                        SizedBox(
+                          child: BoutonCustom(
+                            largeur: 0.12,
+                            onpressed: () {
+                              setState(
+                                () {
+                                  instrumentSelectionnes.add(
+                                    tecInstrumentDuGroupe.text.toLowerCase(),
+                                  );
+                                  tecInstrumentDuGroupe.text = "";
+                                },
+                              );
+                            },
+                            texteValeur: "+",
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const VerticalMargin(ratio: 0.04),
+
+                  //Nombre de chanteurs
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.96,
                     child: InputCustomPL(
                       placeholder: "Nombre de chanteurs",
                       controllerPL: tecNbChanteurs,
                       isObscure: false,
                     ),
-                  ), // Endroits joués
-                  Autocomplete<String>(
-                    optionsBuilder: (TextEditingValue textEditingValue) {
-                      if (textEditingValue.text.isEmpty) {
-                        return const Iterable<String>.empty();
-                      }
-                      return state.villeDisponible
-                          .map((ville) => ville.nomVille)
-                          .where((String ville) {
-                        return ville
-                            .toLowerCase()
-                            .contains(textEditingValue.text.toLowerCase());
-                      }).toList();
-                    },
-                    onSelected: (String endroits) {
-                      setState(() {
-                        villeJouesSelectionnes.add(endroits);
-                      });
-                    },
-                    fieldViewBuilder: (
-                      BuildContext context,
-                      TextEditingController tecVille,
-                      FocusNode focusNode,
-                      VoidCallback onFieldSubmitted,
-                    ) {
-                      return InputCustomPL(
-                        placeholder: "Endroits deja joué(s)",
-                        controllerPL: tecVille,
-                        isObscure: false,
-                      );
-                    },
-                  ), // Posséder une sonorisation
+                  ),
+
+                  const VerticalMargin(ratio: 0.04),
+
+                  // Endroits joués
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.2,
+                    //ligne entrée utilisateur et bouton de validation
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          child: InputCustomPL(
+                            controllerPL: tecInstrumentDuGroupe,
+                            placeholder: "Endroits joués",
+                            largeur: 0.8,
+                          ),
+                        ),
+                        const Horizontalmargin(ratio: 0.04),
+                        // bouton pour ajouter le style saisies dans la liste + vider la saisie
+                        SizedBox(
+                          child: BoutonCustom(
+                            largeur: 0.12,
+                            onpressed: () {
+                              setState(
+                                () {
+                                  instrumentSelectionnes.add(
+                                    tecInstrumentDuGroupe.text.toLowerCase(),
+                                  );
+                                  tecInstrumentDuGroupe.text = "";
+                                },
+                              );
+                            },
+                            texteValeur: "+",
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const VerticalMargin(ratio: 0.04),
+
+                  // Posséder une sonorisation
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.1,
                     child: Column(
                       children: [
                         const Text("Posséder-vous une sonorisation ?"),
                         Checkbox(
                           value: isSonorisation,
                           onChanged: (bool? value) {
-                            setState(() {
-                              isSonorisation = value ?? false;
-                            });
+                            setState(
+                              () {
+                                isSonorisation = value ?? false;
+                              },
+                            );
                           },
                         ),
                       ],
                     ),
-                  ), // Bouton validation formulaire
-                  BoutonCustom(
-                    onpressed: () {
-                      BlocProvider.of<AjoutgroupeBloc>(context).add(
-                        AGEventCreate(
-                          nomGroupe: tecNomDuGroupe.text,
-                          instrumentsDuGroupe: instrumentSelectionnes,
-                          nombreChanteurs: int.parse(tecNbChanteurs.text),
-                          numeroRemplacementContact:
-                              tecNumRemplacementContact.text,
-                          numeroTelContact: tecNumTelContact.text,
-                          possederSonorisation: isSonorisation,
-                          stylesDuGroupe: stylesSelectionnes,
-                          nomVilleRepetition: tecNomVilleRepetition.text,
-                          codePostalVilleRepetition: tecCodePostalVilleRep.text,
-                          endroitsJouesDuGroupe: villeJouesSelectionnes,
-                        ),
-                      );
-                    },
-                    texteValeur: "Valider",
+                  ),
+
+                  const VerticalMargin(ratio: 0.04),
+                  // Bouton validation formulaire
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.96,
+                    child: BoutonCustom(
+                      onpressed: () {
+                        BlocProvider.of<AjoutgroupeBloc>(context).add(
+                          AGEventCreate(
+                            nomGroupe: tecNomDuGroupe.text,
+                            instrumentsDuGroupe: instrumentSelectionnes,
+                            nombreChanteurs: int.parse(tecNbChanteurs.text),
+                            numeroRemplacementContact:
+                                tecNumRemplacementContact.text,
+                            numeroTelContact: tecNumTelContact.text,
+                            possederSonorisation: isSonorisation,
+                            stylesDuGroupe: stylesSelectionnes,
+                            nomVilleRepetition: tecNomVilleRepetition.text,
+                            codePostalVilleRepetition:
+                                tecCodePostalVilleRep.text,
+                            endroitsJouesDuGroupe: villeJouesSelectionnes,
+                          ),
+                        );
+                      },
+                      texteValeur: "Valider",
+                    ),
                   ),
                 ] else if (state is AGLoading) ...[
                   const Center(child: CircularProgressIndicator()),
