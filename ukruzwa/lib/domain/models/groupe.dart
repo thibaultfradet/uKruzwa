@@ -1,7 +1,9 @@
 import 'package:ukruzwa/data/dataSource/remote/instrument_firebase.dart';
 import 'package:ukruzwa/data/dataSource/remote/personne_firebase.dart';
+import 'package:ukruzwa/data/dataSource/remote/sonorisation_firebase.dart';
 import 'package:ukruzwa/data/dataSource/remote/style_firebase.dart';
 import 'package:ukruzwa/data/dataSource/remote/ville_firebase.dart';
+import 'package:ukruzwa/domain/models/sonorisation.dart';
 import 'package:ukruzwa/domain/models/ville.dart';
 import 'package:ukruzwa/domain/models/personnne.dart';
 import 'package:ukruzwa/domain/models/style.dart';
@@ -11,17 +13,13 @@ class Groupe {
   final String? idGroupe;
   final String nomGroupe;
   final String numeroRemplacementContact;
-  final bool possederSonorisation;
   final bool? ingeSon;
-  final String? modeleSono;
-  final String? descriptionSono;
-  final int? prixLocationSono;
-  final int? puissanceSonorisation;
   final bool? ingePro;
   final int? prixInge;
   //Clé étrangère
   final Ville villeRepetition;
   final Contact personneAContacter;
+  Sonorisation? sonorisationDuGroupe;
   final List<Style>? stylesDuGroupe;
   final List<Instrument>? instrumentsDuGroupe;
   final List<Ville>? endroitsDejaJoues;
@@ -31,16 +29,12 @@ class Groupe {
       : idGroupe = "",
         nomGroupe = '',
         numeroRemplacementContact = '',
-        possederSonorisation = false,
         ingeSon = null,
-        modeleSono = null,
-        descriptionSono = null,
-        prixLocationSono = null,
-        puissanceSonorisation = null,
         ingePro = null,
         prixInge = null,
         villeRepetition = Ville.empty(),
         personneAContacter = Contact.empty(),
+        sonorisationDuGroupe = Sonorisation.empty(),
         stylesDuGroupe = [],
         instrumentsDuGroupe = [],
         endroitsDejaJoues = [];
@@ -50,16 +44,12 @@ class Groupe {
     this.idGroupe,
     required this.nomGroupe,
     required this.numeroRemplacementContact,
-    required this.possederSonorisation,
     this.ingeSon,
-    this.modeleSono,
-    this.descriptionSono,
-    this.prixLocationSono,
-    this.puissanceSonorisation,
     this.ingePro,
     this.prixInge,
     required this.villeRepetition,
     required this.personneAContacter,
+    this.sonorisationDuGroupe,
     this.stylesDuGroupe,
     this.instrumentsDuGroupe,
     this.endroitsDejaJoues,
@@ -70,14 +60,11 @@ class Groupe {
     return {
       'idGroupe': idGroupe,
       'IngeSon': ingeSon,
-      'ModeleSono': modeleSono,
       'NomGroupe': nomGroupe,
       'NumeroRemplacementContact': numeroRemplacementContact,
       'NumeroTelephone': personneAContacter.numeroTelephone,
-      'PossederSonorisation': possederSonorisation,
       'PrixInge': prixInge,
-      'PrixLocaSono': prixLocationSono,
-      'PuissanceSono': puissanceSonorisation,
+      'idSonorisation': sonorisationDuGroupe!.idSonorisation,
       'idVille': villeRepetition.idVille,
       'idInstruments': instrumentsDuGroupe!.map((item) {
         return item.idInstrument;
@@ -108,16 +95,12 @@ class Groupe {
       idGroupe: json['idGroupe'],
       nomGroupe: json['NomGroupe'],
       numeroRemplacementContact: json['NumeroRemplacementContact'],
-      possederSonorisation: json['PossederSonorisation'],
       ingeSon: json['IngeSon'],
-      modeleSono: json['ModeleSono'],
-      descriptionSono: json['DescriptionSonorisation'],
-      prixLocationSono: json['PrixLocaSono'],
-      puissanceSonorisation: json['PuissanceSono'],
       ingePro: json['IngePro'],
       prixInge: json['PrixInge'],
       villeRepetition: await retrieveVille(json['idVille']),
       personneAContacter: await retrieveContact(json['NumeroTelephone']),
+      sonorisationDuGroupe: await retrieveSonorisation(json["idSonorisation"]),
       stylesDuGroupe: styles,
       instrumentsDuGroupe: instruments,
       endroitsDejaJoues: endroits,

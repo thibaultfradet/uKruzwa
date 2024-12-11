@@ -3,6 +3,7 @@ import 'package:ukruzwa/data/dataSource/remote/instrument_firebase.dart';
 import 'package:ukruzwa/data/dataSource/remote/personne_firebase.dart';
 import 'package:ukruzwa/data/dataSource/remote/style_firebase.dart';
 import 'package:ukruzwa/data/dataSource/remote/ville_firebase.dart';
+import 'package:ukruzwa/domain/models/sonorisation.dart';
 import 'package:ukruzwa/domain/models/groupe.dart';
 import 'package:ukruzwa/domain/models/instrument.dart';
 import 'package:ukruzwa/domain/models/personnne.dart';
@@ -44,6 +45,7 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
           event.codePostalVilleRepetition.isEmpty ||
           event.nomVilleRepetition.isEmpty) {
         emit(AGFailure());
+        return;
       } else {
         Groupe groupeCreate;
 
@@ -194,7 +196,7 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
           idGroupe: "",
           nomGroupe: event.nomGroupe,
           numeroRemplacementContact: event.numeroRemplacementContact,
-          possederSonorisation: event.possederSonorisation,
+          sonorisationDuGroupe: Sonorisation.empty(),
           villeRepetition: villeRepetition,
           personneAContacter: contactGroupe,
           stylesDuGroupe: listeStyleDuGroupe,
@@ -209,7 +211,7 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
           //Appel de la méthode de création
           createGroupe(groupeCreate);
           //Réussi => on emit le state success
-          emit(AGSuccess(groupeCreate.possederSonorisation, groupeCreate));
+          emit(AGSuccess(event.possederSonorisation, groupeCreate));
         } catch (e) {
           //Non réussi => on emit le state failure
           emit(AGFailure());

@@ -6,10 +6,10 @@ import 'package:ukruzwa/presentation/widgets/item_valider.dart';
 import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 
 class Globalpresentationcompte extends StatefulWidget {
+  final Groupe groupeConcerner;
   final VoidCallback onPressedDelete;
   final VoidCallback onPressedEdit;
   final VoidCallback onPressedEditSono;
-  final Groupe groupeConcerner;
 
   const Globalpresentationcompte({
     super.key,
@@ -161,9 +161,7 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                     height: MediaQuery.of(context).size.height * 0.058,
                     child: BoutonCustom(
                       largeur: 0.7,
-                      onpressed: () {
-                        widget.onPressedDelete();
-                      },
+                      onpressed: widget.onPressedDelete,
                       texteValeur: "SUPPRIMER",
                       isDeleteButton: true,
                     ),
@@ -174,9 +172,7 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                     height: MediaQuery.of(context).size.height * 0.058,
                     child: BoutonCustom(
                       largeur: 0.7,
-                      onpressed: () {
-                        widget.onPressedEdit;
-                      },
+                      onpressed: widget.onPressedEdit,
                       texteValeur: "MODIFIER LE GROUPE",
                     ),
                   ),
@@ -186,9 +182,7 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                     height: MediaQuery.of(context).size.height * 0.058,
                     child: BoutonCustom(
                       largeur: 0.7,
-                      onpressed: () {
-                        widget.onPressedEditSono;
-                      },
+                      onpressed: widget.onPressedEditSono,
                       texteValeur: "MODIFIER LA SONORISATION",
                     ),
                   )

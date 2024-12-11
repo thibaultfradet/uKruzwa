@@ -217,7 +217,7 @@ class _GrdetailState extends State<Grdetail> {
                           ),
                         ),
                         //Si le groupe possède une sonorisation on affiche informations sonorisation (possederSonorisation => booleen)
-                        widget.groupeConcerner.possederSonorisation
+                        widget.groupeConcerner.sonorisationDuGroupe != null
                             ? Container(
                                 alignment: Alignment.center,
                                 child: Column(
@@ -239,7 +239,8 @@ class _GrdetailState extends State<Grdetail> {
                                     ItemValider(
                                       valeur:
                                           // Pour éviter erreur valeur null
-                                          widget.groupeConcerner.modeleSono!,
+                                          widget.groupeConcerner
+                                              .sonorisationDuGroupe!.modeleSono,
                                       largeur: 0.8,
                                     ),
                                     //Espace entre les objets
@@ -254,7 +255,9 @@ class _GrdetailState extends State<Grdetail> {
                                     //Appel item valider avec une hauteur car description peut etre longue
                                     ItemValider(
                                       valeur: widget
-                                          .groupeConcerner.descriptionSono!,
+                                          .groupeConcerner
+                                          .sonorisationDuGroupe!
+                                          .descriptionSono,
                                       largeur: 0.8,
                                       hauteur: 0.2,
                                     ),
@@ -270,7 +273,9 @@ class _GrdetailState extends State<Grdetail> {
                                         const Horizontalmargin(ratio: 0.02),
                                         ItemValider(
                                           valeur: widget
-                                              .groupeConcerner.prixLocationSono
+                                              .groupeConcerner
+                                              .sonorisationDuGroupe!
+                                              .prixLocaSono
                                               .toString(),
                                         )
                                       ],
@@ -282,7 +287,7 @@ class _GrdetailState extends State<Grdetail> {
 
                         const VerticalMargin(ratio: 0.05),
                         // Si le groupe possède un ingénieur son on affiche ses informations (ingeSon => booleen)
-                        widget.groupeConcerner.ingeSon!
+                        widget.groupeConcerner.ingeSon != null
                             ? Container(
                                 alignment: Alignment.center,
                                 child: Column(

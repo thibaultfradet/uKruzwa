@@ -19,6 +19,18 @@ Future<String> createGroupe(Groupe groupeCreate) async {
   return docGroupe.id;
 }
 
+Future<bool> updateGroupeSonorisation(
+    String idGroupe, String idSonorisation) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  final docGroupe = db.collection("Groupes").doc(idGroupe);
+  try {
+    await docGroupe.set({"idSonorisation": idSonorisation});
+  } catch (exception) {
+    return false;
+  }
+  return true;
+}
+
 /* Méthode deleteGroupe => qui supprimer un objet groupe en base de données baser sur l'id du groupe passer en paramètre */
 Future<void> deleteGroupe(String idGroupe) async {}
 

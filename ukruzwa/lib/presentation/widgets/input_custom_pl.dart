@@ -6,6 +6,7 @@ class InputCustomPL extends StatelessWidget {
   final bool? isObscure;
   final bool? enable;
   final double? largeur;
+  final bool? isDouble;
   const InputCustomPL({
     super.key,
     required this.controllerPL,
@@ -13,6 +14,7 @@ class InputCustomPL extends StatelessWidget {
     this.isObscure,
     this.enable,
     this.largeur,
+    this.isDouble,
   });
 
   @override
@@ -23,6 +25,9 @@ class InputCustomPL extends StatelessWidget {
           ? MediaQuery.of(context).size.width * 0.9
           : MediaQuery.of(context).size.width * largeur!,
       child: TextFormField(
+        keyboardType: isDouble != null
+            ? const TextInputType.numberWithOptions(decimal: true)
+            : TextInputType.text,
         enabled: enable, // Active/desactiver en fonction du paramètre
         controller: controllerPL,
         obscureText: isObscure == null ? false : isObscure!,

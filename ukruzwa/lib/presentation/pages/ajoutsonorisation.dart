@@ -6,6 +6,7 @@ import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_e
 import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_state.dart';
 import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
 import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
+import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 
 class Ajoutsonorisation extends StatefulWidget {
   final Groupe
@@ -30,8 +31,10 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
     return BlocBuilder<AjoutsonorisationBloc, AjoutsonorisationState>(
       builder: (BuildContext context, state) {
         return Scaffold(
+          backgroundColor: Colors.white,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
+            backgroundColor: Colors.white,
             title: const Center(
               child: Text(
                 "Ajouter une sonorisation",
@@ -39,96 +42,158 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
               ),
             ),
           ),
-          body: Column(
-            children: [
-              //Description de la sono
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-                child: InputCustomPL(
-                  placeholder: "Description de la sonorisation",
-                  controllerPL: tecDescriptionSono,
-                  isObscure: false,
-                ),
-              ),
-              // Ingénieur accompagne groupe => + info qui dépende si true
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.4,
-                child: Column(
-                  children: [
-                    Checkbox(
-                      value: ingeAccompagne,
-                      onChanged: (bool? value) {
-                        setState(
-                          () {
-                            ingeAccompagne =
-                                value ?? false; // => false si valeur null
-                          },
-                        );
-                      },
-                    ),
-                    //Activé uniquement si ingeAccompagne est vrai
-                    Checkbox(
-                      value: ingeEstPro,
-                      onChanged: ingeAccompagne == true
-                          ? (bool? value) {
-                              setState(
-                                () {
-                                  ingeEstPro = value;
-                                },
-                              );
-                            }
-                          : null,
-                    ),
-                    InputCustomPL(
-                      placeholder: "Prix service ingénieur",
-                      controllerPL: tecPrixServiceInge,
+          body: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const VerticalMargin(ratio: 0.05),
+                  //Description de la sono
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.96,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    child: InputCustomPL(
+                      placeholder: "Description de la sonorisation",
+                      controllerPL: tecDescriptionSono,
                       isObscure: false,
-                      enable: ingeAccompagne,
-                    )
-                  ],
-                ),
-              ),
-
-              //modèle de la sono
-              InputCustomPL(
-                placeholder: "Modèle de la sonorisation",
-                controllerPL: tecModeleSono,
-                isObscure: false,
-              ),
-              //puissance sono
-              InputCustomPL(
-                placeholder: "Puissance de la sonorisation",
-                controllerPL: tecPuissanceSono,
-                isObscure: false,
-              ),
-              //Prix location sono
-              InputCustomPL(
-                placeholder: "Prix location de la sonorisation",
-                controllerPL: tecPrixLocationSono,
-                isObscure: false,
-              ),
-
-              //Bouton validation formulaire
-              BoutonCustom(
-                onpressed: () {
-                  BlocProvider.of<AjoutsonorisationBloc>(context).add(
-                    ASEventCreate(
-                      descriptionSono: tecDescriptionSono.text,
-                      ingeAccompagne: ingeAccompagne,
-                      modeleSono: tecModeleSono.text,
-                      prixLocationSono: int.parse(tecPrixLocationSono.text),
-                      puissanceSono: int.parse(tecPuissanceSono.text),
-                      //valeur nullable
-                      ingeEstPro: ingeEstPro,
-                      prixServiceInge: tecPrixServiceInge.text != ""
-                          ? int.parse(tecPrixServiceInge.text)
-                          : null,
                     ),
-                  );
-                },
-                texteValeur: "Valider",
+                  ),
+
+                  const VerticalMargin(ratio: 0.03),
+                  // Ingénieur accompagne groupe => + info qui dépende si true
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.09,
+                    child: Column(
+                      children: [
+                        const Text("Un ingénieur accompagne t'il le groupe ?"),
+                        Checkbox(
+                          value: ingeAccompagne,
+                          onChanged: (bool? value) {
+                            setState(
+                              () {
+                                ingeAccompagne =
+                                    value ?? false; // => false si valeur null
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const VerticalMargin(ratio: 0.03),
+                  //Activé uniquement si ingeAccompagne est vrai
+                  Visibility(
+                    visible: ingeAccompagne,
+                    child: SizedBox(
+                      // height: MediaQuery.of(context).size.height * 0.3,
+                      child: Column(
+                        children: [
+                          //Ingénieur est pro
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.96,
+                            height: MediaQuery.of(context).size.height * 0.22,
+                            child: Column(
+                              children: [
+                                const Text(
+                                  "L'ingénieur qui accompagne le groupe est t'il un professionnel ?",
+                                  textAlign: TextAlign.center,
+                                ),
+                                Checkbox(
+                                  value: ingeEstPro ?? false,
+                                  onChanged: ingeAccompagne == true
+                                      ? (bool? value) {
+                                          setState(
+                                            () {
+                                              ingeEstPro = value;
+                                            },
+                                          );
+                                        }
+                                      : null,
+                                ),
+                                const VerticalMargin(ratio: 0.03),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.96,
+                                  child: InputCustomPL(
+                                    placeholder: "Prix service ingénieur",
+                                    controllerPL: tecPrixServiceInge,
+                                    isObscure: false,
+                                    enable: ingeAccompagne,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  const VerticalMargin(ratio: 0.03),
+
+                  //modèle de la sono
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.96,
+                    child: InputCustomPL(
+                      placeholder: "Modèle de la sonorisation",
+                      controllerPL: tecModeleSono,
+                      isObscure: false,
+                    ),
+                  ),
+
+                  const VerticalMargin(ratio: 0.03),
+                  //puissance sono
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.96,
+                    child: InputCustomPL(
+                      placeholder: "Puissance de la sonorisation",
+                      controllerPL: tecPuissanceSono,
+                      isObscure: false,
+                      isDouble: true,
+                    ),
+                  ),
+
+                  const VerticalMargin(ratio: 0.03),
+                  //Prix location sono
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.96,
+                    child: InputCustomPL(
+                      placeholder: "Prix location de la sonorisation",
+                      controllerPL: tecPrixLocationSono,
+                      isObscure: false,
+                      isDouble: true,
+                    ),
+                  ),
+
+                  const VerticalMargin(ratio: 0.03),
+                  //Bouton validation formulaire
+                  BoutonCustom(
+                    onpressed: () {
+                      BlocProvider.of<AjoutsonorisationBloc>(context).add(
+                        ASEventCreate(
+                          groupeConcerner: widget.groupeConcerner,
+                          descriptionSono: tecDescriptionSono.text,
+                          ingeAccompagne: ingeAccompagne,
+                          modeleSono: tecModeleSono.text,
+                          prixLocationSono: tecPrixLocationSono.text,
+                          puissanceSono: tecPuissanceSono.text,
+                          //valeur nullable
+                          ingeEstPro:
+                              ingeAccompagne == false ? null : ingeEstPro,
+                          prixServiceInge: ingeAccompagne == false
+                              ? null
+                              : tecPrixServiceInge.text != ""
+                                  ? int.parse(tecPrixServiceInge.text)
+                                  : null,
+                        ),
+                      );
+                    },
+                    texteValeur: "Valider",
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         );
       },

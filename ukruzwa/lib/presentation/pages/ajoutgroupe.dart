@@ -270,6 +270,7 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                         placeholder: "Nombre de chanteurs",
                         controllerPL: tecNbChanteurs,
                         isObscure: false,
+                        isDouble: true,
                       ),
                     ),
 
@@ -288,6 +289,7 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                                   controllerPL: tecCodePostalVilleRep,
                                   placeholder: "Code postal",
                                   largeur: 0.4,
+                                  isDouble: true,
                                 ),
                               ),
                               const Horizontalmargin(ratio: 0.07),
@@ -320,6 +322,7 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                                   controllerPL: tecCodePostalJoues,
                                   placeholder: "Code postal endroit joué",
                                   largeur: 0.4,
+                                  isDouble: true,
                                 ),
                               ),
                               SizedBox(

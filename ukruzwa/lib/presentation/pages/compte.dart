@@ -4,6 +4,7 @@ import 'package:ukruzwa/presentation/blocs/compte/compte_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/compte/compte_event.dart';
 import 'package:ukruzwa/presentation/blocs/compte/compte_state.dart';
 import 'package:ukruzwa/presentation/pages/ajoutgroupe.dart';
+import 'package:ukruzwa/presentation/pages/ajoutsonorisation.dart';
 import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
 import 'package:ukruzwa/presentation/widgets/global_presentation_compte.dart';
 import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
@@ -73,7 +74,6 @@ class _CompteState extends State<Compte> {
                               texteValeur: "Ajouter un groupe"),
                           const VerticalMargin(ratio: 0.02),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.9,
                             child: ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
@@ -96,9 +96,41 @@ class _CompteState extends State<Compte> {
                                         );
                                       },
                                       //Envoie de l'utilisateur vers la page de modification de groupe
-                                      onPressedEdit: () {},
+                                      onPressedEdit: () {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) {
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Ajoutgroupe(
+                                                  groupeAModifier: state
+                                                      .groupeDuCompte[index],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
                                       //Envoie de l'utilisateur vers la page de modification de la sono du groupe concerner
-                                      onPressedEditSono: () {},
+                                      onPressedEditSono: () {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) {
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Ajoutsonorisation(
+                                                  groupeConcerner: state
+                                                      .groupeDuCompte[index],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
                                     ),
                                     const VerticalMargin(ratio: 0.03)
                                   ],
@@ -106,6 +138,7 @@ class _CompteState extends State<Compte> {
                               },
                             ),
                           ),
+                          const VerticalMargin(ratio: 0.05),
                         ],
                       ),
                     ),
