@@ -10,9 +10,9 @@ class Instrument {
   Instrument({this.idInstrument, required this.nomInstrument});
 
   /* FONCTION DE CONVERSION */
-  /* FONCTION DE CONVERSION */
-  Map<String, dynamic> toFirestore() {
+  Map<String, dynamic> toFirestore(String idInstrument) {
     return {
+      'idInstrument': idInstrument,
       'NomInstrument': nomInstrument,
     };
   }

@@ -1,3 +1,4 @@
+import 'package:ukruzwa/domain/models/groupe.dart';
 import 'package:ukruzwa/domain/models/instrument.dart';
 import 'package:ukruzwa/domain/models/personnne.dart';
 import 'package:ukruzwa/domain/models/style.dart';
@@ -24,8 +25,9 @@ class AjoutgroupeStateInitial extends AjoutgroupeState {
 
 // Tentative de création => load,success,fail
 class AGSuccess extends AjoutgroupeState {
+  final Groupe groupeConcerner;
   final bool isSonorisation;
-  AGSuccess(this.isSonorisation) : super();
+  AGSuccess(this.isSonorisation, this.groupeConcerner) : super();
 }
 
 class AGFailure extends AjoutgroupeState {

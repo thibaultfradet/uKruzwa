@@ -8,9 +8,15 @@ import 'package:ukruzwa/domain/models/instrument.dart';
 import 'package:ukruzwa/domain/models/personnne.dart';
 import 'package:ukruzwa/domain/models/style.dart';
 
-Future<bool> createGroupe(Groupe groupeCreate) async {
-  bool isSuccess = false;
-  return isSuccess;
+Future<String> createGroupe(Groupe groupeCreate) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  final docGroupe = db.collection("Groupes").doc();
+  try {
+    await docGroupe.set(groupeCreate.toFirestore(docGroupe.id));
+  } catch (exception) {
+    return "";
+  }
+  return docGroupe.id;
 }
 
 /* Méthode deleteGroupe => qui supprimer un objet groupe en base de données baser sur l'id du groupe passer en paramètre */

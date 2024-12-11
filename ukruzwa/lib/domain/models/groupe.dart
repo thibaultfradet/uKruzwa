@@ -66,8 +66,9 @@ class Groupe {
   });
 
   /* FONCTION DE CONVERSION */
-  Map<String, dynamic> toFirestore() {
+  Map<String, dynamic> toFirestore(String idGroupe) {
     return {
+      'idGroupe': idGroupe,
       'IngeSon': ingeSon,
       'ModeleSono': modeleSono,
       'NomGroupe': nomGroupe,
@@ -81,7 +82,7 @@ class Groupe {
       'idInstruments': instrumentsDuGroupe!.map((item) {
         return item.idInstrument;
       }).toList(),
-      'IdStyles': stylesDuGroupe!.map((item) {
+      'idStyles': stylesDuGroupe!.map((item) {
         return item.idStyle;
       }).toList(),
       'idVilles': endroitsDejaJoues!.map((item) {

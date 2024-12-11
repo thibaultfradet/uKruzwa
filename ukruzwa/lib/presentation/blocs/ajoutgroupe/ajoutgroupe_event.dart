@@ -11,10 +11,10 @@ class AGEventCreate extends AjoutgroupeEvent {
   final String nomVilleRepetition;
   final String codePostalVilleRepetition;
   final List<String> instrumentsDuGroupe;
-  final int
+  final String
       nombreChanteurs; // A ajouter aux chanteurs -> dans le bloc plus tard
   final bool possederSonorisation;
-  final List<String>? endroitsJouesDuGroupe;
+  final List<List<String>>? endroitsJouesDuGroupe;
 
   AGEventCreate({
     required this.nomGroupe,

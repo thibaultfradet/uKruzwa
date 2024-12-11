@@ -1,12 +1,18 @@
 /* CRUD ET AUTRE */
 
-/* Méthode createVille qui prend en paamètre une ville et qui retourne un booleen si la ville a réussi à être créer */
+/* Méthode createVille qui prend en paamètre une ville et qui retourne le numéro du doc créer */
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ukruzwa/domain/models/ville.dart';
 
-Future<bool> createVille(Ville villeCreate) async {
-  bool isSuccess = true;
-  return isSuccess;
+Future<String> createVille(Ville villeCreate) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  final docVille = db.collection("Villes").doc();
+  try {
+    await docVille.set(villeCreate.toFirestore(docVille.id));
+  } catch (exception) {
+    return "";
+  }
+  return docVille.id;
 }
 
 /* retrieveVille qui prend en paramètre un idVile et retourne un objet ville lier dans la base de données */

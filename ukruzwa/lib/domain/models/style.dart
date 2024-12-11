@@ -10,9 +10,10 @@ class Style {
   Style({this.idStyle, required this.nomStyle});
 
   /* FONCTION DE CONVERSION */
-  Map<String, dynamic> toFirestore() {
+  Map<String, dynamic> toFirestore(String idStyle) {
     return {
-      'NomStyles': nomStyle,
+      'idStyle': idStyle,
+      'NomStyle': nomStyle,
     };
   }
 

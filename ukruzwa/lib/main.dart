@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ukruzwa/firebase_options.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutgroupe/ajoutgroupe_bloc.dart';
+import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/authentification/authentification_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/home/home_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/grdetail/grdetail_bloc.dart';
@@ -35,6 +36,9 @@ void main() async {
         BlocProvider<AjoutgroupeBloc>(
           create: (_) => AjoutgroupeBloc(),
         ),
+        BlocProvider<AjoutsonorisationBloc>(
+          create: (_) => AjoutsonorisationBloc(),
+        )
       ],
       child: const MyApp(),
     ),

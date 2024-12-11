@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ukruzwa/data/dataSource/remote/ville_firebase.dart';
 import 'package:ukruzwa/domain/models/personnne.dart';
 import 'package:ukruzwa/domain/models/ville.dart';
 /* CRUD ET AUTRE  */
@@ -47,12 +48,8 @@ Future<bool> createUserInFirestore(String emailAddress, String nom,
 
   try {
     // On ajoute la ville et l'utilisateur en base
-    final docVille = db.collection("Villes").doc();
-    await docVille.set({
-      "CodePostal": villeTemp.codePostal,
-      "NomVille": villeTemp.nomVille,
-      "idVille": docVille.id,
-    });
+    String idVille = await createVille(villeTemp);
+
     final docName = db
         .collection("Personnes")
         .doc(numTel); // identifiant unique => numéro téléphone
@@ -61,7 +58,7 @@ Future<bool> createUserInFirestore(String emailAddress, String nom,
       "Nom": personneTemp.nom,
       "Prenom": personneTemp.prenom,
       "NumeroTelephone": personneTemp.numeroTelephone,
-      "idVille": docVille.id,
+      "idVille": idVille,
     });
     isSuccess = true;
   } catch (e) {

@@ -2,11 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ukruzwa/domain/models/instrument.dart';
 /* CRUD ET AUTRE */
 
-/* Fonction createInstrument qui prend en paramètre un objet instrument qui essaye de le créer en base et retourne le statut de la création */
-
-Future<bool> createInstrument(Instrument instrumentCreate) async {
-  bool isSuccess = true;
-  return isSuccess;
+/* Fonction createInstrument qui prend en paramètre un objet instrument qui essaye de le créer en base et retourne le numéro du doc */
+Future<String> createInstrument(Instrument instrumentCreate) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  final docInstrument = db.collection("Instruments").doc();
+  try {
+    await docInstrument.set(instrumentCreate.toFirestore(docInstrument.id));
+  } catch (exception) {
+    return "";
+  }
+  return docInstrument.id;
 }
 
 /* Fonction findAllInstrument qui retourne la liste de touts les instruments présent dans la base de données */

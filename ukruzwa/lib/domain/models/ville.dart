@@ -16,8 +16,9 @@ class Ville {
   });
 
   /* FONCTION DE CONVERSION */
-  Map<String, dynamic> toFirestore() {
+  Map<String, dynamic> toFirestore(String idVille) {
     return {
+      'idVille': idVille,
       'CodePostal': codePostal,
       'NomVille': nomVille,
     };

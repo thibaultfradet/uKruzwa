@@ -5,9 +5,15 @@ import 'package:ukruzwa/domain/models/style.dart';
 
 /* Fonction createStyle qui prend en paramètre un objet style qui essaye de créer le style et retourner le statut */
 
-Future<bool> createStyle(Style styleCreate) async {
-  bool isSuccess = true;
-  return isSuccess;
+Future<String> createStyle(Style styleCreate) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  final docStyle = db.collection("Styles").doc();
+  try {
+    await docStyle.set(styleCreate.toFirestore(docStyle.id));
+  } catch (exception) {
+    return "";
+  }
+  return docStyle.id;
 }
 
 /* fonction findAllStyle qui retourne la liste de touts les styles de la base de données */
