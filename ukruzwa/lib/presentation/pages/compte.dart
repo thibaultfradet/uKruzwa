@@ -123,8 +123,9 @@ class _CompteState extends State<Compte> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     Ajoutsonorisation(
-                                                  groupeConcerner: state
-                                                      .groupeDuCompte[index],
+                                                  idGroupeConcerner: state
+                                                      .groupeDuCompte[index]
+                                                      .idGroupe!,
                                                 ),
                                               ),
                                             );

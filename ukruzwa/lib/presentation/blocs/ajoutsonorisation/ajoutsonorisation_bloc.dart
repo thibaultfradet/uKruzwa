@@ -28,7 +28,7 @@ class AjoutsonorisationBloc
         String idSonorisation = await createSonorisation(sonorisationTemp);
 
         //Modification en bdd avec l'identifiant de la sonorisation
-        Groupe groupeTemp = event.groupeConcerner;
+        Groupe groupeTemp = await retrieveGroupe(event.idGroupeConcerner);
         groupeTemp.sonorisationDuGroupe = sonorisationTemp;
         updateGroupeSonorisation(groupeTemp.idGroupe!, idSonorisation);
         //Réussi => on emit le state success

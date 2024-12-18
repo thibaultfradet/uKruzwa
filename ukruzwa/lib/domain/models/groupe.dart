@@ -100,7 +100,10 @@ class Groupe {
       prixInge: json['PrixInge'],
       villeRepetition: await retrieveVille(json['idVille']),
       personneAContacter: await retrieveContact(json['NumeroTelephone']),
-      sonorisationDuGroupe: await retrieveSonorisation(json["idSonorisation"]),
+      sonorisationDuGroupe:
+          json["idSonorisation"].isEmpty || json["idSonorisation"] == null
+              ? null
+              : await retrieveSonorisation(json["idSonorisation"]),
       stylesDuGroupe: styles,
       instrumentsDuGroupe: instruments,
       endroitsDejaJoues: endroits,

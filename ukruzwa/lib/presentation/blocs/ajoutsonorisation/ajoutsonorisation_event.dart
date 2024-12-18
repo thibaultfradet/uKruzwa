@@ -1,11 +1,9 @@
-import 'package:ukruzwa/domain/models/groupe.dart';
-
 class AjoutsonorisationEvent {
   const AjoutsonorisationEvent();
 }
 
 class ASEventCreate extends AjoutsonorisationEvent {
-  final Groupe groupeConcerner;
+  final String idGroupeConcerner;
   final String descriptionSono;
   final bool ingeAccompagne;
   final bool?
@@ -16,7 +14,7 @@ class ASEventCreate extends AjoutsonorisationEvent {
   final int?
       prixServiceInge; // nullable => uniquement actif si ingeAccompagne => true
   ASEventCreate({
-    required this.groupeConcerner,
+    required this.idGroupeConcerner,
     required this.descriptionSono,
     required this.ingeAccompagne,
     this.ingeEstPro,

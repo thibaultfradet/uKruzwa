@@ -19,12 +19,24 @@ Future<String> createGroupe(Groupe groupeCreate) async {
   return docGroupe.id;
 }
 
+/* Fonction retrieveGroupe qui prend en paramètre un id de groupe et retourne l'objet groupe associé dans la base de données */
+Future<Groupe> retrieveGroupe(String idGroupe) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  final docGroupe = db.collection("Groupes").doc(idGroupe);
+
+  var getDataGroupe = await docGroupe.get();
+  Map<String, dynamic>? dataGroupe = getDataGroupe.data();
+
+  Groupe groupeTemp = await Groupe.empty().groupeFromJSON(dataGroupe!);
+  return groupeTemp;
+}
+
 Future<bool> updateGroupeSonorisation(
     String idGroupe, String idSonorisation) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
   final docGroupe = db.collection("Groupes").doc(idGroupe);
   try {
-    await docGroupe.set({"idSonorisation": idSonorisation});
+    await docGroupe.update({"idSonorisation": idSonorisation});
   } catch (exception) {
     return false;
   }

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ukruzwa/domain/models/groupe.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_event.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_state.dart';
+import 'package:ukruzwa/presentation/pages/home.dart';
 import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
 import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
 import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 
 class Ajoutsonorisation extends StatefulWidget {
-  final Groupe
-      groupeConcerner; // => dans touts les cas MAIS AUSSI pour la modification d'une sono
-  const Ajoutsonorisation({super.key, required this.groupeConcerner});
+  final String
+      idGroupeConcerner; // => dans touts les cas MAIS AUSSI pour la modification d'une sono
+  const Ajoutsonorisation({super.key, required this.idGroupeConcerner});
 
   @override
   State<Ajoutsonorisation> createState() => _AjoutsonorisationState();
@@ -30,6 +30,33 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
   Widget build(BuildContext context) {
     return BlocBuilder<AjoutsonorisationBloc, AjoutsonorisationState>(
       builder: (BuildContext context, state) {
+        //Si la création de sonorisation cest bien produit
+        if (state is ASSuccess) {
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const Home(),
+                ),
+              );
+            },
+          );
+        }
+        if (state is ASFailure) {
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Center(
+                    child: Text(
+                      'Une erreur est survenue lors de la création, veuillez saisir touts les champs.',
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        }
         return Scaffold(
           backgroundColor: Colors.white,
           resizeToAvoidBottomInset: false,
@@ -119,6 +146,7 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
                                     placeholder: "Prix service ingénieur",
                                     controllerPL: tecPrixServiceInge,
                                     isObscure: false,
+                                    isDouble: true,
                                     enable: ingeAccompagne,
                                   ),
                                 ),
@@ -172,7 +200,7 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
                     onpressed: () {
                       BlocProvider.of<AjoutsonorisationBloc>(context).add(
                         ASEventCreate(
-                          groupeConcerner: widget.groupeConcerner,
+                          idGroupeConcerner: widget.idGroupeConcerner,
                           descriptionSono: tecDescriptionSono.text,
                           ingeAccompagne: ingeAccompagne,
                           modeleSono: tecModeleSono.text,

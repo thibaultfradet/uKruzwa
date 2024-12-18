@@ -57,7 +57,7 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => Ajoutsonorisation(
-                        groupeConcerner: state.groupeConcerner,
+                        idGroupeConcerner: state.idGroupe,
                       ),
                     ),
                   );

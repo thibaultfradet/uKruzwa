@@ -209,9 +209,9 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
           emit(AGLoading());
 
           //Appel de la méthode de création
-          createGroupe(groupeCreate);
+          String idGroupe = await createGroupe(groupeCreate);
           //Réussi => on emit le state success
-          emit(AGSuccess(event.possederSonorisation, groupeCreate));
+          emit(AGSuccess(event.possederSonorisation, idGroupe));
         } catch (e) {
           //Non réussi => on emit le state failure
           emit(AGFailure());
