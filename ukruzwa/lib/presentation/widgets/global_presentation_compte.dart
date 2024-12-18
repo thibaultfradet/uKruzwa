@@ -161,8 +161,10 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                     height: MediaQuery.of(context).size.height * 0.058,
                     child: BoutonCustom(
                       largeur: 0.7,
-                      onpressed: widget.onPressedDelete,
-                      texteValeur: "SUPPRIMER",
+                      onpressed: () {
+                        widget.onPressedDelete();
+                      },
+                      texteValeur: "Supprimer",
                       isDeleteButton: true,
                     ),
                   ),
@@ -172,20 +174,25 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                     height: MediaQuery.of(context).size.height * 0.058,
                     child: BoutonCustom(
                       largeur: 0.7,
-                      onpressed: widget.onPressedEdit,
-                      texteValeur: "MODIFIER LE GROUPE",
+                      onpressed: () => widget.onPressedEdit(),
+                      texteValeur: "Modifier le groupe",
                     ),
                   ),
                   const VerticalMargin(ratio: 0.01),
-                  //edit sono button
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.058,
-                    child: BoutonCustom(
-                      largeur: 0.7,
-                      onpressed: widget.onPressedEditSono,
-                      texteValeur: "MODIFIER LA SONORISATION",
-                    ),
-                  )
+
+                  //Si le groupe n'a pas de sonorisation ou ne propose pas de la modifier
+                  widget.groupeConcerner.sonorisationDuGroupe != null
+                      ?
+                      //edit sono button
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.058,
+                          child: BoutonCustom(
+                            largeur: 0.7,
+                            onpressed: () => widget.onPressedEditSono(),
+                            texteValeur: "Modifier la sonorisation",
+                          ),
+                        )
+                      : const SizedBox()
                 ],
               ),
             )

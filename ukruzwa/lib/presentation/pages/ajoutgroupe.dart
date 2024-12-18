@@ -112,14 +112,24 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                 children: [
                   if (state is AjoutgroupeStateInitial) ...[
                     const VerticalMargin(ratio: 0.05),
-
                     //Nom du groupe
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.96,
                       child: InputCustomPL(
                         placeholder: "Nom du groupe",
                         controllerPL: tecNomDuGroupe,
-                        isObscure: false,
+                        valeur: widget.groupeAModifier?.nomGroupe,
+                      ),
+                    ),
+                    const VerticalMargin(ratio: 0.03),
+                    //Numéro remplacement
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.96,
+                      child: InputCustomPL(
+                        placeholder: "Numéro remplacement du groupe",
+                        controllerPL: tecNumRemplacementContact,
+                        valeur:
+                            widget.groupeAModifier?.numeroRemplacementContact,
                       ),
                     ),
 
@@ -269,7 +279,12 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                       child: InputCustomPL(
                         placeholder: "Nombre de chanteurs",
                         controllerPL: tecNbChanteurs,
-                        isObscure: false,
+                        //nombre d'iteration du libelle chanteur dans la liste d'instrument
+                        valeur: widget.groupeAModifier?.instrumentsDuGroupe!
+                            .where((instrument) =>
+                                instrument.nomInstrument == "chanteur")
+                            .length
+                            .toString(),
                         isDouble: true,
                       ),
                     ),
@@ -289,6 +304,8 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                                   controllerPL: tecCodePostalVilleRep,
                                   placeholder: "Code postal",
                                   largeur: 0.4,
+                                  valeur: widget.groupeAModifier
+                                      ?.villeRepetition.codePostal,
                                   isDouble: true,
                                 ),
                               ),
@@ -298,6 +315,8 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                                   controllerPL: tecNomVilleRepetition,
                                   placeholder: "Ville",
                                   largeur: 0.4,
+                                  valeur: widget.groupeAModifier
+                                      ?.villeRepetition.nomVille,
                                 ),
                               ),
                             ],

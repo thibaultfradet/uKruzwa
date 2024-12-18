@@ -12,6 +12,7 @@ class AjoutsonorisationBloc
     //Etat initial
 
     on<ASEventCreate>((event, emit) async {
+      // TODO : Vérifier si la sonorisation n'existe pas deja en base si elle existe on récupère l'identifiant et on met à jour
       try {
         //Création longue donc on emit un state de chargement en attendant
         emit(ASLoading());

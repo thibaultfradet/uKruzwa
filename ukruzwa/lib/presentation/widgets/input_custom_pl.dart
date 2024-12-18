@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class InputCustomPL extends StatelessWidget {
   final TextEditingController controllerPL;
   final String placeholder;
+  final String? valeur;
   final bool? isObscure;
   final bool? enable;
   final double? largeur;
@@ -11,6 +12,7 @@ class InputCustomPL extends StatelessWidget {
     super.key,
     required this.controllerPL,
     required this.placeholder,
+    this.valeur,
     this.isObscure,
     this.enable,
     this.largeur,
@@ -25,6 +27,7 @@ class InputCustomPL extends StatelessWidget {
           ? MediaQuery.of(context).size.width * 0.9
           : MediaQuery.of(context).size.width * largeur!,
       child: TextFormField(
+        initialValue: valeur,
         keyboardType: isDouble != null
             ? const TextInputType.numberWithOptions(decimal: true)
             : TextInputType.text,

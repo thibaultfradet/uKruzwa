@@ -18,7 +18,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   // Pour DropDownButton => liste des options
-  List<String> options = ['Nom', 'Style', 'Instrument'];
+  List<String> options = ['Style'];
   // Pour DropDownButton => valeur sélectionnée par défaut
   String? selectedValue;
   // Pour TextEditingController

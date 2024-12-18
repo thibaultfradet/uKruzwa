@@ -44,7 +44,16 @@ Future<bool> updateGroupeSonorisation(
 }
 
 /* Méthode deleteGroupe => qui supprimer un objet groupe en base de données baser sur l'id du groupe passer en paramètre */
-Future<void> deleteGroupe(String idGroupe) async {}
+Future<bool> deleteGroupe(String idGroupe) async {
+  try {
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    final docGroupe = db.collection("Groupes").doc(idGroupe);
+    docGroupe.delete();
+    return true;
+  } catch (exception) {
+    return false;
+  }
+}
 
 /* Fonction FindAllGroupe qui ne prend pas de paramètre et retourne une liste de groupe */
 Future<List<Groupe>> findAllGroupe() async {
