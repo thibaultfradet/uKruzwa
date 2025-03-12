@@ -24,7 +24,6 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
   List<String> instrumentSelectionnes = [];
   List<String> stylesSelectionnes = [];
   List<List<String>> villeJouesSelectionnes = [];
-  String numeroTelContactSaisie = "";
   TextEditingController tecNomDuGroupe = TextEditingController();
   TextEditingController tecStyleDuGroupe = TextEditingController();
   TextEditingController tecInstrumentDuGroupe = TextEditingController();
@@ -42,6 +41,62 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
   TextEditingController tecCodePostalVilleRep = TextEditingController();
 
   bool isSonorisation = false;
+
+  /* Méthode modifieListe => appeler lorsque le groupe en paramètre n'est pas null 
+   * modifie les liste par le biais des listes d'items du groupe a modifier
+   */
+  void modifieListe() {
+    //styles
+    for (int i = 0; i < widget.groupeAModifier!.stylesDuGroupe!.length; i++) {
+      stylesSelectionnes
+          .add(widget.groupeAModifier!.stylesDuGroupe![i].nomStyle);
+    }
+    //instruments
+    for (int i = 0;
+        i < widget.groupeAModifier!.instrumentsDuGroupe!.length;
+        i++) {
+      instrumentSelectionnes
+          .add(widget.groupeAModifier!.instrumentsDuGroupe![i].nomInstrument);
+    }
+    //endroits joués
+    for (int i = 0;
+        i < widget.groupeAModifier!.endroitsDejaJoues!.length;
+        i++) {
+      villeJouesSelectionnes.add([
+        widget.groupeAModifier!.endroitsDejaJoues![i].codePostal,
+        widget.groupeAModifier!.endroitsDejaJoues![i].nomVille
+      ]);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.groupeAModifier != null) {
+      // Nom groupe et numéro remplacement
+      tecNomDuGroupe =
+          TextEditingController(text: widget.groupeAModifier!.nomGroupe);
+      tecNumRemplacementContact = TextEditingController(
+          text: widget.groupeAModifier!.numeroRemplacementContact);
+
+      // Endroits repetition
+      tecCodePostalVilleRep = TextEditingController(
+          text: widget.groupeAModifier!.villeRepetition.codePostal);
+      tecNomVilleRepetition = TextEditingController(
+          text: widget.groupeAModifier!.villeRepetition.nomVille);
+
+      // nb chanteurs
+      tecNbChanteurs = TextEditingController(
+          text: widget.groupeAModifier!.instrumentsDuGroupe!
+              .where((instrument) => instrument.nomInstrument == "chanteur")
+              .length
+              .toString());
+
+      // liste items
+      modifieListe();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -280,11 +335,6 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                         placeholder: "Nombre de chanteurs",
                         controllerPL: tecNbChanteurs,
                         //nombre d'iteration du libelle chanteur dans la liste d'instrument
-                        valeur: widget.groupeAModifier?.instrumentsDuGroupe!
-                            .where((instrument) =>
-                                instrument.nomInstrument == "chanteur")
-                            .length
-                            .toString(),
                         isDouble: true,
                       ),
                     ),
@@ -457,22 +507,47 @@ class _AjoutgroupeState extends State<Ajoutgroupe> {
                               },
                             );
                           } else {
-                            BlocProvider.of<AjoutgroupeBloc>(context).add(
-                              AGEventCreate(
-                                nomGroupe: tecNomDuGroupe.text,
-                                instrumentsDuGroupe: instrumentSelectionnes,
-                                nombreChanteurs: tecNbChanteurs.text,
-                                numeroRemplacementContact:
-                                    tecNumRemplacementContact.text,
-                                numeroTelContact: tecNumTelContact.text,
-                                possederSonorisation: isSonorisation,
-                                stylesDuGroupe: stylesSelectionnes,
-                                nomVilleRepetition: tecNomVilleRepetition.text,
-                                codePostalVilleRepetition:
-                                    tecCodePostalVilleRep.text,
-                                endroitsJouesDuGroupe: villeJouesSelectionnes,
-                              ),
-                            );
+                            //Non null modification de groupe
+                            if (widget.groupeAModifier != null) {
+                              BlocProvider.of<AjoutgroupeBloc>(context).add(
+                                AGEventEdit(
+                                  idGroupe: widget.groupeAModifier!.idGroupe!,
+                                  nomGroupe: tecNomDuGroupe.text,
+                                  instrumentsDuGroupe: instrumentSelectionnes,
+                                  nombreChanteurs: tecNbChanteurs.text,
+                                  numeroRemplacementContact:
+                                      tecNumRemplacementContact.text,
+                                  numeroTelContact: tecNumTelContact.text,
+                                  possederSonorisation: isSonorisation,
+                                  stylesDuGroupe: stylesSelectionnes,
+                                  nomVilleRepetition:
+                                      tecNomVilleRepetition.text,
+                                  codePostalVilleRepetition:
+                                      tecCodePostalVilleRep.text,
+                                  endroitsJouesDuGroupe: villeJouesSelectionnes,
+                                ),
+                              );
+                            }
+                            //Création d'un groupe
+                            else {
+                              BlocProvider.of<AjoutgroupeBloc>(context).add(
+                                AGEventCreate(
+                                  nomGroupe: tecNomDuGroupe.text,
+                                  instrumentsDuGroupe: instrumentSelectionnes,
+                                  nombreChanteurs: tecNbChanteurs.text,
+                                  numeroRemplacementContact:
+                                      tecNumRemplacementContact.text,
+                                  numeroTelContact: tecNumTelContact.text,
+                                  possederSonorisation: isSonorisation,
+                                  stylesDuGroupe: stylesSelectionnes,
+                                  nomVilleRepetition:
+                                      tecNomVilleRepetition.text,
+                                  codePostalVilleRepetition:
+                                      tecCodePostalVilleRep.text,
+                                  endroitsJouesDuGroupe: villeJouesSelectionnes,
+                                ),
+                              );
+                            }
                           }
                         },
                         texteValeur: "Valider",

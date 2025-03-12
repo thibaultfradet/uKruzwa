@@ -27,7 +27,7 @@ class InputCustomPL extends StatelessWidget {
           ? MediaQuery.of(context).size.width * 0.9
           : MediaQuery.of(context).size.width * largeur!,
       child: TextFormField(
-        initialValue: valeur,
+        // clavier nombre
         keyboardType: isDouble != null
             ? const TextInputType.numberWithOptions(decimal: true)
             : TextInputType.text,
@@ -35,7 +35,7 @@ class InputCustomPL extends StatelessWidget {
         controller: controllerPL,
         obscureText: isObscure == null ? false : isObscure!,
         decoration: InputDecoration(
-          labelText: placeholder,
+          labelText: placeholder, // placeholder
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(width: 1, color: Colors.grey),
             borderRadius: BorderRadius.circular(15),

@@ -29,8 +29,11 @@ class _AuthentificationState extends State<Authentification> {
         if (state is AuthSuccess && state.isLoginMode) {
           WidgetsBinding.instance.addPostFrameCallback(
             (_) {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const Home()),
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => const Home(),
+                ),
+                (Route route) => false,
               );
             },
           );

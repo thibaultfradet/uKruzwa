@@ -31,6 +31,7 @@ class AjoutsonorisationBloc
         //Modification en bdd avec l'identifiant de la sonorisation
         Groupe groupeTemp = await retrieveGroupe(event.idGroupeConcerner);
         groupeTemp.sonorisationDuGroupe = sonorisationTemp;
+        // TODO: Modifier pour rajouter les elements du formulaire comme ingeSon et + si il est bien égale à true => passer en paramètre de la fonction
         updateGroupeSonorisation(groupeTemp.idGroupe!, idSonorisation);
         //Réussi => on emit le state success
         emit(ASSuccess());

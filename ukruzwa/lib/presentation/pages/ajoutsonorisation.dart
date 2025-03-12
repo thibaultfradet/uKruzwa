@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_event.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_state.dart';
-import 'package:ukruzwa/presentation/pages/home.dart';
+import 'package:ukruzwa/presentation/pages/compte.dart';
 import 'package:ukruzwa/presentation/widgets/bouton_custom.dart';
 import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
 import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
@@ -38,10 +38,11 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
           if (state is ASSuccess) {
             WidgetsBinding.instance.addPostFrameCallback(
               (_) {
-                Navigator.of(context).pushReplacement(
+                Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                    builder: (context) => const Home(),
+                    builder: (context) => const Compte(),
                   ),
+                  (Route route) => false,
                 );
               },
             );

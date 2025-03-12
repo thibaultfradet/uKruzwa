@@ -90,32 +90,30 @@ class _HomeState extends State<Home> {
                   Center(
                     // On rend toute la page scrollable
                     child: SingleChildScrollView(
-                      // Colonne de la page
                       child: Column(
                         children: [
+                          const VerticalMargin(ratio: 0.02),
                           // Partie du haut avec recherche
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.9,
-                            height: MediaQuery.of(context).size.height * 0.22,
+                            height: MediaQuery.of(context).size.height * 0.20,
                             child: Column(
                               children: [
                                 // Ligne avec entrée utilisateur et bouton valider
                                 SizedBox(
                                   height:
-                                      MediaQuery.of(context).size.height * 0.07,
-                                  child: Row(
+                                      MediaQuery.of(context).size.height * 0.15,
+                                  child: Column(
                                     children: [
                                       Expanded(
                                         child: InputCustomPL(
-                                          placeholder:
-                                              "Rechercher par ${selectedValue!}",
+                                          placeholder: "Rechercher par style",
                                           controllerPL: tecRecherche,
                                           isObscure: false,
                                         ),
                                       ),
 
                                       //Bouton validation
-                                      // Validation de la recherche on appelle l'event de recherche et on passe en paramètre le libelle saisie et l'option choisis par l'utilisateur
                                       BoutonCustom(
                                         hauteur: 0.06,
                                         onpressed: () {
@@ -127,86 +125,6 @@ class _HomeState extends State<Home> {
                                           );
                                         },
                                         texteValeur: "Valider",
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // Affichage du filtre avec la valeur sélectionnée,
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.11,
-                                  child: Column(
-                                    //Affichage filtre selectionner
-                                    children: [
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.9,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.05,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16, vertical: 8),
-                                        decoration: BoxDecoration(
-                                          color: Colors.black54,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        child: Text(
-                                          "Filtre : $selectedValue",
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                              color: Colors.white),
-                                        ),
-                                      ),
-
-                                      //Espace entre les deux
-                                      const VerticalMargin(ratio: 0.01),
-                                      // ComboBox avec les différents filtres de recherche
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.9,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.05,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16, vertical: 8),
-                                        decoration: BoxDecoration(
-                                          color: Colors.black54,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        child: DropdownButtonHideUnderline(
-                                          child: DropdownButton<String>(
-                                            dropdownColor: Colors.black,
-                                            value: selectedValue,
-                                            icon: const Icon(
-                                                Icons.arrow_drop_down,
-                                                color: Colors.white),
-                                            style: const TextStyle(
-                                                color: Colors.white),
-                                            onChanged: (String? newValue) {
-                                              setState(
-                                                () {
-                                                  selectedValue = newValue;
-                                                },
-                                              );
-                                            },
-                                            items: options
-                                                .map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                                return DropdownMenuItem<String>(
-                                                  value: value,
-                                                  child: Text(
-                                                    value,
-                                                    textAlign: TextAlign.center,
-                                                  ),
-                                                );
-                                              },
-                                            ).toList(),
-                                          ),
-                                        ),
                                       ),
                                     ],
                                   ),

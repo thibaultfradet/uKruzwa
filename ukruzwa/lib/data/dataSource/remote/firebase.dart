@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 Future<bool> connectUser(String emailAddress, String password) async {
   try {
-    final credential = await FirebaseAuth.instance
+    await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: emailAddress, password: password);
     return true;
   } on FirebaseAuthException catch (e) {
@@ -20,8 +20,7 @@ Future<bool> connectUser(String emailAddress, String password) async {
 
 Future<bool> createUser(String emailAddress, String password) async {
   try {
-    final credential =
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: emailAddress,
       password: password,
     );

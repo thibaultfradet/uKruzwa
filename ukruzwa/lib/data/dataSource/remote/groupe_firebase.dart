@@ -8,6 +8,7 @@ import 'package:ukruzwa/domain/models/instrument.dart';
 import 'package:ukruzwa/domain/models/personnne.dart';
 import 'package:ukruzwa/domain/models/style.dart';
 
+/* Fonction createGroupe qui prend en paramètre un objet groupe et créer un objet groupe en base retourne l'id du groupe si l'opération c'est bien passé sinon retourne une chaîne de caractère vide*/
 Future<String> createGroupe(Groupe groupeCreate) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
   final docGroupe = db.collection("Groupes").doc();
@@ -17,6 +18,17 @@ Future<String> createGroupe(Groupe groupeCreate) async {
     return "";
   }
   return docGroupe.id;
+}
+
+Future<bool> updateGroupe(Groupe groupeEdit) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  final docGroupe = db.collection("Groupes").doc(groupeEdit.idGroupe);
+  try {
+    await docGroupe.set(groupeEdit.toFirestore(groupeEdit.idGroupe!));
+  } catch (exception) {
+    return false;
+  }
+  return true;
 }
 
 /* Fonction retrieveGroupe qui prend en paramètre un id de groupe et retourne l'objet groupe associé dans la base de données */
@@ -79,45 +91,23 @@ Future<List<Groupe>> findAllGroupe() async {
 
 /* variant findAll */
 /* Méthode findAllGrouperecherche qui prend en paramètre le libelle de la recherche et l'option cibler et retourne la liste de groupe associer */
-Future<List<Groupe>> findAllGroupeRecherche(
-    String libelle, String option) async {
+Future<List<Groupe>> findAllGroupeRecherche(String libelle) async {
   List<Groupe> collectionGroupe = [];
-
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   // Query snapshot qui va dependre des paramètres
   QuerySnapshot<Map<String, dynamic>>? querySnapshot;
 
-  switch (option) {
-    case "Nom":
-      querySnapshot = await db
-          .collection("Groupes")
-          .where("NomGroupe", isEqualTo: libelle)
-          .get();
-      break;
-
-    // => se base sur le libelle fournit et récupère touts les groupes avec au moins 1 fois le style
-    case "Style":
-      // On récupère d'abord le style en base
-      Style styleTemp = await retrieveStyleByLibelle(libelle);
-      querySnapshot = await db
-          .collection("Groupes")
-          .where("idStyles", arrayContains: styleTemp.idStyle)
-          .get();
-      break;
-    case "Instrument":
-      // On récupère d'abord le style en base
-      Instrument instrumentTemp = await retrieveInstrumentByLibelle(libelle);
-      querySnapshot = await db
-          .collection("Groupes")
-          .where("idInstruments", arrayContains: instrumentTemp.idInstrument)
-          .get();
-      break;
-    // par défaut => on retourne une liste vide car il s'agit d'une erreur
-    default:
-      return [];
+  // On récupère d'abord le style en base
+  Style? styleTemp = await retrieveStyleByLibelle(libelle);
+  querySnapshot = await db
+      .collection("Groupes")
+      .where("idStyles", arrayContains: styleTemp.idStyle)
+      .get();
+  // si le style n'a pas été trouvé
+  if (styleTemp == null) {
+    return [];
   }
-
   //pour chaque groupe dans la collection
   for (var item in querySnapshot.docs) {
     //Récupération des données
