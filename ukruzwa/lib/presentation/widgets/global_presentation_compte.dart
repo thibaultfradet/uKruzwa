@@ -10,6 +10,7 @@ class Globalpresentationcompte extends StatefulWidget {
   final VoidCallback onPressedDelete;
   final VoidCallback onPressedEdit;
   final VoidCallback onPressedEditSono;
+  final VoidCallback onPressedAddSono;
 
   const Globalpresentationcompte({
     super.key,
@@ -17,6 +18,7 @@ class Globalpresentationcompte extends StatefulWidget {
     required this.onPressedDelete,
     required this.onPressedEdit,
     required this.onPressedEditSono,
+    required this.onPressedAddSono,
   });
 
   @override
@@ -89,8 +91,11 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                           width: MediaQuery.of(context).size.width * 0.35,
                           child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount:
-                                widget.groupeConcerner.stylesDuGroupe!.length,
+                            itemCount: widget.groupeConcerner.stylesDuGroupe!
+                                        .length >
+                                    3
+                                ? 3
+                                : widget.groupeConcerner.stylesDuGroupe!.length,
                             itemBuilder: (context, index) {
                               return Column(
                                 children: [
@@ -121,8 +126,12 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                           width: MediaQuery.of(context).size.width * 0.35,
                           child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: widget
-                                .groupeConcerner.instrumentsDuGroupe!.length,
+                            itemCount: widget.groupeConcerner
+                                        .instrumentsDuGroupe!.length >
+                                    3
+                                ? 3
+                                : widget.groupeConcerner.instrumentsDuGroupe!
+                                    .length,
                             itemBuilder: (context, index) {
                               return Column(
                                 children: [
@@ -192,7 +201,15 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                             texteValeur: "Modifier la sonorisation",
                           ),
                         )
-                      : const SizedBox()
+                      : //add sono bouton
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.058,
+                          child: BoutonCustom(
+                            largeur: 0.7,
+                            onpressed: () => widget.onPressedAddSono(),
+                            texteValeur: "Ajouter une sonorisation",
+                          ),
+                        )
                 ],
               ),
             )

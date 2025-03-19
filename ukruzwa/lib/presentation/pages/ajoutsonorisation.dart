@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ukruzwa/domain/models/groupe.dart';
+import 'package:ukruzwa/domain/models/sonorisation.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_bloc.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_event.dart';
 import 'package:ukruzwa/presentation/blocs/ajoutsonorisation/ajoutsonorisation_state.dart';
@@ -9,9 +11,11 @@ import 'package:ukruzwa/presentation/widgets/input_custom_pl.dart';
 import 'package:ukruzwa/presentation/widgets/vertical_margin.dart';
 
 class Ajoutsonorisation extends StatefulWidget {
-  final String
-      idGroupeConcerner; // => dans touts les cas MAIS AUSSI pour la modification d'une sono
-  const Ajoutsonorisation({super.key, required this.idGroupeConcerner});
+  final Groupe
+      groupeConcerner; // => dans touts les cas MAIS AUSSI pour la modification d'une sono
+  final Sonorisation? sonorisationAModifier; // Si modification de sonorisation
+  const Ajoutsonorisation(
+      {super.key, required this.groupeConcerner, this.sonorisationAModifier});
 
   @override
   State<Ajoutsonorisation> createState() => _AjoutsonorisationState();
@@ -27,11 +31,29 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
   TextEditingController tecPrixServiceInge = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+
+    if (widget.sonorisationAModifier != null) {
+      if (widget.groupeConcerner.ingeSon != null) {
+        ingeAccompagne = widget.groupeConcerner.ingeSon!;
+        tecPrixServiceInge.text = widget.groupeConcerner.prixInge!.toString();
+        ingeEstPro = widget.groupeConcerner.ingePro!;
+      }
+      tecDescriptionSono.text = widget.sonorisationAModifier!.descriptionSono;
+      tecModeleSono.text = widget.sonorisationAModifier!.modeleSono;
+      tecPuissanceSono.text =
+          widget.sonorisationAModifier!.puissanceSono.toString();
+      tecPrixLocationSono.text =
+          widget.sonorisationAModifier!.prixLocaSono.toString();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
           AjoutsonorisationBloc()..add(const AjoutsonorisationEvent()),
-      // TODO :Si le paramètre donne un groupe qui possède deja une sonorisation alors on retrieveSonorisation puis on remplies les champs
       child: BlocBuilder<AjoutsonorisationBloc, AjoutsonorisationState>(
         builder: (BuildContext context, state) {
           //Si la création de sonorisation cest bien produit
@@ -206,7 +228,7 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
                       onpressed: () {
                         BlocProvider.of<AjoutsonorisationBloc>(context).add(
                           ASEventCreate(
-                            idGroupeConcerner: widget.idGroupeConcerner,
+                            groupeConcerner: widget.groupeConcerner,
                             descriptionSono: tecDescriptionSono.text,
                             ingeAccompagne: ingeAccompagne,
                             modeleSono: tecModeleSono.text,

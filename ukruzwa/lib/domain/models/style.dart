@@ -1,5 +1,5 @@
 class Style {
-  final String? idStyle;
+  String? idStyle;
   final String nomStyle;
 
   /* Constructeur vide */

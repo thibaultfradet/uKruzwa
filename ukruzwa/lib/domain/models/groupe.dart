@@ -10,19 +10,19 @@ import 'package:ukruzwa/domain/models/style.dart';
 import 'package:ukruzwa/domain/models/instrument.dart';
 
 class Groupe {
-  final String? idGroupe;
-  final String nomGroupe;
-  final String numeroRemplacementContact;
-  final bool? ingeSon;
-  final bool? ingePro;
-  final int? prixInge;
+  String? idGroupe;
+  String nomGroupe;
+  String numeroRemplacementContact;
+  bool? ingeSon;
+  bool? ingePro;
+  int? prixInge;
   //Clé étrangère
-  final Ville villeRepetition;
-  final Contact personneAContacter;
+  Ville villeRepetition;
+  Contact personneAContacter;
   Sonorisation? sonorisationDuGroupe;
-  final List<Style>? stylesDuGroupe;
-  final List<Instrument>? instrumentsDuGroupe;
-  final List<Ville>? endroitsDejaJoues;
+  List<Style>? stylesDuGroupe;
+  List<Instrument>? instrumentsDuGroupe;
+  List<Ville>? endroitsDejaJoues;
 
   /* Constructeur vide */
   Groupe.empty()

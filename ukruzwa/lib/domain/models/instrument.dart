@@ -1,5 +1,5 @@
 class Instrument {
-  final String? idInstrument;
+  String? idInstrument;
   final String nomInstrument;
 
   /* Constructeur vide */

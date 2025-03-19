@@ -78,8 +78,11 @@ class _GlobalpresentationState extends State<Globalpresentation> {
                           width: MediaQuery.of(context).size.width * 0.35,
                           child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount:
-                                widget.groupeConcerner.stylesDuGroupe!.length,
+                            itemCount: widget.groupeConcerner.stylesDuGroupe!
+                                        .length >
+                                    3
+                                ? 3
+                                : widget.groupeConcerner.stylesDuGroupe!.length,
                             itemBuilder: (context, index) {
                               return Column(children: [
                                 ItemValider(
@@ -108,8 +111,12 @@ class _GlobalpresentationState extends State<Globalpresentation> {
                           width: MediaQuery.of(context).size.width * 0.35,
                           child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: widget
-                                .groupeConcerner.instrumentsDuGroupe!.length,
+                            itemCount: widget.groupeConcerner
+                                        .instrumentsDuGroupe!.length >
+                                    3
+                                ? 3
+                                : widget.groupeConcerner.instrumentsDuGroupe!
+                                    .length,
                             itemBuilder: (context, index) {
                               return Column(children: [
                                 ItemValider(

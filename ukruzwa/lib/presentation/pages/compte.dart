@@ -123,9 +123,31 @@ class _CompteState extends State<Compte> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     Ajoutsonorisation(
-                                                  idGroupeConcerner: state
+                                                  groupeConcerner: state
+                                                      .groupeDuCompte[index],
+                                                  sonorisationAModifier: state
                                                       .groupeDuCompte[index]
-                                                      .idGroupe!,
+                                                      .sonorisationDuGroupe,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+
+                                      //Envoie de l'utilisateur vers la page d'ajout de sonorisation pour le groupe concerner
+                                      onPressedAddSono: () {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) {
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Ajoutsonorisation(
+                                                  groupeConcerner: state
+                                                      .groupeDuCompte[index],
+                                                  sonorisationAModifier: null,
                                                 ),
                                               ),
                                             );

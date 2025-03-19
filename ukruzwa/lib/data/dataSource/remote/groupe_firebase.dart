@@ -1,23 +1,21 @@
-/* createGroupe qui prend en paramètre un objet groupe qui essaye de créer le groupe dans firebase et retourne le statut du résultat */
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ukruzwa/data/dataSource/remote/instrument_firebase.dart';
 import 'package:ukruzwa/data/dataSource/remote/personne_firebase.dart';
 import 'package:ukruzwa/data/dataSource/remote/style_firebase.dart';
 import 'package:ukruzwa/domain/models/groupe.dart';
-import 'package:ukruzwa/domain/models/instrument.dart';
 import 'package:ukruzwa/domain/models/personnne.dart';
 import 'package:ukruzwa/domain/models/style.dart';
 
 /* Fonction createGroupe qui prend en paramètre un objet groupe et créer un objet groupe en base retourne l'id du groupe si l'opération c'est bien passé sinon retourne une chaîne de caractère vide*/
-Future<String> createGroupe(Groupe groupeCreate) async {
+Future<Groupe> createGroupe(Groupe groupeCreate) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
   final docGroupe = db.collection("Groupes").doc();
   try {
     await docGroupe.set(groupeCreate.toFirestore(docGroupe.id));
   } catch (exception) {
-    return "";
+    return Groupe.empty();
   }
-  return docGroupe.id;
+  groupeCreate.idGroupe = docGroupe.id;
+  return groupeCreate;
 }
 
 Future<bool> updateGroupe(Groupe groupeEdit) async {
@@ -105,6 +103,7 @@ Future<List<Groupe>> findAllGroupeRecherche(String libelle) async {
       .where("idStyles", arrayContains: styleTemp.idStyle)
       .get();
   // si le style n'a pas été trouvé
+  // ignore: unnecessary_null_comparison
   if (styleTemp == null) {
     return [];
   }
@@ -146,4 +145,24 @@ Future<List<Groupe>> findAllGroupeCompte(String email) async {
   }
 
   return collectionGroupe;
+}
+
+Future<int> getNbChanteursActuel(String idGroupe) async {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+  final docGroupe = db.collection("Groupes").doc(idGroupe);
+
+  var getDataGroupe = await docGroupe.get();
+  Map<String, dynamic>? dataGroupe = getDataGroupe.data();
+
+  int counter = 0; // Initialize the counter
+  String idChanteur = "TRObRcioAfUvrk67BDLO";
+  // Loop through the JSON list
+  dataGroupe!["idInstruments"].forEach((element) {
+    // Check if the string element matches the target string
+    if (element == idChanteur) {
+      counter++; // Increment the counter
+    }
+  });
+
+  return counter;
 }

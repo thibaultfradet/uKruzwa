@@ -35,8 +35,6 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
           instrumentDisponible: instrumentDisponible));
     });
 
-    //TODO : Rajouter la modification de groupe => avec id en paramètre et obj groupe méthode updateGroupe dans groupe_firebase.dart => A tester
-
     //Modification d'un groupe event
     on<AGEventEdit>((event, emit) async {
       //Vérifications entrées utilisateurs
@@ -67,8 +65,8 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
           try {
             villeTemp = villeDisponible
                 .where((ville) =>
-                    ville.codePostal == event.codePostalVilleRepetition &&
-                    ville.nomVille == event.nomVilleRepetition)
+                    ville.codePostal == event.endroitsJouesDuGroupe![i][0] &&
+                    ville.nomVille == event.endroitsJouesDuGroupe![i][1])
                 .first;
           } catch (e) {
             // ville pas trouver dans celle disponible => null
@@ -82,7 +80,7 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
               codePostal: event.endroitsJouesDuGroupe![i][0],
             );
             //On crée la ville en base
-            createVille(villeTemp);
+            villeTemp.idVille = await createVille(villeTemp);
           }
           endroitsJouesDuGroupe.add(villeTemp);
         }
@@ -106,7 +104,7 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
               nomStyle: event.stylesDuGroupe[i],
             );
             // On créer le style
-            createStyle(styleDuGroupe);
+            styleDuGroupe.idStyle = await createStyle(styleDuGroupe);
           }
           listeStyleDuGroupe.add(styleDuGroupe);
         }
@@ -116,28 +114,33 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
         List<Instrument> listeInstrumentDuGroupe = [];
         for (var i = 0; i < event.instrumentsDuGroupe.length; i++) {
           Instrument? instrumentDuGroupe;
-          // try car .first provoque exception si pas trouver
-          try {
-            instrumentDuGroupe = instrumentDisponible
-                .where((instrument) =>
-                    instrument.nomInstrument == event.instrumentsDuGroupe[i])
-                .first;
-          } catch (e) {
-            instrumentDuGroupe = null;
-          }
-          //Si instrument à null alors l'objet n'existe pas on le créer en base
-          if (instrumentDuGroupe == null) {
-            instrumentDuGroupe =
-                Instrument(nomInstrument: event.instrumentsDuGroupe[i]);
+          if (event.instrumentsDuGroupe[i] != "chanteur") {
+            // try car .first provoque exception si pas trouver
+            try {
+              instrumentDuGroupe = instrumentDisponible
+                  .where((instrument) =>
+                      instrument.nomInstrument == event.instrumentsDuGroupe[i])
+                  .first;
+            } catch (e) {
+              instrumentDuGroupe = null;
+            }
+            //Si instrument à null alors l'objet n'existe pas on le créer en base
+            if (instrumentDuGroupe == null) {
+              instrumentDuGroupe =
+                  Instrument(nomInstrument: event.instrumentsDuGroupe[i]);
 
-            //On créer l'instrument en base
-            createInstrument(instrumentDuGroupe);
+              //On créer l'instrument en base
+              instrumentDuGroupe.idInstrument =
+                  await createInstrument(instrumentDuGroupe);
+            }
+
+            listeInstrumentDuGroupe.add(instrumentDuGroupe);
           }
-          listeInstrumentDuGroupe.add(instrumentDuGroupe);
         }
 
         //Rajout des chanteurs
         try {
+          //Déduction avec nombre de chanteurs actuel
           Instrument instrumentTemp = Instrument(
               idInstrument: "TRObRcioAfUvrk67BDLO", nomInstrument: "chanteur");
           for (int i = 0; i < int.parse(event.nombreChanteurs); i++) {
@@ -214,7 +217,7 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
           bool isEdit = await updateGroupe(groupeEdit);
           if (isEdit) {
             //Réussi => on emit le state success
-            emit(AGSuccess(event.possederSonorisation, groupeEdit.idGroupe!));
+            emit(AGSuccess(event.possederSonorisation, groupeEdit));
           } else {
             emit(AGFailure());
           }
@@ -255,8 +258,8 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
           try {
             villeTemp = villeDisponible
                 .where((ville) =>
-                    ville.codePostal == event.codePostalVilleRepetition &&
-                    ville.nomVille == event.nomVilleRepetition)
+                    ville.codePostal == event.endroitsJouesDuGroupe![i][0] &&
+                    ville.nomVille == event.endroitsJouesDuGroupe![i][1])
                 .first;
           } catch (e) {
             // ville pas trouver dans celle disponible => null
@@ -399,9 +402,14 @@ class AjoutgroupeBloc extends Bloc<AjoutgroupeEvent, AjoutgroupeState> {
           emit(AGLoading());
 
           //Appel de la méthode de création
-          String idGroupe = await createGroupe(groupeCreate);
-          //Réussi => on emit le state success
-          emit(AGSuccess(event.possederSonorisation, idGroupe));
+          Groupe groupeAfterCreate = await createGroupe(groupeCreate);
+          //Création réussi
+          if (groupeAfterCreate.idGroupe != "") {
+            //Réussi => on emit le state success
+            emit(AGSuccess(event.possederSonorisation, groupeAfterCreate));
+          } else {
+            emit(AGFailure());
+          }
         } catch (e) {
           //Non réussi => on emit le state failure
           emit(AGFailure());

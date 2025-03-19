@@ -1,5 +1,5 @@
 class Ville {
-  final String? idVille;
+  String? idVille;
   final String nomVille;
   final String codePostal;
 
