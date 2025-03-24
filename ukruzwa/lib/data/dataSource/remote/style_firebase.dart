@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ukruzwa/domain/models/style.dart';
 
-/* CRUD ET AUTRE */
-
 /* Fonction createStyle qui prend en paramètre un objet style qui essaye de créer le style et retourner le statut */
-
 Future<String> createStyle(Style styleCreate) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
   final docStyle = db.collection("Styles").doc();

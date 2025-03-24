@@ -1,9 +1,7 @@
-/* CRUD ET AUTRE */
-
-/* Méthode createVille qui prend en paamètre une ville et qui retourne le numéro du doc créer */
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ukruzwa/domain/models/ville.dart';
 
+/* Méthode createVille qui prend en paramètre un objet ville et le créer dans la base */
 Future<String> createVille(Ville villeCreate) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
   final docVille = db.collection("Villes").doc();

@@ -31,6 +31,11 @@ Future<Sonorisation> retrieveSonorisation(String idSonorisation) async {
   return Sonorisation.fromJSON(dataSonorisation!);
 }
 
+/* Fonction createOrEditSonorisation qui prend en paramètre tout le nécessaire pour créer un objet sonorisation ainsi qu'un objet groupe
+ => Cette méthode Vérifie si la sonorisation n'existe pas déjà dans la base de données
+ Si elle n'existe pas la sonorisation est créer
+ Dans tout les cas on fait le lien avec le groupe et la sonorisation (créer ou existente)
+ */
 Future<bool> createOrEditSonorisation(String modele, String description,
     double prixLocation, double puissanceSono, Groupe groupeConcerner) async {
   FirebaseFirestore db = FirebaseFirestore.instance;

@@ -174,7 +174,7 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                         widget.onPressedDelete();
                       },
                       texteValeur: "Supprimer",
-                      isDeleteButton: true,
+                      buttonColor: Colors.red,
                     ),
                   ),
                   const VerticalMargin(ratio: 0.01),
@@ -197,6 +197,7 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                           height: MediaQuery.of(context).size.height * 0.058,
                           child: BoutonCustom(
                             largeur: 0.7,
+                            buttonColor: Colors.blue,
                             onpressed: () => widget.onPressedEditSono(),
                             texteValeur: "Modifier la sonorisation",
                           ),
@@ -206,6 +207,7 @@ class _GlobalpresentationcompteState extends State<Globalpresentationcompte> {
                           height: MediaQuery.of(context).size.height * 0.058,
                           child: BoutonCustom(
                             largeur: 0.7,
+                            buttonColor: Colors.blue,
                             onpressed: () => widget.onPressedAddSono(),
                             texteValeur: "Ajouter une sonorisation",
                           ),

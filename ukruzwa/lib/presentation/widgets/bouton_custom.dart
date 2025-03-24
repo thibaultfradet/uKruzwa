@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class BoutonCustom extends StatelessWidget {
   final VoidCallback onpressed;
   final String texteValeur;
-  final bool? isDeleteButton;
+  final Color? buttonColor;
   final double? largeur;
   final double? hauteur;
   const BoutonCustom({
     super.key,
     required this.onpressed,
     required this.texteValeur,
-    this.isDeleteButton,
+    this.buttonColor,
     this.hauteur,
     this.largeur,
   });
@@ -29,7 +29,7 @@ class BoutonCustom extends StatelessWidget {
           onpressed();
         },
         style: TextButton.styleFrom(
-          backgroundColor: isDeleteButton == null ? Colors.black : Colors.red,
+          backgroundColor: buttonColor ?? Colors.black,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),

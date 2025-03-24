@@ -18,6 +18,8 @@ Future<Groupe> createGroupe(Groupe groupeCreate) async {
   return groupeCreate;
 }
 
+/* Fonction updateGroupe qui prend en paramètre un groupe et le met à jour dans la base de données
+Retourne true si la modification est réussi false sinon */
 Future<bool> updateGroupe(Groupe groupeEdit) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
   final docGroupe = db.collection("Groupes").doc(groupeEdit.idGroupe);
@@ -41,6 +43,8 @@ Future<Groupe> retrieveGroupe(String idGroupe) async {
   return groupeTemp;
 }
 
+/*Fonction updateGroupeSonorisation => 
+Prend en parmètre un id de groupe et un id de sonorisation et fait le lien entre les deux dans la base de données */
 Future<bool> updateGroupeSonorisation(
     String idGroupe, String idSonorisation) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -147,7 +151,11 @@ Future<List<Groupe>> findAllGroupeCompte(String email) async {
   return collectionGroupe;
 }
 
-Future<int> getNbChanteursActuel(String idGroupe) async {
+/* Méthode getNbChanteursDuGroupe => 
+  Prend en paramètre un id de groupe
+  Retourne le nombre de chanteurs présent dans le groupe
+  */
+Future<int> getNbChanteursDuGroupe(String idGroupe) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
   final docGroupe = db.collection("Groupes").doc(idGroupe);
 

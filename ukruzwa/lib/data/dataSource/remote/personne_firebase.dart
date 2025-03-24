@@ -68,8 +68,8 @@ Future<bool> createUserInFirestore(String emailAddress, String nom,
 }
 
 /* PARTIE CONTACT */
-/* CRUD ET AUTRE */
 
+/* Fonction createContact qui prend en paramètre un objet Personne et créer un objet contact dans la base de données */
 Future<void> createContact(Personne personneContact) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
 

@@ -25,6 +25,9 @@ class AjoutsonorisationBloc
       }
     });
     //Etat initial
+    on<AjoutsonorisationEvent>((event, emit) async {
+      emit(AjoutsonorisationStateInitial());
+    });
     on<ASEventCreate>((event, emit) async {
       try {
         //Création longue donc on emit un state de chargement en attendant

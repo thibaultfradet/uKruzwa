@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ukruzwa/domain/models/instrument.dart';
-/* CRUD ET AUTRE */
 
 /* Fonction createInstrument qui prend en paramètre un objet instrument qui essaye de le créer en base et retourne le numéro du doc */
 Future<String> createInstrument(Instrument instrumentCreate) async {
