@@ -104,8 +104,8 @@ class _CompteState extends State<Compte> {
                                                 .pushReplacement(
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    Ajoutsonorisation(
-                                                  groupeConcerner: state
+                                                    Ajoutgroupe(
+                                                  groupeAModifier: state
                                                       .groupeDuCompte[index],
                                                 ),
                                               ),

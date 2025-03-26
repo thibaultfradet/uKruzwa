@@ -24,7 +24,9 @@ Future<bool> updateGroupe(Groupe groupeEdit) async {
   FirebaseFirestore db = FirebaseFirestore.instance;
   final docGroupe = db.collection("Groupes").doc(groupeEdit.idGroupe);
   try {
-    await docGroupe.set(groupeEdit.toFirestore(groupeEdit.idGroupe!));
+    Map<String, dynamic> groupeJson =
+        groupeEdit.toFirestore(groupeEdit.idGroupe!);
+    await docGroupe.set(groupeJson);
   } catch (exception) {
     return false;
   }

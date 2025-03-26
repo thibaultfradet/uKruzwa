@@ -31,6 +31,28 @@ Future<Sonorisation> retrieveSonorisation(String idSonorisation) async {
   return Sonorisation.fromJSON(dataSonorisation!);
 }
 
+/* Méthode removeSonoFromGroupe => permet de détacher la sonorisation a un groupe*/
+Future<bool> removeSonoFromGroupe(
+    String idSonorisation, Groupe groupeConcerner) async {
+  try {
+    //Modification des champs => ingeSon,ingePro,prixInge,idSonorisation
+    Groupe groupeTemp = groupeConcerner;
+    groupeTemp.ingePro = null;
+    groupeTemp.ingeSon = null;
+    groupeTemp.prixInge = null;
+    groupeTemp.sonorisationDuGroupe = null;
+
+    bool success = await updateGroupe(groupeTemp);
+    if (success) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+}
+
 /* Fonction createOrEditSonorisation qui prend en paramètre tout le nécessaire pour créer un objet sonorisation ainsi qu'un objet groupe
  => Cette méthode Vérifie si la sonorisation n'existe pas déjà dans la base de données
  Si elle n'existe pas la sonorisation est créer

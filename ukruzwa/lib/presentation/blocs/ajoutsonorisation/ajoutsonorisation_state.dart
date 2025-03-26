@@ -13,7 +13,8 @@ class ASSuccess extends AjoutsonorisationState {
 }
 
 class ASFailure extends AjoutsonorisationState {
-  ASFailure() : super();
+  final String? erreur;
+  ASFailure(this.erreur) : super();
 }
 
 class ASLoading extends AjoutsonorisationState {

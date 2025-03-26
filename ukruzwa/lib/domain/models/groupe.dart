@@ -64,7 +64,8 @@ class Groupe {
       'NumeroRemplacementContact': numeroRemplacementContact,
       'NumeroTelephone': personneAContacter.numeroTelephone,
       'PrixInge': prixInge,
-      'idSonorisation': sonorisationDuGroupe!.idSonorisation,
+      'IngePro': ingePro,
+      'idSonorisation': sonorisationDuGroupe?.idSonorisation,
       'idVille': villeRepetition.idVille,
       'idInstruments': instrumentsDuGroupe!.map((item) {
         return item.idInstrument;
@@ -100,10 +101,9 @@ class Groupe {
       prixInge: json['PrixInge'],
       villeRepetition: await retrieveVille(json['idVille']),
       personneAContacter: await retrieveContact(json['NumeroTelephone']),
-      sonorisationDuGroupe:
-          json["idSonorisation"].isEmpty || json["idSonorisation"] == null
-              ? null
-              : await retrieveSonorisation(json["idSonorisation"]),
+      sonorisationDuGroupe: json["idSonorisation"] == null
+          ? null
+          : await retrieveSonorisation(json["idSonorisation"]),
       stylesDuGroupe: styles,
       instrumentsDuGroupe: instruments,
       endroitsDejaJoues: endroits,

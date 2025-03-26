@@ -51,3 +51,10 @@ class ASEventEdit extends AjoutsonorisationEvent {
     required this.prixLocationSono,
   });
 }
+
+class ASEventRemove extends AjoutsonorisationEvent {
+  final String idSonorisation;
+  final Groupe groupeConcerner;
+
+  ASEventRemove({required this.idSonorisation, required this.groupeConcerner});
+}

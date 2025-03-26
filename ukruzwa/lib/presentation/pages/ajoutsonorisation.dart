@@ -73,11 +73,9 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
             WidgetsBinding.instance.addPostFrameCallback(
               (_) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                  SnackBar(
                     content: Center(
-                      child: Text(
-                        'Une erreur est survenue lors de la création, veuillez saisir touts les champs.',
-                      ),
+                      child: Text(state.erreur ?? "Une erreur est survenue"),
                     ),
                   ),
                 );
@@ -89,10 +87,13 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
               backgroundColor: Colors.white,
-              title: const Center(
+              title: Center(
                 child: Text(
-                  "Ajouter une sonorisation",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  widget.sonorisationAModifier != null
+                      ? "Modification une sonorisation"
+                      : "Ajouter une sonorisation",
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -247,6 +248,27 @@ class _AjoutsonorisationState extends State<Ajoutsonorisation> {
                       },
                       texteValeur: "Valider",
                     ),
+                    const VerticalMargin(ratio: 0.04),
+                    widget.sonorisationAModifier != null
+                        ? BoutonCustom(
+                            onpressed: () {
+                              BlocProvider.of<AjoutsonorisationBloc>(context)
+                                  .add(
+                                ASEventRemove(
+                                  idSonorisation: widget
+                                      .sonorisationAModifier!.idSonorisation,
+                                  groupeConcerner: widget.groupeConcerner,
+                                ),
+                              );
+                            },
+                            texteValeur: "Supprimer la sonorisation du groupe",
+                            buttonColor: Colors.red,
+                            hauteur: 0.07,
+                            largeur: 0.8,
+                          )
+                        : const SizedBox(),
+
+                    const VerticalMargin(ratio: 0.04),
                   ],
                 ),
               ),
